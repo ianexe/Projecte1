@@ -8,6 +8,7 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
+
 }
 
 // Destructor
@@ -58,14 +59,15 @@ update_status ModuleRender::Update()
 	if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 && App->renderer->camera.x < 0.0)
 	{
 		//There are two different ifs to make the code more easily understandable
-		if (-(App->player->position.x) > App->renderer->camera.x){
+		if (-(App->player->position.x) + 300.0 > App->renderer->displacement.x){
 			App->renderer->camera.x += speed;
 		}
 	}
 	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 && App->renderer->camera.x >= -1200)
 	{
-		//if (App->player->position.x > App->renderer->camera.x)
-		App->renderer->camera.x -= speed;
+		if (-(App->player->position.x) + 500.0 < App->renderer->displacement.x + SCREEN_WIDTH){
+			App->renderer->camera.x -= speed;
+		}
 	}
 	return UPDATE_CONTINUE;
 }
@@ -98,6 +100,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	SDL_Rect rect;
 	rect.x = (int) (camera.x * speed) + x * SCREEN_SIZE;
 	rect.y = (int) (camera.y * speed) + y * SCREEN_SIZE;
+	displacement = rect;
 
 	if(section != NULL)
 	{
