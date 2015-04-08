@@ -42,7 +42,7 @@ ModuleSceneKen::ModuleSceneKen(Application* app, bool start_enabled) : Module(ap
 	hatGuy.frames.PushBack({ 760, 16, 40, 40 });
 	hatGuy.frames.PushBack({ 760, 64, 40, 40 });
 	hatGuy.frames.PushBack({ 760, 112, 40, 40 });
-	hatGuy.speed = 0.9f;
+	hatGuy.speed = 0.08f;
 
 	// for moving the foreground
 	foreground_pos = 0;
@@ -78,23 +78,30 @@ bool ModuleSceneKen::CleanUp()
 update_status ModuleSceneKen::Update()
 {
 	// Calculate boat Y position -----------------------------
-	if(foreground_pos < -6.0f)
-		forward = false;
-	else if(foreground_pos > 0.0f)
-		forward = true;
 	
-	if(forward)
+	if (foreground_pos < -6.0f)
+		forward = false;
+	else if (foreground_pos > 0.0f)
+		forward = true;
+
+	if (forward)
 		foreground_pos -= 0.02f;
 	else
 		foreground_pos += 0.02f;
 
+	//Prova meva per fer el codi Calculate boat Y position
+	/*for (forward == true; foreground_pos < -6.0f; foreground_pos -= 0.02f);
+	forward = false;
+	for (forward == false; foreground_pos < 0.0f; foreground_pos += 0.02f);
+	forward = true;*/
+	
 	// Draw everything --------------------------------------
 	App->renderer->Blit(graphics, 0, 0, &background, 0.75f); // sea and sky
 	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
 
-	App->renderer->Blit(graphics, 0, (int)foreground_pos, &foreground, 0.92f);
-	App->renderer->Blit(graphics, 192, 104 + (int)foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
-	App->renderer->Blit(graphics, 27, 85, &(hatGuy.GetCurrentFrame()), 0.9f);
+	App->renderer->Blit(graphics, 0, foreground_pos, &foreground, 0.92f);
+	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
+	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 0.92f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)

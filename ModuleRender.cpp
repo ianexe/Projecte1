@@ -47,20 +47,26 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	int speed = 3;
-
+	int speed = 8;
+	//SDL_Rect CameraBorders
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
 		App->renderer->camera.y += speed;
 
 	if(App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
 		App->renderer->camera.y -= speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
-		App->renderer->camera.x += speed;
-
-	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1)
+	if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 && App->renderer->camera.x < 0.0)
+	{
+		//There are two different ifs to make the code more easily understandable
+		if (-(App->player->position.x) > App->renderer->camera.x){
+			App->renderer->camera.x += speed;
+		}
+	}
+	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 && App->renderer->camera.x >= -1200)
+	{
+		//if (App->player->position.x > App->renderer->camera.x)
 		App->renderer->camera.x -= speed;
-
+	}
 	return UPDATE_CONTINUE;
 }
 

@@ -21,5 +21,4 @@ public:
 	Animation forward;
 	Animation backward;
 	p2Point<int> position;
-
 };

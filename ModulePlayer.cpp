@@ -8,7 +8,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 {
 	graphics = NULL;
 
-	position.x = 100;
+	position.x = 200;
 	position.y = 216;
 
 	// idle animation (arcade sprite sheet)
