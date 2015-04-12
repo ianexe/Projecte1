@@ -8,9 +8,9 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
-	scene_ken = new ModuleSceneKen(this, true); 	
+	scene_ken = new ModuleSceneKen(this, false); 	
 	player = new ModulePlayer(this, false);
-	scene_honda = new ModuleSceneHonda(this, false);
+	scene_honda = new ModuleSceneHonda(this, true);
 	fade = new ModuleFadeToBlack(this);
 
 	// The order of calls is very important!

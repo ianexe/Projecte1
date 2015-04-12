@@ -3,10 +3,12 @@
 #include "Application.h"
 #include "ModuleFadeToBlack.h"
 
-ModuleFadeToBlack::ModuleFadeToBlack(Application* app, bool start_enabled) : 
-Module(app, start_enabled), 
-start_time(0), 
-total_time(0), 
+ModuleFadeToBlack::ModuleFadeToBlack(Application* app, bool start_enabled) :
+Module(app, start_enabled),
+start_time(0),
+total_time(0),
+del_module (NULL),
+new_module(NULL),
 fading_in(true)
 {
 	screen = {0, 0, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE};
