@@ -15,9 +15,12 @@ public:
 	bool CleanUp();
 
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f);
-
+	void setScreenBorders();
 public:
 	SDL_Renderer* renderer;
 	SDL_Rect camera;
 	SDL_Rect displacement;
+	int distance;
+	int distance2;
+	float centerCameraX;
 };

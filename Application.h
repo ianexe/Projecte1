@@ -11,6 +11,7 @@
 #include "ModuleAudio.h"
 #include "ModuleSceneKen.h"
 #include "ModulePlayer.h"
+#include "ModulePlayer2.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneHonda.h"
 
@@ -24,6 +25,7 @@ public:
 	ModuleAudio* audio;
 	ModuleSceneKen* scene_ken;
 	ModulePlayer* player;
+	ModulePlayer2* player2;
 	ModuleFadeToBlack* fade;
 	ModuleSceneHonda* scene_honda;
 

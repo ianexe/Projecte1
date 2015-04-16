@@ -8,9 +8,10 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
-	scene_ken = new ModuleSceneKen(this, false); 	
+	scene_ken = new ModuleSceneKen(this, true);
 	player = new ModulePlayer(this, false);
-	scene_honda = new ModuleSceneHonda(this, true);
+	player2 = new ModulePlayer2(this, false);
+	scene_honda = new ModuleSceneHonda(this, false);
 	fade = new ModuleFadeToBlack(this);
 
 	// The order of calls is very important!
@@ -30,6 +31,7 @@ Application::Application()
 	
 	// Characters
 	AddModule(player);
+	AddModule(player2);
 
 	// Misc
 	AddModule(fade); // let this after all drawing
@@ -45,6 +47,7 @@ Application::~Application()
 	delete scene_honda;
 	delete scene_ken;
 	delete player;
+	delete player2;
 	delete fade;
 }
 

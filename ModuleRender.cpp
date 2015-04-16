@@ -1,14 +1,15 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
-
+#include <assert.h>
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	renderer = NULL;
-	camera.x = camera.y = 0;
+	camera.x = 0;
+	camera.y = 0;
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
-
+	
 }
 
 // Destructor
@@ -42,33 +43,64 @@ bool ModuleRender::Init()
 update_status ModuleRender::PreUpdate()
 {
 	SDL_RenderClear(renderer);
+	centerCameraX = -camera.x - 192;
+	distance = App->player->position.x - App->player2->position.x;
+	distance2 = App->player2->position.x - App->player->position.x;
 	return UPDATE_CONTINUE;
 }
 
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	int speed = 8;
+	int speed = 12;
+
 	//SDL_Rect CameraBorders
+
+
+
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
 		App->renderer->camera.y += speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
-		App->renderer->camera.y -= speed;
 
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 && App->renderer->camera.x < 0.0)
-	{
-		//There are two different ifs to make the code more easily understandable
-		if (-(App->player->position.x) + 300.0 > App->renderer->displacement.x){
-			App->renderer->camera.x += speed;
-		}
-	}
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 && App->renderer->camera.x >= -1200)
-	{
-		if (-(App->player->position.x) + 500.0 < App->renderer->displacement.x + SCREEN_WIDTH){
+
+
+		if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
+			App->renderer->camera.y -= speed;
+
+	/*	if (distance > 10)
+		{
+			App->renderer->camera.x = 0.0;
+		}*/
+
+		if (App->renderer->centerCameraX < distance || -App->renderer->camera.x < distance2)
+		{
 			App->renderer->camera.x -= speed;
 		}
-	}
+
+		if (App->renderer->camera.x > distance / 2)
+		{
+			App->renderer->camera.x += speed;
+		}
+
+		/*if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 )
+		{
+			
+			
+			//assert(App->renderer->camera.x > -(App->player->position.x));
+			App->renderer->camera.x += speed;
+
+		}
+
+	
+		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 && App->renderer->camera.x >= -1400)
+		{
+			//if ((App->player->position.x) + 500 < App->renderer->displacement.x - SCREEN_WIDTH){
+			//if (-(App->player->position.x) < App->renderer->camera.x + 100){
+			App->renderer->camera.x -= speed;
+			//}
+		}
+	//}*/
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -100,7 +132,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	SDL_Rect rect;
 	rect.x = (int) (camera.x * speed) + x * SCREEN_SIZE;
 	rect.y = (int) (camera.y * speed) + y * SCREEN_SIZE;
-	displacement = rect;
+
 
 	if(section != NULL)
 	{
@@ -122,4 +154,14 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	}
 
 	return ret;
+}
+
+//Set Rect
+
+void ModuleRender::setScreenBorders()
+{
+	displacement.x = App->renderer->camera.x; // SCREEN_SIZE);
+	displacement.w = SCREEN_WIDTH;
+	displacement.h = SCREEN_HEIGHT;
+	//displacement.y = (int)(camera.y * speed) * SCREEN_SIZE;
 }

@@ -1,14 +1,14 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModulePlayer.h"
+#include "ModulePlayer2.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
-ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	graphics = NULL;
 
-	position.x = 0;
+	position.x = 100;
 	position.y = 216;
 
 	// idle animation (arcade sprite sheet)
@@ -38,11 +38,11 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.speed = 0.1f;
 }
 
-ModulePlayer::~ModulePlayer()
+ModulePlayer2::~ModulePlayer2()
 {}
 
 // Load assets
-bool ModulePlayer::Start()
+bool ModulePlayer2::Start()
 {
 	LOG("Loading player");
 
@@ -52,7 +52,7 @@ bool ModulePlayer::Start()
 }
 
 // Unload assets
-bool ModulePlayer::CleanUp()
+bool ModulePlayer2::CleanUp()
 {
 	LOG("Unloading player");
 
@@ -62,30 +62,28 @@ bool ModulePlayer::CleanUp()
 }
 
 // Update: draw background
-update_status ModulePlayer::Update()
+update_status ModulePlayer2::Update()
 {
 	Animation* current_animation = &idle;
 	// debug camera movement --------------------------------
 	int speed = 5;
 
-	if(App->input->keyboard[SDL_SCANCODE_A] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
 	{
-		if (App->player->position.x > 0.0)
+		if (App->player2->position.x > 0.0)
 		{
 			current_animation = &backward;
 			position.x -= speed;
 		}
-		
 	}
 
-	if(App->input->keyboard[SDL_SCANCODE_D] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1)
 	{
-		if (App->player->position.x < 790.0)
+		if (App->player2->position.x < 790.0)
 		{
 			current_animation = &forward;
 			position.x += speed;
 		}
-		
 	}
 
 	// Draw everything --------------------------------------

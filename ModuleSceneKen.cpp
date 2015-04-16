@@ -59,7 +59,10 @@ bool ModuleSceneKen::Start()
 	
 	graphics = App->textures->Load("ken_stage.png");
 	App->player->Enable();
-	App->audio->PlayMusic("ken.ogg",FADE_TIME);
+	App->player2->Enable();
+	
+	
+	//App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
 	return true;
 }
@@ -71,6 +74,7 @@ bool ModuleSceneKen::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->player->Disable();
+	App->player2->Disable();
 	return true;
 }
 
@@ -103,7 +107,8 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
 	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 0.92f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
-
+	App->renderer->setScreenBorders();
+	
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
