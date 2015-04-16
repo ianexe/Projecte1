@@ -52,7 +52,7 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	int speed = 12;
+	int speed = 6;
 
 	//SDL_Rect CameraBorders
 
@@ -67,12 +67,29 @@ update_status ModuleRender::Update()
 		if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
 			App->renderer->camera.y -= speed;
 
+
+
+
+
+		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 || App->input->keyboard[SDL_SCANCODE_D] == 1)
+		{
+			
+				App->renderer->camera.x -= speed;
+			
+		}
+
+		if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 || App->input->keyboard[SDL_SCANCODE_A] == 1)
+		{
+			
+				App->renderer->camera.x += speed;
+				
+		}
 	/*	if (distance > 10)
 		{
 			App->renderer->camera.x = 0.0;
 		}*/
 
-		if (App->renderer->centerCameraX < distance || -App->renderer->camera.x < distance2)
+	/*	if (App->renderer->centerCameraX < distance || -App->renderer->camera.x < distance2)
 		{
 			App->renderer->camera.x -= speed;
 		}
@@ -81,7 +98,7 @@ update_status ModuleRender::Update()
 		{
 			App->renderer->camera.x += speed;
 		}
-
+		*/
 		/*if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 )
 		{
 			
@@ -92,7 +109,7 @@ update_status ModuleRender::Update()
 		}
 
 	
-		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 && App->renderer->camera.x >= -1400)
+		if (App->renderer->camera.x >= -1400)
 		{
 			//if ((App->player->position.x) + 500 < App->renderer->displacement.x - SCREEN_WIDTH){
 			//if (-(App->player->position.x) < App->renderer->camera.x + 100){

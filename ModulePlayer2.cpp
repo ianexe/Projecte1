@@ -72,15 +72,17 @@ update_status ModulePlayer2::Update()
 	{
 		if (App->player2->position.x > 0.0)
 		{
+			
 			current_animation = &backward;
 			position.x -= speed;
 		}
 	}
 
-	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 )
 	{
 		if (App->player2->position.x < 790.0)
 		{
+			
 			current_animation = &forward;
 			position.x += speed;
 		}

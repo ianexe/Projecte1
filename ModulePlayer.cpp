@@ -72,7 +72,7 @@ update_status ModulePlayer::Update()
 	{
 		if (App->player->position.x > 0.0)
 		{
-			current_animation = &backward;
+			current_animation = &forward;
 			position.x -= speed;
 		}
 		
