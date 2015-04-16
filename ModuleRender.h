@@ -22,5 +22,5 @@ public:
 	SDL_Rect displacement;
 	int distance;
 	int distance2;
-	float centerCameraX;
+	int centerCameraX;
 };

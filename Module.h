@@ -6,7 +6,7 @@ class Module
 {
 private :
 	bool enabled;
-
+	
 public:
 	Application* App;
 

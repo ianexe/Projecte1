@@ -52,7 +52,7 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	int speed = 6;
+	int speed = 4;
 
 	//SDL_Rect CameraBorders
 
@@ -84,6 +84,14 @@ update_status ModuleRender::Update()
 				App->renderer->camera.x += speed;
 				
 		}
+
+		if (App->renderer->camera.x >= 0)
+		{
+			App->renderer->camera.x = 0;
+		}
+
+		//TODO POSAR UN SCENE LEN I ACABAR LA CAMERA
+				//if (App->renderer->camera.x > App->scene_honda)
 	/*	if (distance > 10)
 		{
 			App->renderer->camera.x = 0.0;
