@@ -52,7 +52,7 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	int speed = 4;
+	int speed = 6;
 	char title[250];
 	sprintf_s(title, "Camera X: %i Player1X: %i", -(camera.x), (App->player->position.x));
 	App->window->SetTitle(title);
