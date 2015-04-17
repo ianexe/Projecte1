@@ -2,13 +2,14 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include <assert.h>
+#include <stdio.h>
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	renderer = NULL;
 	camera.x = 0;
 	camera.y = 0;
-	camera.w = SCREEN_WIDTH;
-	camera.h = SCREEN_HEIGHT;
+	//camera.w = SCREEN_WIDTH;
+	//camera.h = SCREEN_HEIGHT;
 	
 }
 
@@ -45,7 +46,6 @@ update_status ModuleRender::PreUpdate()
 	SDL_RenderClear(renderer);
 	centerCameraX = -camera.x - 192;
 	distance = App->player->position.x - App->player2->position.x;
-	distance2 = App->player2->position.x - App->player->position.x;
 	return UPDATE_CONTINUE;
 }
 
@@ -53,10 +53,13 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()
 {
 	int speed = 4;
-
+	char title[250];
+	sprintf_s(title, "Camera X: %i Player1X: %i", -(camera.x), (App->player->position.x));
+	App->window->SetTitle(title);
 	//SDL_Rect CameraBorders
 
 
+	//camera.x = -(distance / 2) - 192;
 
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
 		App->renderer->camera.y += speed;
@@ -181,12 +184,14 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	return ret;
 }
 
+
 //Set Rect
 
 void ModuleRender::setScreenBorders()
-{
+{/*
 	displacement.x = App->renderer->camera.x; // SCREEN_SIZE);
 	displacement.w = SCREEN_WIDTH;
 	displacement.h = SCREEN_HEIGHT;
 	//displacement.y = (int)(camera.y * speed) * SCREEN_SIZE;
+	*/
 }
