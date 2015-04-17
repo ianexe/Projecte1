@@ -20,7 +20,7 @@ public:
 public:
 	SDL_Renderer* renderer;
 	p2Point<float> camera;
-	SDL_Rect displacement;
+	p2Point<float> OpCamera;
 	int distance;
 	int centerCameraX;
 };

@@ -50,9 +50,9 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	float speed = 6;
+	float speed = 9;
 	char title[250];
-	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %i", -(camera.x), (App->player->position.x), (App->player2->position.x));
 	App->window->SetTitle(title);
 
 	//distance = App->player->position.x + App->player2->position.x;
@@ -98,6 +98,7 @@ update_status ModuleRender::Update()
 			App->renderer->camera.x = 0;
 		}
 
+		OpCamera.x = (-camera.x / 3);
 		//TODO POSAR UN SCENE LEN I ACABAR LA CAMERA
 				//if (App->renderer->camera.x > App->scene_honda)
 	/*	if (distance > 10)
@@ -190,7 +191,6 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 		}
 	}
 		
-
 	else
 	{
 		if (SDL_RenderCopyEx(renderer, texture, section, &rect, 0, 0, SDL_FLIP_HORIZONTAL) != 0)
