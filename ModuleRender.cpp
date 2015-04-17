@@ -6,7 +6,7 @@
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	renderer = NULL;
-	camera.x = 0;
+	camera.x = 200;
 	camera.y = 0;
 	//camera.w = SCREEN_WIDTH;
 	//camera.h = SCREEN_HEIGHT;
@@ -45,7 +45,7 @@ update_status ModuleRender::PreUpdate()
 {
 	SDL_RenderClear(renderer);
 	centerCameraX = -camera.x - 192;
-	distance = App->player->position.x - App->player2->position.x;
+	distance = App->player->position.x + App->player2->position.x;
 	return UPDATE_CONTINUE;
 }
 
@@ -54,12 +54,12 @@ update_status ModuleRender::Update()
 {
 	int speed = 6;
 	char title[250];
-	sprintf_s(title, "Camera X: %i Player1X: %i", -(camera.x), (App->player->position.x));
+	sprintf_s(title, "Camera X: %i Player1X: %i Player2X: %i", -(camera.x), (App->player->position.x), (App->player2->position.x));
 	App->window->SetTitle(title);
 	//SDL_Rect CameraBorders
 
 
-	//camera.x = -(distance / 2) - 192;
+	camera.x = -(distance / 2) - 192;
 
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
 		App->renderer->camera.y += speed;
@@ -73,7 +73,7 @@ update_status ModuleRender::Update()
 
 
 
-
+		/*
 		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 || App->input->keyboard[SDL_SCANCODE_D] == 1)
 		{
 			
@@ -88,6 +88,7 @@ update_status ModuleRender::Update()
 				
 		}
 
+		*/
 		if (App->renderer->camera.x >= 0)
 		{
 			App->renderer->camera.x = 0;
