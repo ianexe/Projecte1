@@ -40,12 +40,10 @@ bool ModuleRender::Init()
 	return ret;
 }
 
-// PreUpdate: clear buffer
+// PreUpdate: clear buffer a
 update_status ModuleRender::PreUpdate()
 {
 	SDL_RenderClear(renderer);
-	distance = App->player->position.x + App->player2->position.x;
-	centerCameraX = -(distance / 2) - 192 ;
 	return UPDATE_CONTINUE;
 }
 
@@ -56,10 +54,13 @@ update_status ModuleRender::Update()
 	char title[250];
 	sprintf_s(title, "Camera X: %i Player1X: %i Player2X: %i", -(camera.x), (App->player->position.x), (App->player2->position.x));
 	App->window->SetTitle(title);
+
+	distance = App->player->position.x + App->player2->position.x;
+
 	//SDL_Rect CameraBorders
 
 
-	camera.x = -(distance) - 192;
+	camera.x = -(distance/2) - 192;
 	
 
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
@@ -70,6 +71,7 @@ update_status ModuleRender::Update()
 
 		if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
 			App->renderer->camera.y -= speed;
+
 
 
 
