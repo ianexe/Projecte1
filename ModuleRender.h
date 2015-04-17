@@ -18,6 +18,7 @@ public:
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f, bool mirror = true);
 	void setScreenBorders();
 public:
+	//Fer ground limit
 	SDL_Renderer* renderer;
 	p2Point<float> camera;
 	p2Point<float> OpCamera;

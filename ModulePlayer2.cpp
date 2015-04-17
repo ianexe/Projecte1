@@ -8,8 +8,8 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 {
 	graphics = NULL;
 
-	position.x = 280;
-	position.y = 216;
+	position.x = 280.0;
+	position.y = 216.0;
 
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({7, 14, 60, 90});
@@ -81,11 +81,11 @@ update_status ModulePlayer2::Update()
 {
 	Animation* current_animation = &idle;
 	// debug camera movement --------------------------------
-	int speed = 2;
+	int speed = 3;
 
 	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
 	{
-		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 50)
+		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 		{
 			current_animation = &backward;
 			position.x -= speed;
@@ -94,7 +94,7 @@ update_status ModulePlayer2::Update()
 
 	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 )
 	{
-			if (position.x < 815.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 100)
+			if (position.x < 815.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 80)
 			{
 				current_animation = &forward;
 				position.x += speed;

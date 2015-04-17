@@ -8,7 +8,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 {
 	graphics = NULL;
 
-	position.x = 0;
+	position.x = 200;
 	position.y = 216;
 
 	// idle animation (arcade sprite sheet)
@@ -90,7 +90,7 @@ update_status ModulePlayer::Update()
 	if(App->input->keyboard[SDL_SCANCODE_A] == 1)
 	{
 		//
-		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 50)
+		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
 			current_animation = &forward;
 			position.x -= speed;
@@ -100,7 +100,7 @@ update_status ModulePlayer::Update()
 
 	if(App->input->keyboard[SDL_SCANCODE_D] == 1)
 	{
-		if (App->player->position.x < 815.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 100)
+		if (App->player->position.x < 815.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 80)
 		{
 			current_animation = &forward;
 			position.x += speed;

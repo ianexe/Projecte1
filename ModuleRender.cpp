@@ -52,15 +52,19 @@ update_status ModuleRender::Update()
 {
 	float speed = 9;
 	char title[250];
-	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %i", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
 	App->window->SetTitle(title);
 
-	//distance = App->player->position.x + App->player2->position.x;
+	distance = App->player->position.x + App->player2->position.x;
 
 	//SDL_Rect CameraBorders
 
-
-	//camera.x = -(distance/2);
+	
+		camera.x = (-(distance / 2 - 192) * 3);
+	if (camera.x <= -1513){
+	
+		camera.x = -1513;
+	}
 	
 	//CAMBIAR-HO
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)

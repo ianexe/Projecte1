@@ -24,5 +24,5 @@ public:
 	Animation punch2;
 	Animation kick;
 	bool isOnLeft;
-	p2Point<int> position;
+	p2Point<float> position;
 };
