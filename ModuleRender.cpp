@@ -64,7 +64,7 @@ update_status ModuleRender::Update()
 	
 	//CAMBIAR-HO
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
-		App->renderer->camera.x += speed * SCREEN_SIZE;
+		App->renderer->camera.x += speed;
 
 
 

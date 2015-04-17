@@ -84,13 +84,13 @@ update_status ModulePlayer::Update()
 	Animation* current_animation = &idle;
 	// debug camera movement --------------------------------
 
-	//Divisio de 3
-	float speed = 2;
+	
+	float speed = 3;
 
 	if(App->input->keyboard[SDL_SCANCODE_A] == 1)
 	{
 		//
-		if (App->player->position.x > 0.0 /*&& App->player->position.x < -(App->renderer->camera.x)/ SCREEN_SIZE*/ )
+		if (App->player->position.x > 0.0 && App->player->position.x > -(App->renderer->camera.x)/ SCREEN_SIZE)
 		{
 			current_animation = &forward;
 			position.x -= speed;
@@ -103,7 +103,7 @@ update_status ModulePlayer::Update()
 		if (App->player->position.x < 815.0 && App->player->position.x < ((-(App->renderer->camera.x)) + SCREEN_WIDTH))
 		{
 			current_animation = &forward;
-			position.x += speed / SCREEN_SIZE;
+			position.x += speed;
 		}
 		
 	}
