@@ -20,5 +20,9 @@ public:
 	Animation idle;
 	Animation forward;
 	Animation backward;
+	Animation punch;
+	Animation punch2;
+	Animation kick;
+	bool isOnLeft;
 	p2Point<int> position;
 };

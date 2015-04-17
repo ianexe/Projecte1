@@ -36,6 +36,23 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.frames.PushBack({883, 128, 58, 91});
 	backward.frames.PushBack({974, 129, 57, 89});
 	backward.speed = 0.1f;
+
+	// punch
+	punch.frames.PushBack({ 19, 272, 64, 91 });
+	punch.frames.PushBack({ 108, 272, 92, 91 });
+	punch.speed = 0.1f;
+
+	// punch2
+	punch2.frames.PushBack({ 333, 268, 64, 95 });
+	punch2.frames.PushBack({ 432, 268, 108, 94 });
+	punch2.speed = 0.1f;
+
+	// kick
+	kick.frames.PushBack({ 689, 267, 66, 92 });
+	kick.frames.PushBack({ 777, 265, 114, 94 });
+	kick.speed = 0.1f;
+
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -88,10 +105,30 @@ update_status ModulePlayer::Update()
 		
 	}
 
+	else if (App->input->keyboard[SDL_SCANCODE_Z] == 1)
+	{
+		current_animation = &punch;
+	}
+
+	else if (App->input->keyboard[SDL_SCANCODE_X] == 1)
+	{
+		current_animation = &punch2;
+	}
+
+	else if (App->input->keyboard[SDL_SCANCODE_C] == 1)
+	{
+		current_animation = &kick;
+	}
+
+	if (App->player->position.x < App->player2->position.x)
+		isOnLeft = true;
+	else
+		isOnLeft = false;
+
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	App->renderer->Blit(graphics, position.x, position.y - r.h, &r);
+	App->renderer->Blit(graphics, position.x, position.y - r.h, &r, 1.0f ,isOnLeft);
 
 	return UPDATE_CONTINUE;
 }
