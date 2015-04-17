@@ -43,7 +43,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	punch.speed = 0.1f;
 
 	// punch2
-	punch2.frames.PushBack({ 333, 268, 64, 95 });
+	punch2.frames.PushBack({ 333, 268, 74, 95 });
 	punch2.frames.PushBack({ 432, 268, 108, 94 });
 	punch2.speed = 0.1f;
 
