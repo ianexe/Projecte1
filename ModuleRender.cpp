@@ -6,7 +6,7 @@
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	renderer = NULL;
-	camera.x = 200;
+	camera.x = 0;
 	camera.y = 0;
 	//camera.w = SCREEN_WIDTH;
 	//camera.h = SCREEN_HEIGHT;
@@ -50,28 +50,29 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-	int speed = 6;
+	float speed = 6;
 	char title[250];
-	sprintf_s(title, "Camera X: %i Player1X: %i Player2X: %i", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
 	App->window->SetTitle(title);
 
-	distance = App->player->position.x + App->player2->position.x;
+	//distance = App->player->position.x + App->player2->position.x;
 
 	//SDL_Rect CameraBorders
 
 
-	camera.x = -(distance/2) - 192;
+	//camera.x = -(distance/2);
 	
-
+	//CAMBIAR-HO
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
-		App->renderer->camera.y += speed;
+		App->renderer->camera.x += speed * SCREEN_SIZE;
 
 
 
 
-		if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
-			App->renderer->camera.y -= speed;
-
+	if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1){
+	
+		App->renderer->camera.x -= speed;
+	}
 
 
 
@@ -162,7 +163,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int) (camera.x * speed) + x * SCREEN_SIZE;
+	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
 	rect.y = (int) (camera.y * speed) + y * SCREEN_SIZE;
 
 

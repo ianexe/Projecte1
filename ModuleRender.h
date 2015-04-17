@@ -19,7 +19,7 @@ public:
 	void setScreenBorders();
 public:
 	SDL_Renderer* renderer;
-	p2Point<int> camera;
+	p2Point<float> camera;
 	SDL_Rect displacement;
 	int distance;
 	int centerCameraX;
