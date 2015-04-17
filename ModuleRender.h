@@ -22,6 +22,5 @@ public:
 	p2Point<int> camera;
 	SDL_Rect displacement;
 	int distance;
-	int distance2;
 	int centerCameraX;
 };

@@ -44,8 +44,8 @@ bool ModuleRender::Init()
 update_status ModuleRender::PreUpdate()
 {
 	SDL_RenderClear(renderer);
-	centerCameraX = -camera.x - 192;
 	distance = App->player->position.x + App->player2->position.x;
+	centerCameraX = -(distance / 2) - 192 ;
 	return UPDATE_CONTINUE;
 }
 
@@ -59,7 +59,8 @@ update_status ModuleRender::Update()
 	//SDL_Rect CameraBorders
 
 
-	camera.x = -(distance / 2) - 192;
+	camera.x = -(distance) - 192;
+	
 
 	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
 		App->renderer->camera.y += speed;

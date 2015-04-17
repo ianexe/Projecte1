@@ -88,7 +88,7 @@ update_status ModulePlayer::Update()
 	if(App->input->keyboard[SDL_SCANCODE_A] == 1)
 	{
 		//
-		if (App->player->position.x > 0.0 && App->player->position.x < -(App->renderer->camera.x)* SCREEN_SIZE )
+		if (App->player->position.x > 0.0 /*&& App->player->position.x < -(App->renderer->camera.x)/ SCREEN_SIZE*/ )
 		{
 			current_animation = &forward;
 			position.x -= speed;
