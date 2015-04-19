@@ -69,6 +69,9 @@
     <ClInclude Include="ModulePlayer2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleIntro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

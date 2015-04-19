@@ -208,14 +208,3 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	return ret;
 }
 
-
-//Set Rect
-
-void ModuleRender::setScreenBorders()
-{/*
-	displacement.x = App->renderer->camera.x; // SCREEN_SIZE);
-	displacement.w = SCREEN_WIDTH;
-	displacement.h = SCREEN_HEIGHT;
-	//displacement.y = (int)(camera.y * speed) * SCREEN_SIZE;
-	*/
-}

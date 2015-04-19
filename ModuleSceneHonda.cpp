@@ -37,6 +37,7 @@ bool ModuleSceneHonda::Start()
 	bool ret = true;
 	graphics = App->textures->Load("honda_stage2.png");
 	App->player->Enable();
+	App->player2->Enable();
 	App->audio->PlayMusic("honda.ogg", FADE_TIME);
 
 	return ret;
@@ -49,6 +50,7 @@ bool ModuleSceneHonda::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->player->Disable();
+	App->player2->Disable();
 	return true;
 }
 

@@ -74,6 +74,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
+    <ClInclude Include="ModuleIntro.h" />
     <ClInclude Include="ModulePlayer2.h" />
     <ClInclude Include="ModuleSceneKen.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
