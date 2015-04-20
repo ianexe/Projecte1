@@ -6,6 +6,8 @@ ModuleIntro::ModuleIntro(Application* app, bool start_enabled) : Module(app, sta
 	App->renderer->camera.x = App->renderer->camera.x = 0.0;
 	graphics = NULL;
 
+	backgorund.x = 0;
+	background
 }
 
 

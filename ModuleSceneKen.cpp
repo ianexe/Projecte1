@@ -60,7 +60,7 @@ bool ModuleSceneKen::Start()
 	graphics = App->textures->Load("ken_stage.png");
 	App->player->Enable();
 	App->player2->Enable();
-	//App->audio->PlayMusic("ken.ogg",FADE_TIME);
+	App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
 	return true;
 }
