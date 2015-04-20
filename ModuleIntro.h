@@ -1,14 +1,22 @@
-#ifndef __ModuleIntro_H__
-#define __ModuleIntro_H__
+#pragma once
 #include "Module.h"
+#include "Globals.h"
+
 
 //Scroll
 //Input
 //Select stage?
 //Que el joc torni a la intro quan mors!!!
 //Que et moris!!
-class ModuleIntro{
+class ModuleIntro : public Module
+{
 public:
-	
+	ModuleIntro(Application* app, bool start_enabled = true);
+	~ModuleIntro();
+
+	bool Init();
+
+	update_status Update();
+
+	bool CleanUp();
 };
-#endif //__ModuleIntro_H__S
