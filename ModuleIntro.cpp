@@ -34,7 +34,7 @@ update_status ModuleIntro::PreUpdate()
 
 update_status ModuleIntro::Update()
 { 
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		App->fade->FadeToBlack(App->scene_intro, App->scene_ken, FADE_TIME);
 	}

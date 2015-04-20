@@ -106,10 +106,10 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 1.0f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
 	
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
-	}
+	}*/
 
 	return UPDATE_CONTINUE;
 }

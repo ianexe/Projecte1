@@ -83,7 +83,7 @@ update_status ModulePlayer2::Update()
 	// debug camera movement --------------------------------
 	int speed = 3;
 
-	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 		{
@@ -92,7 +92,7 @@ update_status ModulePlayer2::Update()
 		}
 	}
 
-	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 )
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 			if (position.x < 815.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 80)
 			{

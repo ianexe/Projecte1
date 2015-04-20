@@ -87,7 +87,7 @@ update_status ModulePlayer::Update()
 	
 	float speed = 3;
 
-	if(App->input->keyboard[SDL_SCANCODE_A] == 1)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		//
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
@@ -98,7 +98,7 @@ update_status ModulePlayer::Update()
 		
 	}
 
-	else if(App->input->keyboard[SDL_SCANCODE_D] == 1)
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if (App->player->position.x < 815.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 80)
 		{
@@ -108,17 +108,17 @@ update_status ModulePlayer::Update()
 		
 	}
 
-	else if (App->input->keyboard[SDL_SCANCODE_Z] == 1)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
 	{
 		current_animation = &punch;
 	}
 
-	else if (App->input->keyboard[SDL_SCANCODE_X] == 1)
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_UP)
 	{
 		current_animation = &punch2;
 	}
 
-	else if (App->input->keyboard[SDL_SCANCODE_C] == 1)
+	else if (App->input->GetKey(SDL_SCANCODE_C) == KEY_UP)
 	{
 		current_animation = &kick;
 	}

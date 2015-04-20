@@ -67,7 +67,7 @@ update_status ModuleRender::Update()
 	}
 	
 	//CAMBIAR-HO
-	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
+	/*if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
 		App->renderer->camera.x += speed;
 
 
@@ -76,7 +76,7 @@ update_status ModuleRender::Update()
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1){
 	
 		App->renderer->camera.x -= speed;
-	}
+	}*/
 
 
 
