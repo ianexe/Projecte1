@@ -23,7 +23,7 @@ public:
 		return frames[(int)current_frame];
 	}
 
-	float getFrame()
+	const float getFrame() const
 	{
 		return current_frame;
 	}
