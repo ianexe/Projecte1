@@ -106,19 +106,19 @@ update_status ModulePlayer2::Update()
 
 	//Call Attack if able
 
-	if ((App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN) && (!isAttacking))
 	{
 		doPunch = true;
 		isAttacking = true;
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN) && (!isAttacking))
 	{
 		doPunch2 = true;
 		isAttacking = true;
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN) && (!isAttacking))
 	{
 		doKick = true;
 		isAttacking = true;
