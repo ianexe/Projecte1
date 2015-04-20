@@ -52,7 +52,7 @@ ModuleSceneKen::ModuleSceneKen(Application* app, bool start_enabled) : Module(ap
 ModuleSceneKen::~ModuleSceneKen()
 {}
 
-// Load assets
+//	Load assets
 bool ModuleSceneKen::Start()
 {
 	LOG("Loading ken scene");

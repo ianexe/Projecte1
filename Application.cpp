@@ -9,7 +9,7 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
 	scene_intro = new ModuleIntro(this, true);
-	scene_ken = new ModuleSceneKen(this, true);
+	scene_ken = new ModuleSceneKen(this, false);
 	player = new ModulePlayer(this, false);
 	player2 = new ModulePlayer2(this, false);
 	scene_honda = new ModuleSceneHonda(this, false);
@@ -27,7 +27,7 @@ Application::Application()
 	AddModule(audio);
 
 	// Scenes
-	//AddModule(scene_intro);
+	AddModule(scene_intro);
 	AddModule(scene_ken);
 	AddModule(scene_honda);
 	

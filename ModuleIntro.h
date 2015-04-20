@@ -21,7 +21,8 @@ public:
 	bool CleanUp();
 
 	//Variables
-	SDL_Texture* scroll;
+	SDL_Texture* graphics;
+	SDL_Rect scroll;
 	//Animation punchFace;
 	bool isEnd;
 

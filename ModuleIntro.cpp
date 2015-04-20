@@ -4,22 +4,31 @@
 ModuleIntro::ModuleIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	App->renderer->camera.x = App->renderer->camera.x = 0.0;
-	scroll = NULL;
+	graphics = NULL;
+
+	scroll.x = -48;
+	scroll.y = 0;
+	scroll.w = SCREEN_WIDTH;
+	scroll.h = SCREEN_HEIGHT;
+	isEnd = false;
 }
 
 bool ModuleIntro::Start()
 {
 	LOG("Loading Intro scene");
 
-	scroll = App->textures->Load("intro_def.png");
-	//App->audio->PlayMusic("ken.ogg", FADE_TIME);
-	isEnd = false;
+	graphics = App->textures->Load("intro_end.png");
+
+	//graphics = App->textures->Load("ken_stage.png");
+	App->audio->PlayMusic("honda.ogg", FADE_TIME);
+	
 	return true;
 }
 update_status ModuleIntro::PreUpdate()
 {
-	App->renderer->camera.y -= 3;
-	App->renderer->Blit(scroll, 0, 0, NULL);
+	
+	
+	App->renderer->Blit(graphics, 0, 0,&scroll);
 	return UPDATE_CONTINUE;
 }
 
@@ -35,6 +44,6 @@ update_status ModuleIntro::Update()
 bool ModuleIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-	App->textures->Unload(scroll); 
+	App->textures->Unload(graphics); 
 		return true;
 }
