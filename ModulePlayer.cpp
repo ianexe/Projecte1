@@ -39,12 +39,12 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
-	punch.frames.PushBack({ 108, 272, 92, 91 });
+	punch.frames.PushBack({ 84, 272, 116, 91 });
 	punch.speed = 0.1f;
 
 	// punch2
-	punch2.frames.PushBack({ 333, 268, 74, 95 });
-	punch2.frames.PushBack({ 432, 268, 108, 94 });
+	punch2.frames.PushBack({ 333, 268, 90, 95 });
+	punch2.frames.PushBack({ 422, 268, 118, 94 });
 	punch2.speed = 0.1f;
 
 	// kick
@@ -98,7 +98,7 @@ update_status ModulePlayer::Update()
 		
 	}
 
-	if(App->input->keyboard[SDL_SCANCODE_D] == 1)
+	else if(App->input->keyboard[SDL_SCANCODE_D] == 1)
 	{
 		if (App->player->position.x < 815.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 80)
 		{
@@ -131,7 +131,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	App->renderer->Blit(graphics, position.x, position.y - r.h, &r, 1.0f ,isOnLeft);
+	App->renderer->Blit(graphics, position.x-(r.w/2), position.y - r.h, &r, 1.0f ,isOnLeft);
 
 	return UPDATE_CONTINUE;
 }
