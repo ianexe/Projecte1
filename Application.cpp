@@ -8,12 +8,13 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
-	scene_ken = new ModuleSceneKen(this, true);
+	scene_intro = new ModuleIntro(this, true);
+	scene_ken = new ModuleSceneKen(this, false);
 	player = new ModulePlayer(this, false);
 	player2 = new ModulePlayer2(this, false);
 	scene_honda = new ModuleSceneHonda(this, false);
 	fade = new ModuleFadeToBlack(this);
-
+	
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -26,6 +27,7 @@ Application::Application()
 	AddModule(audio);
 
 	// Scenes
+	AddModule(scene_intro);
 	AddModule(scene_ken);
 	AddModule(scene_honda);
 	
@@ -44,6 +46,7 @@ Application::~Application()
 	delete textures;
 	delete input;
 	delete audio;
+	delete scene_intro;
 	delete scene_honda;
 	delete scene_ken;
 	delete player;
