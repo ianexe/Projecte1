@@ -23,6 +23,16 @@ public:
 	Animation punch;
 	Animation punch2;
 	Animation kick;
+
 	bool isOnLeft;
+
+	float animCount;
+
+	bool isAttacking;
+
+	bool doPunch;
+	bool doPunch2;
+	bool doKick;
+
 	p2Point<float> position;
 };

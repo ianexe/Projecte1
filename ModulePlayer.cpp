@@ -87,9 +87,10 @@ update_status ModulePlayer::Update()
 	
 	float speed = 3;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	//Move if asked and is not attacking
+
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 	{
-		//
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
 			current_animation = &forward;
@@ -98,7 +99,7 @@ update_status ModulePlayer::Update()
 		
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (App->player->position.x < 815.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH - 80)
 		{
@@ -108,20 +109,60 @@ update_status ModulePlayer::Update()
 		
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
+	//Call Attack if able
+
+	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
+	{
+		doPunch = true;
+		isAttacking = true;
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking))
+	{
+		doPunch2 = true;
+		isAttacking = true;
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking))
+	{
+		doKick = true;
+		isAttacking = true;
+	}
+
+	//Does attack if called
+
+	if (doPunch)
 	{
 		current_animation = &punch;
+		if (current_animation->getFrame() >= 1.9f)
+		{
+			doPunch = false;
+			isAttacking = false;
+		}
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_UP)
+
+	if (doPunch2)
 	{
 		current_animation = &punch2;
+		if (current_animation->getFrame() >= 1.9f)
+		{
+			doPunch2 = false;
+			isAttacking = false;
+		}
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_C) == KEY_UP)
+	if (doKick)
 	{
 		current_animation = &kick;
+		if (current_animation->getFrame() >= 1.9f)
+		{
+			doKick = false;
+			isAttacking = false;
+		}
 	}
+
+	//Checks where player is facing
 
 	if (App->player->position.x < App->player2->position.x)
 		isOnLeft = true;
@@ -131,7 +172,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	App->renderer->Blit(graphics, position.x-(r.w/2), position.y - r.h, &r, 1.0f ,isOnLeft);
+	App->renderer->Blit(graphics, position.x-(r.w/2.0f), position.y - r.h, &r, 1.0f ,isOnLeft);
 
 	return UPDATE_CONTINUE;
 }

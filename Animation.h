@@ -22,4 +22,9 @@ public:
 
 		return frames[(int)current_frame];
 	}
+
+	float getFrame()
+	{
+		return current_frame;
+	}
 };
