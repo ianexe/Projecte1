@@ -199,10 +199,14 @@ update_status ModulePlayer::Update()
 		width_col = 50;
 		height_col = 10;
 
+		if (isOnLeft){
+			c_punch2 = App->colision->AddCollider({ position.x +10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, NULL);
+		}
+		else
+		{
+			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, NULL);
 
-		
-		c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
-
+		}
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch2 = false;
@@ -218,10 +222,10 @@ update_status ModulePlayer::Update()
 
 
 		if (isOnLeft){
-			collider->SetPos(position.x + 7, position.y - 92);
+			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 10 }, COLLIDER_KICK_1, NULL);
 		}
 		else{
-			collider->SetPos(position.x - 57, position.y - 92);
+			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 10 }, COLLIDER_KICK_1, NULL);
 		}
 
 		//App->player_col->AddCollider(atac, COLLIDER_KICK_1, NULL);

@@ -166,22 +166,19 @@ update_status ModulePlayer2::Update()
 	if (doPunch)
 	{
 		current_animation = &punch;
-		width_col = 50;
-		height_col = 10;
+		/*width_col = 50;
+		height_col = 10;*/
 
 		if (isOnLeft){
 
-			collider->SetPos(position.x - 20, position.y - 90);
-			App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 90 }, COLLIDER_PUNCH_2);
-
-			App->player2_col->Init_rec(atac, App->player2->position.x + 10, (App->player2->position.y) - 75, width_col, height_col);
+			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 90 }, COLLIDER_PUNCH_2);
 		}
 		else{
 
-			App->player2_col->Init_rec(atac, App->player2->position.x - 60, (App->player2->position.y) - 75, width_col, height_col);
+			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 60, 90 }, COLLIDER_PUNCH_2);
 		}
 
-		App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
+		//App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -199,15 +196,15 @@ update_status ModulePlayer2::Update()
 
 
 		if (isOnLeft){
-
-			App->player2_col->Init_rec(atac, App->player2->position.x + 10, (App->player2->position.y) - 77, width_col, height_col);
+			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
 		}
-		else{
+		else
+		{
+			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
 
-			App->player2_col->Init_rec(atac, App->player2->position.x - 60, (App->player2->position.y) - 77, width_col, height_col);
 		}
 
-		App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
+		//App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -224,15 +221,13 @@ update_status ModulePlayer2::Update()
 
 
 		if (isOnLeft){
-
-			App->player2_col->Init_rec(atac, App->player2->position.x + 7, (App->player2->position.y) - 92, width_col, height_col);
+			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 10 }, COLLIDER_KICK_2, NULL);
 		}
 		else{
-
-			App->player2_col->Init_rec(atac, App->player2->position.x - 57, (App->player2->position.y) - 92, width_col, height_col);
+			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 10 }, COLLIDER_KICK_2, NULL);
 		}
 
-		App->player2_col->AddCollider(atac, COLLIDER_KICK_2, NULL);
+		//App->player2_col->AddCollider(atac, COLLIDER_KICK_2, NULL);
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -253,14 +248,14 @@ update_status ModulePlayer2::Update()
 
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
-	App->player2_col->Update();
+	/*App->player2_col->Update();
 	
 	if (App->player2_col->check_collision == true){
 
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
 		App->player2_col->check_collision = false;
 	}
-
+	*/
 
 
 	return UPDATE_CONTINUE;

@@ -30,9 +30,9 @@ public:
 	SDL_Rect detection;
 
 	Collider* collider;
-	Collider* punch1;
-	Collider* punch2;
-	Collider* kick;
+	Collider* c_punch1;
+	Collider* c_punch2;
+	Collider* c_kick;
 
 
 	int width_col;
