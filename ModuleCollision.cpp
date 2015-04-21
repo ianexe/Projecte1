@@ -123,14 +123,15 @@ update_status ModuleCollision::Update()
 		// Debug ---
 		if(debug)
 			DrawDebug(c1);
-
 		p2List_item<Collider*>* tmp2 = tmp->next; // avoid checking collisions already checked
 		while(tmp2 != NULL)
 		{
+			
 			c2 = tmp2->data;
 
 			if (c1->CheckCollision(c2->rect) == true)
 			{
+				
 				if (matrix[c1->type][c2->type] && c1->callback){
 					c1->callback->OnCollision(c1, c2);
 					check_collision = true;

@@ -147,11 +147,11 @@ update_status ModulePlayer2::Update()
 		isAttacking = true;
 		if (isOnLeft){
 
-			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2);
+			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2, this);
 		}
 		else{
 
-			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2);
+			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2, this);
 		}
 	}
 
@@ -160,11 +160,11 @@ update_status ModulePlayer2::Update()
 		doPunch2 = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
+			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
 		}
 		else
 		{
-			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
+			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
 
 		}
 	}
@@ -174,10 +174,10 @@ update_status ModulePlayer2::Update()
 		doKick = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 30 }, COLLIDER_KICK_2, NULL);
+			c_kick = App->colision->AddCollider({ position.x + 7.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
 		}
 		else{
-			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 30 }, COLLIDER_KICK_2, NULL);
+			c_kick = App->colision->AddCollider({ position.x - 57.0, position.y - 92.0, 50, 50 }, COLLIDER_KICK_2, this);
 		}
 		
 	}
@@ -213,10 +213,7 @@ update_status ModulePlayer2::Update()
 	if (doKick)
 	{
 		current_animation = &kick;
-		width_col = 50;
-		height_col = 30;
-
-
+		
 		
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
@@ -254,5 +251,5 @@ update_status ModulePlayer2::Update()
 
 void ModulePlayer2::OnCollision(Collider* c1, Collider* c2)
 {
-	App->player2->Health -= 50;
+	App->player2->Health--;
 }

@@ -75,6 +75,7 @@ bool ModuleSceneKen::CleanUp()
 	App->textures->Unload(graphics);
 	App->player->Disable();
 	App->player2->Disable();
+	App->colision->Disable();
 	return true;
 }
 

@@ -135,13 +135,17 @@ update_status ModulePlayer::Update()
 	{
 		if (App->player->position.x < 896.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
-			width_col = 35;
-			height_col = 85;
-
+			
 			current_animation = &forward;
 			position.x += speed;
 			
-			collider->SetPos(position.x - 20, position.y - 90);
+			if (isOnLeft){
+				collider->SetPos(position.x - 20, position.y - 90);
+			}
+			else{
+				collider->SetPos(position.x - 20, position.y - 90);
+			}
+			//collider->SetPos(position.x - 20, position.y - 90);
 			//App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
 		}
 	}
@@ -152,12 +156,12 @@ update_status ModulePlayer::Update()
 		isAttacking = true;
 		if (isOnLeft){
 
-			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, NULL);
+			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 			//collider->SetPos(position.x + 10, position.y - 75);
 
 		}
 		else{
-			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, NULL);
+			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 
 	
@@ -168,11 +172,11 @@ update_status ModulePlayer::Update()
 		doPunch2 = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, NULL);
+			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 		else
 		{
-			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, NULL);
+			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 		
 	}
@@ -182,10 +186,10 @@ update_status ModulePlayer::Update()
 		doKick = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, NULL);
+			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
 		else{
-			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 30 }, COLLIDER_KICK_1, NULL);
+			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
 
 		
@@ -268,6 +272,5 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	assert(1 == 1);
-	App->player->Health -= 50;
+	App->player->Health--;
 }
