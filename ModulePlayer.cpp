@@ -40,16 +40,19 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
+	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.speed = 0.1f;
 
 	// punch2
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
 	punch2.frames.PushBack({ 422, 268, 118, 94 });
+	punch2.frames.PushBack({ 333, 268, 90, 95 });
 	punch2.speed = 0.1f;
 
 	// kick
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.frames.PushBack({ 777, 265, 114, 94 });
+	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
 
 
@@ -100,7 +103,7 @@ update_status ModulePlayer::Update()
 
 	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking))
 	{
-		if (App->player->position.x < 815.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+		if (App->player->position.x < 896.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
 			current_animation = &forward;
 			position.x += speed;
@@ -133,7 +136,7 @@ update_status ModulePlayer::Update()
 	if (doPunch)
 	{
 		current_animation = &punch;
-		if (current_animation->getFrame() >= 1.9f)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch = false;
 			isAttacking = false;
@@ -144,7 +147,7 @@ update_status ModulePlayer::Update()
 	if (doPunch2)
 	{
 		current_animation = &punch2;
-		if (current_animation->getFrame() >= 1.9f)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch2 = false;
 			isAttacking = false;
@@ -154,7 +157,7 @@ update_status ModulePlayer::Update()
 	if (doKick)
 	{
 		current_animation = &kick;
-		if (current_animation->getFrame() >= 1.9f)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doKick = false;
 			isAttacking = false;
