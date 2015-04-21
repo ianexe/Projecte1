@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModulePlayer2.h"
-#include "ModuleCollision.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -9,8 +8,6 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 {
 	graphics = NULL;
 
-	width_col = 0;
-	height_col = 0;
 	position.x = 380.0;
 	position.y = 216.0;
 
@@ -85,79 +82,32 @@ bool ModulePlayer2::CleanUp()
 // Update: draw background
 update_status ModulePlayer2::Update()
 {
-	
-	App->player2_col->CleanUp();
-	App->player2_col->PreUpdate();
-	
-	width_col = 35;
-	height_col = 85;
-	
 	Animation* current_animation = &idle;
-
-	if (isOnLeft){
-
-		App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
-	}
-	else{
-
-		App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
-	}
-
-	App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
 	// debug camera movement --------------------------------
-	
-	
-	int speed = 3;
+
+	float speed = 3;
+
+	//Move if asked and is not attacking
 
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 		{
-			width_col = 35;
-			height_col = 85;
-
 			current_animation = &forward;
 			position.x -= speed;
-
-			if (isOnLeft){
-
-				App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
-			}
-			else{
-
-				App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
-			}
-
-			App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
 		}
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && (!isAttacking))
 	{
-		if (position.x < 896.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
-		{
-				width_col = 35;
-				height_col = 85;
-
+			if (position.x < 896.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+			{
 				current_animation = &forward;
 				position.x += speed;
-
-				if (isOnLeft){
-
-					App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
-				}
-				else{
-
-					App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
-				}
-
-				App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
-
 			}
 	}
+
+	//Call Attack if able
 
 	if ((App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN) && (!isAttacking))
 	{
@@ -182,20 +132,6 @@ update_status ModulePlayer2::Update()
 	if (doPunch)
 	{
 		current_animation = &punch;
-		width_col = 50;
-		height_col = 10;
-
-		if (isOnLeft){
-
-			App->player2_col->Init_rec(atac, App->player2->position.x + 10, (App->player2->position.y) - 75, width_col, height_col);
-		}
-		else{
-
-			App->player2_col->Init_rec(atac, App->player2->position.x - 60, (App->player2->position.y) - 75, width_col, height_col);
-		}
-
-		App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
-
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch = false;
@@ -207,21 +143,6 @@ update_status ModulePlayer2::Update()
 	if (doPunch2)
 	{
 		current_animation = &punch2;
-		width_col = 50;
-		height_col = 10;
-
-
-		if (isOnLeft){
-
-			App->player2_col->Init_rec(atac, App->player2->position.x + 10, (App->player2->position.y) - 77, width_col, height_col);
-		}
-		else{
-
-			App->player2_col->Init_rec(atac, App->player2->position.x - 60, (App->player2->position.y) - 77, width_col, height_col);
-		}
-
-		App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
-
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch2 = false;
@@ -232,21 +153,6 @@ update_status ModulePlayer2::Update()
 	if (doKick)
 	{
 		current_animation = &kick;
-		width_col = 50;
-		height_col = 30;
-
-
-		if (isOnLeft){
-
-			App->player2_col->Init_rec(atac, App->player2->position.x + 7, (App->player2->position.y) - 92, width_col, height_col);
-		}
-		else{
-
-			App->player2_col->Init_rec(atac, App->player2->position.x - 57, (App->player2->position.y) - 92, width_col, height_col);
-		}
-
-		App->player2_col->AddCollider(atac, COLLIDER_KICK_2, NULL);
-
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doKick = false;
@@ -265,14 +171,6 @@ update_status ModulePlayer2::Update()
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
-
-	App->player2_col->Update();
-	
-	if (App->player2_col->check_collision == true){
-
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
-		App->player2_col->check_collision = false;
-	}
 
 	return UPDATE_CONTINUE;
 }

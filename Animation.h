@@ -27,5 +27,4 @@ public:
 	{
 		return current_frame;
 	}
-
 };
