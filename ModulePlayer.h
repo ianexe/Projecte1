@@ -17,7 +17,6 @@ public:
 public:
 
 	SDL_Texture* graphics;
-	Collider* collider;
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -26,6 +25,8 @@ public:
 	Animation kick;
 
 	bool isOnLeft;
+
+	float animCount;
 
 	bool isAttacking;
 

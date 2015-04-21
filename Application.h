@@ -15,7 +15,6 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneHonda.h"
 #include "ModuleIntro.h"
-#include "ModuleCollision.h"
 
 class Application
 {
@@ -30,8 +29,7 @@ public:
 	ModulePlayer2* player2;
 	ModuleFadeToBlack* fade;
 	ModuleSceneHonda* scene_honda;
-	ModuleIntro* scene_intro;
-	ModuleCollision* collision;
+	ModuleIntro * scene_intro;
 
 private:
 
