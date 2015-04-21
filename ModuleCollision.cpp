@@ -164,31 +164,31 @@ void ModuleCollision::DrawDebug(Collider* col)
 	switch(col->type)
 	{
 		case COLLIDER_NONE:
-		App->renderer->DrawQuad(col->rect, 255, 255, 255, alpha);
+		App->renderer->DrawQuad(col->rect, 255, 255, 255, alpha, true);
 		break;
 		case COLLIDER_DEFENSE_1:
-		App->renderer->DrawQuad(col->rect, 0, 0, 255, alpha);
+			App->renderer->DrawQuad(col->rect, 0, 0, 255, alpha, true);
 		break;
 		case COLLIDER_DEFENSE_2:
-		App->renderer->DrawQuad(col->rect, 0, 255, 0, alpha);
+			App->renderer->DrawQuad(col->rect, 0, 255, 0, alpha, true);
 		break;
 		case COLLIDER_PUNCH_1:
-		App->renderer->DrawQuad(col->rect, 255, 0, 0, alpha);
+			App->renderer->DrawQuad(col->rect, 255, 0, 0, alpha, true);
 		break;
 		case COLLIDER_PUNCH_2:
-		App->renderer->DrawQuad(col->rect, 255, 255, 0, alpha);
+			App->renderer->DrawQuad(col->rect, 255, 255, 0, alpha, true);
 		break;
 		case COLLIDER_KICK_1:
-		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
+			App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha, true);
 		break;
 		case COLLIDER_KICK_2:
-		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
+			App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha, true);
 		break;
 		case COLLIDER_NEUTRAL_1:
-		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
+			App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha, true);
 		break;
 		case COLLIDER_NEUTRAL_2:
-		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
+			App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha, true);
 		break;
 	}
 	
