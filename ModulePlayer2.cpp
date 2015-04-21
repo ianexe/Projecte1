@@ -72,9 +72,9 @@ bool ModulePlayer2::Start()
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
-	c_punch1 = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_PUNCH_1);
-	c_punch2 = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_NEUTRAL_2);
-	c_kick = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_NEUTRAL_2);
+	c_punch1 = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_PUNCH_2);
+	c_punch2 = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_PUNCH_1);
+	c_kick = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_KICK_2);
 	return true;
 }
 

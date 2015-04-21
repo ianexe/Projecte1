@@ -19,8 +19,7 @@ bool ModuleIntro::Start()
 
 	graphics = App->textures->Load("intro_end.png");
 
-	//graphics = App->textures->Load("ken_stage.png");
-	App->audio->PlayMusic("opening.ogg", FADE_TIME);
+	//App->audio->PlayMusic("opening.ogg", FADE_TIME);
 	
 	return true;
 }
