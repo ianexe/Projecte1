@@ -11,6 +11,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 
 	width_col = 0;
 	height_col = 0;
+	
 	position.x = 380.0;
 	position.y = 216.0;
 
@@ -57,6 +58,8 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
+	Health = 100;
+	
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -68,6 +71,7 @@ bool ModulePlayer2::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
+	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
 
 	return true;
 }
@@ -86,27 +90,18 @@ bool ModulePlayer2::CleanUp()
 update_status ModulePlayer2::Update()
 {
 	
-	App->player2_col->CleanUp();
-	App->player2_col->PreUpdate();
-	
-	width_col = 35;
+/*	width_col = 35;
 	height_col = 85;
-	
+	*/
 	Animation* current_animation = &idle;
 
 	if (isOnLeft){
-
-		App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
+		collider->SetPos(position.x - 20, position.y - 90);
 	}
 	else{
-
-		App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
+		collider->SetPos(position.x - 20, position.y - 90);
 	}
-
-	App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
 	// debug camera movement --------------------------------
-	
 	
 	int speed = 3;
 
@@ -121,16 +116,11 @@ update_status ModulePlayer2::Update()
 			position.x -= speed;
 
 			if (isOnLeft){
-
-				App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
+				collider->SetPos(position.x - 20, position.y - 90);
 			}
 			else{
-
-				App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
+				collider->SetPos(position.x - 20, position.y - 90);
 			}
-
-			App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
 		}
 	}
 
@@ -138,23 +128,17 @@ update_status ModulePlayer2::Update()
 	{
 		if (position.x < 896.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
-				width_col = 35;
-				height_col = 85;
-
 				current_animation = &forward;
 				position.x += speed;
 
 				if (isOnLeft){
-
-					App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
+					collider->SetPos(position.x - 20, position.y - 90);
 				}
 				else{
-
-					App->player2_col->Init_rec(detection, App->player2->position.x - 20, (App->player2->position.y) - 90, width_col, height_col);
+					collider->SetPos(position.x - 20, position.y - 90);
 				}
 
-				App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
+				//App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
 
 			}
 	}
@@ -186,6 +170,9 @@ update_status ModulePlayer2::Update()
 		height_col = 10;
 
 		if (isOnLeft){
+
+			collider->SetPos(position.x - 20, position.y - 90);
+			App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 90 }, COLLIDER_PUNCH_2);
 
 			App->player2_col->Init_rec(atac, App->player2->position.x + 10, (App->player2->position.y) - 75, width_col, height_col);
 		}
@@ -274,5 +261,12 @@ update_status ModulePlayer2::Update()
 		App->player2_col->check_collision = false;
 	}
 
+
+
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer2::OnCollision(Collider* c1, Collider* c2)
+{
+	App->player2->Health -= 50;
 }

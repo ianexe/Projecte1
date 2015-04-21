@@ -15,6 +15,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void OnCollision(Collider* c1, Collider* c2);
 public:
 
 	SDL_Texture* graphics;
@@ -28,6 +29,12 @@ public:
 	SDL_Rect defense;
 	SDL_Rect detection;
 
+	Collider* collider;
+	Collider* punch1;
+	Collider* punch2;
+	Collider* kick;
+
+
 	int width_col;
 	int height_col;
 
@@ -40,4 +47,5 @@ public:
 	bool doKick;
 
 	p2Point<float> position;
+	unsigned int Health;
 };

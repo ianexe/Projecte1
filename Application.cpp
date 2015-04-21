@@ -13,8 +13,7 @@ Application::Application()
 	player2 = new ModulePlayer2(this, false);
 	scene_honda = new ModuleSceneHonda(this, false);
 	fade = new ModuleFadeToBlack(this);
-	player_col = new ModuleCollision(this, false);
-	player2_col = new ModuleCollision(this, false);
+	colision = new ModuleCollision(this);
 	scene_intro = new ModuleIntro(this, true);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -26,12 +25,13 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
-
+	AddModule(colision);
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(scene_ken);
 	AddModule(scene_honda);
 	
+
 	// Characters
 	AddModule(player);
 	AddModule(player2);
@@ -39,8 +39,8 @@ Application::Application()
 	// Misc
 	AddModule(fade); // let this after all drawing
 
-	AddModule(player_col);
-	AddModule(player2_col);
+	
+	
 }
 
 Application::~Application()
@@ -56,8 +56,7 @@ Application::~Application()
 	delete player;
 	delete player2;
 	delete fade;
-	delete player_col;
-	delete player2_col;
+	delete colision;
 }
 
 bool Application::Init()
@@ -117,7 +116,6 @@ update_status Application::Update()
 			ret = item->data->PostUpdate();
 		item = item->next;
 	}
-
 	return ret;
 }
 

@@ -9,8 +9,6 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 {
 	graphics = NULL;
 
-	width_col = 0;
-	height_col = 0;
 	position.x = 80;
 	position.y = 216;
 
@@ -58,7 +56,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
 
-
+	Health = 100;
 
 }
 
@@ -71,6 +69,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
+	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 
 	return true;
 }
@@ -88,24 +87,27 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	App->player_col->CleanUp();
-	App->player_col->PreUpdate();
+	//App->player_col->CleanUp();
+	//App->player_col->PreUpdate();
 
-	width_col = 35;
-	height_col = 85;
+	//width_col = 35;
+	//height_col = 85;
 
 	Animation* current_animation = &idle;
 
-	if (isOnLeft){
+	/*if (isOnLeft){
 
+		
 		App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
 	}
 	else{
 
 		App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-	}
-
-	App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
+	}*/
+	//App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
+	
+	collider->SetPos(position.x - 20, position.y - 90);
+	
 	
 	
 	// debug camera movement --------------------------------
@@ -124,22 +126,9 @@ update_status ModulePlayer::Update()
 			current_animation = &forward;
 			position.x -= speed;
 
-			if (isOnLeft){
-
-				App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-			}
-			else{
-
-				App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-			}
-
-			App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
-			
-		
+			collider->SetPos(position.x - 20, position.y - 90);
 
 		}
-		
-	
 	}
 
 	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking))
@@ -152,21 +141,9 @@ update_status ModulePlayer::Update()
 			current_animation = &forward;
 			position.x += speed;
 			
-			if (isOnLeft){
-
-				App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-			}
-			else{
-
-				App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-			}
-
-			App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
-
-
-
+			collider->SetPos(position.x - 20, position.y - 90);
+			//App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
 		}
-		
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
@@ -200,14 +177,13 @@ update_status ModulePlayer::Update()
 
 		if (isOnLeft){
 
-			App->player_col->Init_rec(atac, App->player->position.x + 10, (App->player->position.y) - 75, width_col, height_col);
+			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50,10}, COLLIDER_PUNCH_1, NULL); 
+			//collider->SetPos(position.x + 10, position.y - 75);
+
 		}
 		else{
-
-			App->player_col->Init_rec(atac, App->player->position.x - 60, (App->player->position.y) - 75, width_col, height_col);
+			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, NULL);
 		}
-
-		App->player_col->AddCollider(atac, COLLIDER_PUNCH_1, NULL);
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -224,16 +200,8 @@ update_status ModulePlayer::Update()
 		height_col = 10;
 
 
-		if (isOnLeft){
-
-			App->player_col->Init_rec(atac, App->player->position.x + 10, (App->player->position.y) - 77, width_col, height_col);
-		}
-		else{
-
-			App->player_col->Init_rec(atac, App->player->position.x - 60, (App->player->position.y) - 77, width_col, height_col);
-		}
-
-		App->player_col->AddCollider(atac, COLLIDER_PUNCH_1, NULL);
+		
+		c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -250,15 +218,13 @@ update_status ModulePlayer::Update()
 
 
 		if (isOnLeft){
-
-			App->player_col->Init_rec(atac, App->player->position.x + 7, (App->player->position.y) - 92, width_col, height_col);
+			collider->SetPos(position.x + 7, position.y - 92);
 		}
 		else{
-
-			App->player_col->Init_rec(atac, App->player->position.x - 57, (App->player->position.y) - 92, width_col, height_col);
+			collider->SetPos(position.x - 57, position.y - 92);
 		}
 
-		App->player_col->AddCollider(atac, COLLIDER_KICK_1, NULL);
+		//App->player_col->AddCollider(atac, COLLIDER_KICK_1, NULL);
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -279,14 +245,22 @@ update_status ModulePlayer::Update()
 
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
-	App->player_col->Update();
+
+	//Comprovacio mala
+	/*
+	//App->player_col->Update();
 
 	if (App->player_col->check_collision == true){
 
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
 		App->player_col->check_collision = false;
-	}
+	}*/
 
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+{
+	App->player->Health -= 50;
 }

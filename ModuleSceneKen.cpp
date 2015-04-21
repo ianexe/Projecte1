@@ -107,12 +107,17 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
 	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 0.92f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
-	App->renderer->setScreenBorders();
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
 	}
+
+	if (App->player->Health <= 0 || App->player2->Health <= 0)
+	{
+		App->fade->FadeToBlack(App->scene_ken, App->scene_intro, FADE_TIME);
+	}
+
 
 	return UPDATE_CONTINUE;
 }

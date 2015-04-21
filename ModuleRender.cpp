@@ -52,7 +52,9 @@ update_status ModuleRender::Update()
 {
 	float speed = 9;
 	char title[250];
-	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	//sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	sprintf_s(title, "Health 1: %i Health2 %i BoolColi %i BoolColi2 %i", App->player->Health, App->player2->Health, App->colision->check_collision, App->colision->check_collision);
+
 	App->window->SetTitle(title);
 
 	distance = App->player->position.x + App->player2->position.x;
@@ -70,74 +72,19 @@ update_status ModuleRender::Update()
 	if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
 		App->renderer->camera.x += speed;
 
-
-
-
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == 1){
 	
 		App->renderer->camera.x -= speed;
 	}
 
 
-
-
-		/*
-		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 || App->input->keyboard[SDL_SCANCODE_D] == 1)
-		{
-			
-				App->renderer->camera.x -= speed;
-			
-		}
-
-		if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 || App->input->keyboard[SDL_SCANCODE_A] == 1)
-		{
-			
-				App->renderer->camera.x += speed;
-				
-		}
-
-		*/
 		if (App->renderer->camera.x >= 0)
 		{
 			App->renderer->camera.x = 0;
 		}
 
 		OpCamera.x = (-camera.x / 3);
-		//TODO POSAR UN SCENE LEN I ACABAR LA CAMERA
-				//if (App->renderer->camera.x > App->scene_honda)
-	/*	if (distance > 10)
-		{
-			App->renderer->camera.x = 0.0;
-		}*/
-
-	/*	if (App->renderer->centerCameraX < distance || -App->renderer->camera.x < distance2)
-		{
-			App->renderer->camera.x -= speed;
-		}
-
-		if (App->renderer->camera.x > distance / 2)
-		{
-			App->renderer->camera.x += speed;
-		}
-		*/
-		/*if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1 )
-		{
-			
-			
-			//assert(App->renderer->camera.x > -(App->player->position.x));
-			App->renderer->camera.x += speed;
-
-		}
-
 	
-		if (App->renderer->camera.x >= -1400)
-		{
-			//if ((App->player->position.x) + 500 < App->renderer->displacement.x - SCREEN_WIDTH){
-			//if (-(App->player->position.x) < App->renderer->camera.x + 100){
-			App->renderer->camera.x -= speed;
-			//}
-		}
-	//}*/
 	
 	return UPDATE_CONTINUE;
 }
@@ -234,13 +181,3 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 }
 
 
-//Set Rect
-
-void ModuleRender::setScreenBorders()
-{/*
-	displacement.x = App->renderer->camera.x; // SCREEN_SIZE);
-	displacement.w = SCREEN_WIDTH;
-	displacement.h = SCREEN_HEIGHT;
-	//displacement.y = (int)(camera.y * speed) * SCREEN_SIZE;
-	*/
-}
