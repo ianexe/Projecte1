@@ -58,9 +58,9 @@ bool ModuleSceneKen::Start()
 	LOG("Loading ken scene");
 	
 	graphics = App->textures->Load("ken_stage.png");
+	App->colision->Enable();
 	App->player->Enable();
 	App->player2->Enable();
-	
 	
 	//App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
@@ -118,6 +118,6 @@ update_status ModuleSceneKen::Update()
 		App->fade->FadeToBlack(App->scene_ken, App->scene_intro, FADE_TIME);
 	}
 
-
+	
 	return UPDATE_CONTINUE;
 }

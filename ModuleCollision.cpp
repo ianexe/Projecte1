@@ -152,7 +152,7 @@ update_status ModuleCollision::Update()
 
 
 	// Debug ---
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == 1)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == 1)
 		debug = !debug;
 
 	return UPDATE_CONTINUE;

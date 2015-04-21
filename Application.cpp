@@ -15,6 +15,8 @@ Application::Application()
 	fade = new ModuleFadeToBlack(this);
 	colision = new ModuleCollision(this);
 	scene_intro = new ModuleIntro(this, true);
+
+
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -25,13 +27,13 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
-	AddModule(colision);
+	
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(scene_ken);
 	AddModule(scene_honda);
 	
-
+	AddModule(colision);
 	// Characters
 	AddModule(player);
 	AddModule(player2);
@@ -50,13 +52,14 @@ Application::~Application()
 	delete textures;
 	delete input;
 	delete audio;
+	delete colision;
 	delete scene_intro;
 	delete scene_honda;
 	delete scene_ken;
 	delete player;
 	delete player2;
 	delete fade;
-	delete colision;
+	
 }
 
 bool Application::Init()
