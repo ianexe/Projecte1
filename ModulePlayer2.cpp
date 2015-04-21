@@ -72,9 +72,6 @@ bool ModulePlayer2::Start()
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
-	c_punch1 = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_PUNCH_2);
-	c_punch2 = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_PUNCH_1);
-	c_kick = App->colision->AddCollider({ position.x, position.y, 0, 0 }, COLLIDER_KICK_2);
 	return true;
 }
 
@@ -84,7 +81,6 @@ bool ModulePlayer2::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
-
 	return true;
 }
 
@@ -149,54 +145,20 @@ update_status ModulePlayer2::Update()
 	{
 		doPunch = true;
 		isAttacking = true;
+		if (isOnLeft){
+
+			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2);
+		}
+		else{
+
+			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2);
+		}
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN) && (!isAttacking))
 	{
 		doPunch2 = true;
 		isAttacking = true;
-	}
-
-	if ((App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN) && (!isAttacking))
-	{
-		doKick = true;
-		isAttacking = true;
-	}
-
-	//Does attack if called
-
-	if (doPunch)
-	{
-		current_animation = &punch;
-		/*width_col = 50;
-		height_col = 10;*/
-
-		if (isOnLeft){
-
-			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 90 }, COLLIDER_PUNCH_2);
-		}
-		else{
-
-			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 60, 90 }, COLLIDER_PUNCH_2);
-		}
-
-		//App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
-
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-		{
-			doPunch = false;
-			isAttacking = false;
-		}
-	}
-
-
-	if (doPunch2)
-	{
-		current_animation = &punch2;
-		width_col = 50;
-		height_col = 10;
-
-
 		if (isOnLeft){
 			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
 		}
@@ -205,13 +167,46 @@ update_status ModulePlayer2::Update()
 			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, NULL);
 
 		}
+	}
 
-		//App->player2_col->AddCollider(atac, COLLIDER_PUNCH_2, NULL);
+	if ((App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN) && (!isAttacking))
+	{
+		doKick = true;
+		isAttacking = true;
+		if (isOnLeft){
+			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 30 }, COLLIDER_KICK_2, NULL);
+		}
+		else{
+			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 30 }, COLLIDER_KICK_2, NULL);
+		}
+		
+	}
 
+	//Does attack if called
+
+	if (doPunch)
+	{
+		current_animation = &punch;
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			doPunch = false;
+			isAttacking = false;
+			c_punch1->to_delete = true;
+
+		}
+	}
+
+
+	if (doPunch2)
+	{
+		current_animation = &punch2;
+		
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch2 = false;
 			isAttacking = false;
+			c_punch2->to_delete = true;
 		}
 	}
 
@@ -222,19 +217,13 @@ update_status ModulePlayer2::Update()
 		height_col = 30;
 
 
-		if (isOnLeft){
-			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 10 }, COLLIDER_KICK_2, NULL);
-		}
-		else{
-			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 10 }, COLLIDER_KICK_2, NULL);
-		}
-
-		//App->player2_col->AddCollider(atac, COLLIDER_KICK_2, NULL);
+		
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doKick = false;
 			isAttacking = false;
+			c_kick->to_delete = true;
 		}
 	}
 

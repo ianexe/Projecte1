@@ -182,10 +182,10 @@ update_status ModulePlayer::Update()
 		doKick = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 10 }, COLLIDER_KICK_1, NULL);
+			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, NULL);
 		}
 		else{
-			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 10 }, COLLIDER_KICK_1, NULL);
+			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 30 }, COLLIDER_KICK_1, NULL);
 		}
 
 		
@@ -263,11 +263,11 @@ update_status ModulePlayer::Update()
 		App->player_col->check_collision = false;
 	}*/
 
-
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
+	assert(1 == 1);
 	App->player->Health -= 50;
 }
