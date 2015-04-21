@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "ModuleCollision.h"
 
 class ModulePlayer2 : public Module
 {
@@ -23,10 +24,14 @@ public:
 	Animation punch;
 	Animation punch2;
 	Animation kick;
+	SDL_Rect atac;
+	SDL_Rect defense;
+	SDL_Rect detection;
+
+	int width_col;
+	int height_col;
 
 	bool isOnLeft;
-
-	float animCount;
 
 	bool isAttacking;
 

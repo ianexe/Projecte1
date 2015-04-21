@@ -8,13 +8,14 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
-	scene_intro = new ModuleIntro(this, true);
-	scene_ken = new ModuleSceneKen(this, false);
+	scene_ken = new ModuleSceneKen(this, true);
 	player = new ModulePlayer(this, false);
 	player2 = new ModulePlayer2(this, false);
 	scene_honda = new ModuleSceneHonda(this, false);
 	fade = new ModuleFadeToBlack(this);
-	
+	player_col = new ModuleCollision(this, false);
+	player2_col = new ModuleCollision(this, false);
+
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -27,7 +28,6 @@ Application::Application()
 	AddModule(audio);
 
 	// Scenes
-	AddModule(scene_intro);
 	AddModule(scene_ken);
 	AddModule(scene_honda);
 	
@@ -37,6 +37,9 @@ Application::Application()
 
 	// Misc
 	AddModule(fade); // let this after all drawing
+
+	AddModule(player_col);
+	AddModule(player2_col);
 }
 
 Application::~Application()
@@ -46,12 +49,13 @@ Application::~Application()
 	delete textures;
 	delete input;
 	delete audio;
-	delete scene_intro;
 	delete scene_honda;
 	delete scene_ken;
 	delete player;
 	delete player2;
 	delete fade;
+	delete player_col;
+	delete player2_col;
 }
 
 bool Application::Init()

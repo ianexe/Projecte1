@@ -1,6 +1,7 @@
 #pragma once
 
 class Application;
+struct Collider;
 
 class Module
 {

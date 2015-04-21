@@ -2,7 +2,7 @@
 #define __ModuleCollision_H__
 
 #include "Module.h"
-#include "List.h"
+#include "p2List.h"
 
 enum COLLIDER_TYPE
 {
