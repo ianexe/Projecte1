@@ -52,7 +52,7 @@ ModuleSceneKen::ModuleSceneKen(Application* app, bool start_enabled) : Module(ap
 ModuleSceneKen::~ModuleSceneKen()
 {}
 
-//	Load assets
+// Load assets
 bool ModuleSceneKen::Start()
 {
 	LOG("Loading ken scene");
@@ -60,7 +60,9 @@ bool ModuleSceneKen::Start()
 	graphics = App->textures->Load("ken_stage.png");
 	App->player->Enable();
 	App->player2->Enable();
-	App->audio->PlayMusic("ken.ogg",FADE_TIME);
+	
+	
+	//App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
 	return true;
 }
@@ -101,15 +103,16 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 0, 0, &background, 0.75f); // sea and sky
 	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
 
-	App->renderer->Blit(graphics, 0, foreground_pos, &foreground, 1.0f);
-	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 1.0f); // girl animation
-	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 1.0f); //Hat guy animation
+	App->renderer->Blit(graphics, 0, foreground_pos, &foreground, 0.92f);
+	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
+	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 0.92f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
+	App->renderer->setScreenBorders();
 	
-	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
-	}*/
+	}
 
 	return UPDATE_CONTINUE;
 }

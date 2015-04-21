@@ -37,7 +37,6 @@ bool ModuleSceneHonda::Start()
 	bool ret = true;
 	graphics = App->textures->Load("honda_stage2.png");
 	App->player->Enable();
-	App->player2->Enable();
 	App->audio->PlayMusic("honda.ogg", FADE_TIME);
 
 	return ret;
@@ -50,7 +49,6 @@ bool ModuleSceneHonda::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->player->Disable();
-	App->player2->Disable();
 	return true;
 }
 
@@ -65,7 +63,7 @@ update_status ModuleSceneHonda::Update()
 	App->renderer->Blit(graphics, 305, 136, &(water.GetCurrentFrame())); // water animation
 	App->renderer->Blit(graphics, 0, -16, &roof, 0.75f);
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{
 		App->fade->FadeToBlack(App->scene_honda, App->scene_ken, FADE_TIME);
 	}
