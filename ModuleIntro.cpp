@@ -3,11 +3,9 @@
 #include "ModuleIntro.h"
 ModuleIntro::ModuleIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	App->renderer->camera.x = App->renderer->camera.x = 0.0;
-	graphics = NULL;
-
 	scroll.x = -48;
 	scroll.y = 0;
+	graphics = NULL;
 	scroll.w = SCREEN_WIDTH;
 	scroll.h = SCREEN_HEIGHT;
 	isEnd = false;
@@ -16,10 +14,11 @@ ModuleIntro::ModuleIntro(Application* app, bool start_enabled) : Module(app, sta
 bool ModuleIntro::Start()
 {
 	LOG("Loading Intro scene");
-
+	
+	
 	graphics = App->textures->Load("intro_end.png");
 
-	//App->audio->PlayMusic("opening.ogg", FADE_TIME);
+	App->audio->PlayMusic("opening.ogg", FADE_TIME);
 	
 	return true;
 }

@@ -62,7 +62,7 @@ bool ModuleSceneKen::Start()
 	App->player->Enable();
 	App->player2->Enable();
 	
-	//App->audio->PlayMusic("ken.ogg",FADE_TIME);
+	App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
 	return true;
 }
@@ -111,7 +111,7 @@ update_status ModuleSceneKen::Update()
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
+		//App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
 	}
 
 	if (App->player->Health <= 0 || App->player2->Health <= 0)

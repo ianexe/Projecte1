@@ -56,7 +56,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
 
-	Health = 100;
+	
 
 }
 
@@ -67,7 +67,9 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-
+	Health = 100;
+	position.x = 80;
+	position.y = 216;
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 
@@ -80,7 +82,8 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
-
+	position.x = 80;
+	position.y = 216;
 	return true;
 }
 
@@ -106,7 +109,7 @@ update_status ModulePlayer::Update()
 	}*/
 	//App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
 	
-	collider->SetPos(position.x - 20, position.y - 90);
+	collider->SetPos(position.x - 30, position.y - 90);
 	
 	
 	
@@ -126,7 +129,7 @@ update_status ModulePlayer::Update()
 			current_animation = &forward;
 			position.x -= speed;
 
-			collider->SetPos(position.x - 20, position.y - 90);
+			collider->SetPos(position.x - 30, position.y - 90);
 
 		}
 	}
@@ -139,14 +142,9 @@ update_status ModulePlayer::Update()
 			current_animation = &forward;
 			position.x += speed;
 			
-			if (isOnLeft){
-				collider->SetPos(position.x - 20, position.y - 90);
-			}
-			else{
-				collider->SetPos(position.x - 20, position.y - 90);
-			}
-			//collider->SetPos(position.x - 20, position.y - 90);
-			//App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
+		
+			collider->SetPos(position.x - 30, position.y - 90);
+			
 		}
 	}
 

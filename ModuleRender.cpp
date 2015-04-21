@@ -52,8 +52,8 @@ update_status ModuleRender::Update()
 {
 	float speed = 9;
 	char title[250];
-	//sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
-	sprintf_s(title, "Health 1: %i Health2 %i BoolColi %i", App->player->Health, App->player2->Health, App->colision->check_collision);
+	sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	//sprintf_s(title, "Health 1: %i Health2 %i BoolColi %i", App->player->Health, App->player2->Health, App->colision->check_collision);
 	App->window->SetTitle(title);
 
 	distance = App->player->position.x + App->player2->position.x;

@@ -9,12 +9,8 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 {
 	graphics = NULL;
 
-	width_col = 0;
-	height_col = 0;
-	
 	position.x = 380.0;
 	position.y = 216.0;
-
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -58,7 +54,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
-	Health = 100;
+
 	
 }
 
@@ -69,7 +65,9 @@ ModulePlayer2::~ModulePlayer2()
 bool ModulePlayer2::Start()
 {
 	LOG("Loading player");
-
+	Health = 100;
+	position.x = 380.0;
+	position.y = 216.0;
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
 	return true;
@@ -81,6 +79,8 @@ bool ModulePlayer2::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
+	position.x = 380.0;
+	position.y = 216.0;
 	return true;
 }
 
