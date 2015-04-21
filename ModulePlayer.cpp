@@ -9,9 +9,6 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	graphics = NULL;
 	collider = NULL;
 
-	position.x = 80;
-	position.y = 216;
-
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({7, 14, 60, 90});
 	idle.frames.PushBack({95, 15, 60, 89});
@@ -67,7 +64,10 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 
-	collider = App->collision->AddCollider({ 0, 50, 100, 100 }, COLLIDER_PLAYER1_BODY);
+	position.x = 80;
+	position.y = 216;
+
+	collider = App->collision->AddCollider({ position.x-30, position.y-90, 60, 90 }, COLLIDER_PLAYER1_BODY);
 
 	return true;
 }
@@ -173,6 +173,8 @@ update_status ModulePlayer::Update()
 		isOnLeft = false;
 
 	// Draw everything --------------------------------------
+	collider->SetPos(position.x-30, position.y-90);
+
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
 	App->renderer->Blit(graphics, position.x-(r.w/2.0f), position.y - r.h, &r, 1.0f ,isOnLeft);

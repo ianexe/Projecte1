@@ -62,7 +62,6 @@ bool ModuleSceneKen::Start()
 	App->player->Enable();
 	App->player2->Enable();
 	App->audio->PlayMusic("ken.ogg",FADE_TIME);
-	App->collision->AddCollider({ 0, 500, 300, 50 }, COLLIDER_PLAYER1_PUNCH2);
 	
 	return true;
 }
@@ -75,6 +74,7 @@ bool ModuleSceneKen::CleanUp()
 	App->textures->Unload(graphics);
 	App->player->Disable();
 	App->player2->Disable();
+	App->collision->Disable();
 	return true;
 }
 

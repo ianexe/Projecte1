@@ -17,6 +17,7 @@ public:
 public:
 
 	SDL_Texture* graphics;
+	Collider* collider;
 	Animation idle;
 	Animation forward;
 	Animation backward;
