@@ -35,9 +35,6 @@ public:
 	Collider* c_kick;
 
 	//Variables
-	int width_col;
-	int height_col;
-
 	bool isOnLeft;
 
 	bool isAttacking;

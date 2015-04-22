@@ -7,10 +7,7 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 {
 	renderer = NULL;
 	camera.x = 0;
-	camera.y = 0;
-	//camera.w = SCREEN_WIDTH;
-	//camera.h = SCREEN_HEIGHT;
-	
+	camera.y = 0;	
 }
 
 // Destructor
@@ -52,8 +49,10 @@ update_status ModuleRender::Update()
 {
 	float speed = 9;
 	char title[250];
+
+	//sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
 	sprintf_s(title, "Player1 Health: %i Player2 Health: %i", (App->player->Health), (App->player2->Health));
-	//sprintf_s(title, "Health 1: %i Health2 %i BoolColi %i", App->player->Health, App->player2->Health, App->colision->check_collision);
+
 	App->window->SetTitle(title);
 
 	distance = App->player->position.x + App->player2->position.x;
@@ -61,6 +60,7 @@ update_status ModuleRender::Update()
 	//SDL_Rect CameraBorders
 
 	
+
 		camera.x = (-(distance / 2 - 192) * 3);
 	if (camera.x <= -1513){
 	
@@ -68,13 +68,13 @@ update_status ModuleRender::Update()
 	}
 	
 	//CAMBIAR-HO
-	if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
+	/*if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
 		App->renderer->camera.x += speed;
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == 1){
 	
 		App->renderer->camera.x -= speed;
-	}
+	}*/
 
 
 		if (App->renderer->camera.x >= 0)

@@ -11,7 +11,6 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	position.x = 80;
 	position.y = 216;
-
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -68,8 +67,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	Health = 100;
-	position.x = 80;
-	position.y = 216;
+	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 
@@ -90,25 +88,9 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	//App->player_col->CleanUp();
-	//App->player_col->PreUpdate();
-
-	//width_col = 35;
-	//height_col = 85;
-
+	
 	Animation* current_animation = &idle;
 
-	/*if (isOnLeft){
-
-		
-		App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-	}
-	else{
-
-		App->player_col->Init_rec(detection, App->player->position.x - 20, (App->player->position.y) - 90, width_col, height_col);
-	}*/
-	//App->player_col->AddCollider(detection, COLLIDER_NEUTRAL_1, NULL);
-	
 	collider->SetPos(position.x - 30, position.y - 90);
 	
 	
@@ -123,8 +105,7 @@ update_status ModulePlayer::Update()
 	{
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
-			width_col = 35;
-			height_col = 85;
+			
 
 			current_animation = &forward;
 			position.x -= speed;
@@ -198,9 +179,7 @@ update_status ModulePlayer::Update()
 	if (doPunch)
 	{
 		current_animation = &punch;
-		width_col = 50;
-		height_col = 10;
-
+		
 		
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -214,9 +193,7 @@ update_status ModulePlayer::Update()
 	if (doPunch2)
 	{
 		current_animation = &punch2;
-		width_col = 50;
-		height_col = 10;
-
+		
 		
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -229,10 +206,7 @@ update_status ModulePlayer::Update()
 	if (doKick)
 	{
 		current_animation = &kick;
-		width_col = 50;
-		height_col = 30;
-
-		//App->player_col->AddCollider(atac, COLLIDER_KICK_1, NULL);
+		
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -255,20 +229,10 @@ update_status ModulePlayer::Update()
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
 
-	//Comprovacio mala
-	/*
-	//App->player_col->Update();
-
-	if (App->player_col->check_collision == true){
-
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
-		App->player_col->check_collision = false;
-	}*/
-
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	App->player->Health--;
+	App->player2->Health--;
 }
