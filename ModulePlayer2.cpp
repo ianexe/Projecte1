@@ -66,8 +66,7 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player");
 	Health = 100;
-	position.x = 380.0;
-	position.y = 216.0;
+	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
 	return true;
@@ -107,8 +106,7 @@ update_status ModulePlayer2::Update()
 	{
 		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 		{
-			width_col = 35;
-			height_col = 85;
+			
 
 			current_animation = &forward;
 			position.x -= speed;
@@ -236,14 +234,6 @@ update_status ModulePlayer2::Update()
 
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
-	/*App->player2_col->Update();
-	
-	if (App->player2_col->check_collision == true){
-
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
-		App->player2_col->check_collision = false;
-	}
-	*/
 
 
 	return UPDATE_CONTINUE;
@@ -251,5 +241,5 @@ update_status ModulePlayer2::Update()
 
 void ModulePlayer2::OnCollision(Collider* c1, Collider* c2)
 {
-	App->player2->Health--;
+	App->player->Health--;
 }

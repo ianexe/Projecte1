@@ -7,10 +7,7 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 {
 	renderer = NULL;
 	camera.x = 0;
-	camera.y = 0;
-	//camera.w = SCREEN_WIDTH;
-	//camera.h = SCREEN_HEIGHT;
-	
+	camera.y = 0;	
 }
 
 // Destructor
@@ -61,6 +58,7 @@ update_status ModuleRender::Update()
 	//SDL_Rect CameraBorders
 
 	
+
 		camera.x = (-(distance / 2 - 192) * 3);
 	if (camera.x <= -1513){
 	
@@ -68,13 +66,13 @@ update_status ModuleRender::Update()
 	}
 	
 	//CAMBIAR-HO
-	if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
+	/*if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
 		App->renderer->camera.x += speed;
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == 1){
 	
 		App->renderer->camera.x -= speed;
-	}
+	}*/
 
 
 		if (App->renderer->camera.x >= 0)

@@ -34,10 +34,6 @@ public:
 	Collider* c_punch2;
 	Collider* c_kick;
 
-
-	int width_col;
-	int height_col;
-
 	bool isOnLeft;
 
 	bool isAttacking;
