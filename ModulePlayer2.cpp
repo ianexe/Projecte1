@@ -87,9 +87,7 @@ bool ModulePlayer2::CleanUp()
 update_status ModulePlayer2::Update()
 {
 	
-/*	width_col = 35;
-	height_col = 85;
-	*/
+	//Els sprites estan ben ficats
 	Animation* current_animation = &idle;
 
 	collider->SetPos(position.x - 30, position.y - 90);
