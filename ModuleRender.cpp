@@ -48,7 +48,31 @@ update_status ModuleRender::PreUpdate()
 }
 
 // Update: debug camera
-update_status ModuleRender::Update()
+/*
+
+sdadsadsasdas
+as
+f
+da
+dga
+a
+gdg
+s
+ag
+gfa
+ry
+wr
+e
+ewa
+t
+a
+taeaw
+e
+
+
+
+
+*/update_status ModuleRender::Update()
 {
 	float speed = 9;
 	char title[250];
