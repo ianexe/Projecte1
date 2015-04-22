@@ -93,6 +93,7 @@ update_status ModulePlayer2::Update()
 	Animation* current_animation = &idle;
 
 	collider->SetPos(position.x - 30, position.y - 90);
+
 	// debug camera movement --------------------------------
 	
 	int speed = 3;
@@ -107,6 +108,7 @@ update_status ModulePlayer2::Update()
 			position.x -= speed;
 
 			collider->SetPos(position.x - 30, position.y - 90);
+
 		}
 	}
 
