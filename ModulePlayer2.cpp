@@ -92,12 +92,7 @@ update_status ModulePlayer2::Update()
 	*/
 	Animation* current_animation = &idle;
 
-	if (isOnLeft){
-		collider->SetPos(position.x - 20, position.y - 90);
-	}
-	else{
-		collider->SetPos(position.x - 20, position.y - 90);
-	}
+	collider->SetPos(position.x - 30, position.y - 90);
 	// debug camera movement --------------------------------
 	
 	int speed = 3;
@@ -111,12 +106,7 @@ update_status ModulePlayer2::Update()
 			current_animation = &forward;
 			position.x -= speed;
 
-			if (isOnLeft){
-				collider->SetPos(position.x - 20, position.y - 90);
-			}
-			else{
-				collider->SetPos(position.x - 20, position.y - 90);
-			}
+			collider->SetPos(position.x - 30, position.y - 90);
 		}
 	}
 
@@ -127,12 +117,7 @@ update_status ModulePlayer2::Update()
 				current_animation = &forward;
 				position.x += speed;
 
-				if (isOnLeft){
-					collider->SetPos(position.x - 20, position.y - 90);
-				}
-				else{
-					collider->SetPos(position.x - 20, position.y - 90);
-				}
+				collider->SetPos(position.x - 30, position.y - 90);
 
 				//App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
 
