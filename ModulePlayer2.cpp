@@ -87,6 +87,10 @@ bool ModulePlayer2::CleanUp()
 update_status ModulePlayer2::Update()
 {
 	
+	if (Health < 0)
+		Health = 0;
+
+
 	//Els sprites estan ben ficats
 	Animation* current_animation = &idle;
 

@@ -86,6 +86,7 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {
 	
+
 	Animation* current_animation = &idle;
 
 	collider->SetPos(position.x - 30, position.y - 90);
@@ -94,19 +95,14 @@ update_status ModulePlayer::Update()
 	
 	// debug camera movement --------------------------------
 
-
-	
 	float speed = 3;
 
 	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
-			
-
 			current_animation = &forward;
 			position.x -= speed;
-
 			collider->SetPos(position.x - 30, position.y - 90);
 
 		}
