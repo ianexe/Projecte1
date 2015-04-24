@@ -24,7 +24,7 @@ enum p1_states
 	STUN,
 
 };
-
+/*
 p1_states states = IDLE;
 switch (states)
 {
@@ -54,7 +54,7 @@ case IDLE:
 	HIT_L,
 	STUN,
 }
-
+*/
 class ModulePlayer : public Module
 {
 public:
