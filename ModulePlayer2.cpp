@@ -9,8 +9,8 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 {
 	graphics = NULL;
 
-	position.x = 380.0;
-	position.y = 216.0;
+	position.x = 380;
+	position.y = 216;
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -78,8 +78,8 @@ bool ModulePlayer2::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
-	position.x = 380.0;
-	position.y = 216.0;
+	position.x = 380;
+	position.y = 216;
 	return true;
 }
 
@@ -160,7 +160,7 @@ update_status ModulePlayer2::Update()
 			c_kick = App->colision->AddCollider({ position.x + 7.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
 		}
 		else{
-			c_kick = App->colision->AddCollider({ position.x - 57.0, position.y - 92.0, 50, 50 }, COLLIDER_KICK_2, this);
+			c_kick = App->colision->AddCollider({ position.x - 57.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
 		}
 		
 	}
@@ -217,7 +217,7 @@ update_status ModulePlayer2::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
+	App->renderer->Blit(graphics, position.x - (r.w / 2), position.y - r.h, &r, 1, isOnLeft);
 
 
 

@@ -20,7 +20,7 @@ public:
 	
 public:
 	SDL_Renderer* renderer;
-	p2Point<float> camera;
-	p2Point<float> OpCamera;
-	float distance;
+	p2Point<int> camera;
+	p2Point<int> OpCamera;
+	int distance;
 };

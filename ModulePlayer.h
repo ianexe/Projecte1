@@ -43,6 +43,6 @@ public:
 	bool doPunch2;
 	bool doKick;
 
-	p2Point<float> position;
+	p2Point<int> position;
 	unsigned int Health;
 };
