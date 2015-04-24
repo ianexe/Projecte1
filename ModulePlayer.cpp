@@ -54,9 +54,6 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
-
-	
-
 }
 
 ModulePlayer::~ModulePlayer()

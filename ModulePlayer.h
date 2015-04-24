@@ -5,6 +5,56 @@
 #include "p2Point.h"
 #include "ModuleCollision.h"
 
+enum p1_states
+{
+	IDLE,
+	WALK_R,
+	WALK_L,
+	CROUCH,
+	JUMP,
+	JUMP_L,
+	JUMP_R,
+	PUNCH_L,
+	PUNCH_M,
+	PUNCH_H,
+	KICK_L,
+	KICK_M,
+	KICK_H,
+	HIT_L,
+	STUN,
+
+};
+
+p1_states states = IDLE;
+switch (states)
+{
+case IDLE:
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		state = WALK_R;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		state = WALK_L;
+	}
+	break;
+	WALK_R,
+	WALK_L,
+	CROUCH,
+	JUMP,
+	JUMP_L,
+	JUMP_R,
+	PUNCH_L,
+	PUNCH_M,
+	PUNCH_H,
+	KICK_L,
+	KICK_M,
+	KICK_H,
+	HIT_L,
+	STUN,
+}
+
 class ModulePlayer : public Module
 {
 public:
