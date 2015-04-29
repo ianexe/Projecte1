@@ -72,9 +72,6 @@
     <ClInclude Include="ModuleIntro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleCollision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -117,9 +114,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModuleIntro.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleCollision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

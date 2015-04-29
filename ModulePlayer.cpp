@@ -7,7 +7,6 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	graphics = NULL;
-	collider = NULL;
 
 	position.x = 80;
 	position.y = 216;
@@ -55,6 +54,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
+
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -66,8 +67,6 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
-
-	collider = App->collision->AddCollider({ 0, 50, 100, 100 }, COLLIDER_PLAYER1_BODY);
 
 	return true;
 }

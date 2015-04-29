@@ -58,11 +58,9 @@ bool ModuleSceneKen::Start()
 	LOG("Loading ken scene");
 	
 	graphics = App->textures->Load("ken_stage.png");
-	App->collision->Enable();
 	App->player->Enable();
 	App->player2->Enable();
 	App->audio->PlayMusic("ken.ogg",FADE_TIME);
-	App->collision->AddCollider({ 0, 500, 300, 50 }, COLLIDER_PLAYER1_PUNCH2);
 	
 	return true;
 }
@@ -100,7 +98,6 @@ update_status ModuleSceneKen::Update()
 	forward = true;*/
 	
 	// Draw everything --------------------------------------
-	
 	App->renderer->Blit(graphics, 0, 0, &background, 0.75f); // sea and sky
 	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 0.75f); // flag animation
 

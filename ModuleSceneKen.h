@@ -3,8 +3,6 @@
 #include "Animation.h"
 #include "Globals.h"
 
-struct Collider;
-
 class ModuleSceneKen : public Module
 {
 public:
