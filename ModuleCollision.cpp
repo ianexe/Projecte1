@@ -106,6 +106,7 @@ update_status ModuleCollision::PreUpdate()
 // Called before render is available
 update_status ModuleCollision::Update()
 {
+	LOG("Loading collision scene");
 	p2List_item<Collider*>* tmp = colliders.getFirst();
 
 	Collider* c1;
@@ -150,6 +151,7 @@ update_status ModuleCollision::Update()
 
 void ModuleCollision::DrawDebug(Collider* col)
 {
+	LOG("Hola me he activado");
 	Uint8 alpha = 80;
 	switch (col->type)
 	{
