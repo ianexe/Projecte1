@@ -1,16 +1,13 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
-
-
+#include <assert.h>
+#include <stdio.h>
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	renderer = NULL;
 	camera.x = 0;
-	camera.y = 0;
-	//camera.w = SCREEN_WIDTH;
-	//camera.h = SCREEN_HEIGHT;
-	
+	camera.y = 0;	
 }
 
 // Destructor
@@ -52,7 +49,10 @@ update_status ModuleRender::Update()
 {
 	float speed = 9;
 	char title[250];
-	sprintf_s(title, "Camera X: %f Camera Y: %f Player1X: %f Player2X: %f", -(camera.x), -(camera.y), (App->player->position.x), (App->player2->position.x));
+
+	//sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
+	sprintf_s(title, "Player1 Health: %i Player2 Health: %i", (App->player->Health), (App->player2->Health));
+
 	App->window->SetTitle(title);
 
 	distance = App->player->position.x + App->player2->position.x;
@@ -60,6 +60,7 @@ update_status ModuleRender::Update()
 	//SDL_Rect CameraBorders
 
 	
+
 		camera.x = (-(distance / 2 - 192) * 3);
 	if (camera.x <= -1513){
 	
@@ -67,18 +68,13 @@ update_status ModuleRender::Update()
 	}
 	
 	//CAMBIAR-HO
-	/*if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
+	/*if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
 		App->renderer->camera.x += speed;
 
-
-
-
-	if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1){
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == 1){
 	
 		App->renderer->camera.x -= speed;
 	}*/
-
-
 
 
 		if (App->renderer->camera.x >= 0)
@@ -87,7 +83,7 @@ update_status ModuleRender::Update()
 		}
 
 		OpCamera.x = (-camera.x / 3);
-		
+	
 	
 	return UPDATE_CONTINUE;
 }
@@ -157,4 +153,30 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 	return ret;
 }
+
+bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+{
+	bool ret = true;
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	SDL_Rect rec(rect);
+	if (use_camera)
+	{
+		rec.x = (int)(camera.x + rect.x * SCREEN_SIZE);
+		rec.y = (int)(camera.y + rect.y * SCREEN_SIZE);
+		rec.w *= SCREEN_SIZE;
+		rec.h *= SCREEN_SIZE;
+	}
+
+	if (SDL_RenderFillRect(renderer, &rec) != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
 

@@ -65,7 +65,7 @@ update_status ModuleSceneHonda::Update()
 	App->renderer->Blit(graphics, 305, 136, &(water.GetCurrentFrame())); // water animation
 	App->renderer->Blit(graphics, 0, -16, &roof, 0.75f);
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{
 		App->fade->FadeToBlack(App->scene_honda, App->scene_ken, FADE_TIME);
 	}

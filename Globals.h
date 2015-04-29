@@ -25,4 +25,4 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "Super Awesome Game"
-#define FADE_TIME 4.5f
+#define FADE_TIME 2.5f
