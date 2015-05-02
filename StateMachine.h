@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-//#include "p2Qeue.h"
+#include "p2Qeue.h"
 #include "SDL\include\SDL.h"
 
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
