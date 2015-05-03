@@ -3,9 +3,10 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "p2Qeue.h"
 #include "ModuleCollision.h"
 
-enum p1_states
+/*enum p1_states
 {
 	IDLE,
 	WALK_R,
@@ -23,7 +24,67 @@ enum p1_states
 	HIT_L,
 	STUN,
 
+};*/
+
+#define JUMP_TIME 3000
+#define PUNCH_TIME 1000
+#define HIT_TIME 500
+
+enum p1_states
+{
+	ST_UNKNOWN,
+
+	ST_IDLE,
+	ST_WALK_FORWARD,
+	ST_WALK_BACKWARD,
+	ST_JUMP_NEUTRAL,
+	ST_JUMP_FORWARD,
+	ST_JUMP_BACKWARD,
+	ST_CROUCH,
+	ST_PUNCH_STANDING_L,
+	ST_PUNCH_STANDING_M,
+	ST_PUNCH_STANDING_H,
+	ST_KICK_STANDING_L,
+	ST_KICK_STANDING_M,
+	ST_KICK_STANDING_H,
+	ST_PUNCH_NEUTRAL_JUMP,
+	ST_PUNCH_FORWARD_JUMP,
+	ST_PUNCH_BACKWARD_JUMP,
+	ST_PUNCH_CROUCH,
+	ST_HIT,
+	ST_STUN
 };
+
+enum p1_inputs
+{
+	IN_LEFT_DOWN,
+	IN_LEFT_UP,
+	IN_RIGHT_DOWN,
+	IN_RIGHT_UP,
+	IN_LEFT_AND_RIGHT,
+	IN_JUMP,
+	IN_CROUCH_UP,
+	IN_CROUCH_DOWN,
+	IN_JUMP_AND_CROUCH,
+	IN_X, // X = PUNCH
+	IN_H, // H = HIT
+	IN_JUMP_FINISH,
+	IN_PUNCH_FINISH,
+	IN_HIT_FINISH
+};
+
+Uint32 jump_timer = 0;
+Uint32 punch_timer = 0;
+Uint32 hit_timer = 0;
+
+
+
+
+
+
+
+
+
 /*
 p1_states states = IDLE;
 switch (states)
@@ -55,6 +116,8 @@ case IDLE:
 	STUN,
 }
 */
+
+
 class ModulePlayer : public Module
 {
 public:
@@ -67,9 +130,13 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
+	//State methods
+	p1_states processfsm(p2Qeue<p1_inputs>& inputs);
 public:
 	
 	SDL_Texture* graphics;
+	//Animations
+
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -78,6 +145,7 @@ public:
 	Animation kick;
 	SDL_Rect atac;
 	SDL_Rect defense;
+
 	//SDL_Rect detection;
 	Collider* collider;
 	Collider* c_punch1;
