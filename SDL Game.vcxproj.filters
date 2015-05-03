@@ -75,9 +75,6 @@
     <ClInclude Include="ModuleCollision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="p2Qeue.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>

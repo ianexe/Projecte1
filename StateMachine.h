@@ -316,7 +316,7 @@ ryu_states process_fsm(p2Qeue<ryu_inputs>& inputs)
 
 	return state;
 }
-/*
+
 int main(int argc, char** argv)
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -390,5 +390,5 @@ int main(int argc, char** argv)
 
 	return 0;
 }
-*/
+
 #endif

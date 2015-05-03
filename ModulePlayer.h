@@ -73,9 +73,7 @@ enum p1_inputs
 	IN_HIT_FINISH
 };
 
-Uint32 jump_timer = 0;
-Uint32 punch_timer = 0;
-Uint32 hit_timer = 0;
+
 
 
 
@@ -131,7 +129,10 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 	//State methods
+	bool external_input(p2Qeue<p1_inputs>& inputs);
+	void internal_input(p2Qeue<p1_inputs>& inputs);
 	p1_states processfsm(p2Qeue<p1_inputs>& inputs);
+
 public:
 	
 	SDL_Texture* graphics;
@@ -152,7 +153,12 @@ public:
 	Collider* c_punch2;
 	Collider* c_kick;
 
+	//State Variables
+	p2Qeue<p1_inputs> inputs;
+	p1_states current_state;
+	
 	//Variables
+	//bools
 	bool isOnLeft;
 
 	bool isAttacking;
@@ -161,6 +167,15 @@ public:
 	bool doPunch2;
 	bool doKick;
 
+	//Timers
+	Uint32 jump_timer;
+	Uint32 punch_timer;
+	Uint32 hit_timer;
+
+	//Character basics
 	p2Point<int> position;
 	unsigned int Health;
+	float speed;
+
+
 };

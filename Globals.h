@@ -15,6 +15,14 @@ enum update_status
 	UPDATE_ERROR
 };
 
+// Timers
+
+#define JUMP_TIME 3000
+#define PUNCH_TIME 1000
+#define HIT_TIME 500
+
+
+
 // Configuration -----------
 #define SCREEN_WIDTH 384
 #define SCREEN_HEIGHT 224
