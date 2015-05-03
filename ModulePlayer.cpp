@@ -55,7 +55,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
 
-	
+
 
 }
 
@@ -67,9 +67,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	Health = 100;
-	
+
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
+
 
 	return true;
 }
@@ -88,29 +89,41 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	
+
 	Animation* current_animation = &idle;
+	collider->type = COLLIDER_NEUTRAL_1;
 
 	collider->SetPos(position.x - 30, position.y - 90);
-	
-	
-	
+
+
 	// debug camera movement --------------------------------
 
 
-	
+
 	float speed = 3;
 
 	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 	{
+
+
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
-			
+
+			if (isOnLeft){
+
+				collider->type = COLLIDER_DEFENSE_1;
+			}
+			else{
+				collider->type = COLLIDER_NEUTRAL_1;
+			}
 
 			current_animation = &forward;
 			position.x -= speed;
 
+
 			collider->SetPos(position.x - 30, position.y - 90);
+
+
 
 		}
 	}
@@ -119,13 +132,20 @@ update_status ModulePlayer::Update()
 	{
 		if (App->player->position.x < 896.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
-			
+			if (isOnLeft){
+
+				collider->type = COLLIDER_NEUTRAL_1;
+			}
+			else{
+				collider->type = COLLIDER_DEFENSE_1;
+			}
+
 			current_animation = &forward;
 			position.x += speed;
-			
-		
+
+
 			collider->SetPos(position.x - 30, position.y - 90);
-			
+
 		}
 	}
 
@@ -133,6 +153,7 @@ update_status ModulePlayer::Update()
 	{
 		doPunch = true;
 		isAttacking = true;
+		collider->type = COLLIDER_NEUTRAL_1;
 		if (isOnLeft){
 
 			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
@@ -143,13 +164,14 @@ update_status ModulePlayer::Update()
 			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 
-	
+
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking))
 	{
 		doPunch2 = true;
 		isAttacking = true;
+		collider->type = COLLIDER_NEUTRAL_1;
 		if (isOnLeft){
 			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
@@ -157,13 +179,14 @@ update_status ModulePlayer::Update()
 		{
 			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
-		
+
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking))
 	{
 		doKick = true;
 		isAttacking = true;
+		collider->type = COLLIDER_NEUTRAL_1;
 		if (isOnLeft){
 			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
@@ -171,7 +194,7 @@ update_status ModulePlayer::Update()
 			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
 
-		
+
 	}
 
 	//Does attack if called
@@ -179,8 +202,8 @@ update_status ModulePlayer::Update()
 	if (doPunch)
 	{
 		current_animation = &punch;
-		
-		
+
+
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch = false;
@@ -193,8 +216,8 @@ update_status ModulePlayer::Update()
 	if (doPunch2)
 	{
 		current_animation = &punch2;
-		
-		
+
+
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch2 = false;
@@ -206,7 +229,7 @@ update_status ModulePlayer::Update()
 	if (doKick)
 	{
 		current_animation = &kick;
-		
+
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -216,7 +239,6 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	//Checks where player is facing
 
 	if (App->player->position.x < App->player2->position.x)
 		isOnLeft = true;

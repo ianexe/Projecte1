@@ -55,7 +55,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
 
-	
+
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -66,7 +66,7 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player");
 	Health = 100;
-	
+
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
 	return true;
@@ -86,21 +86,28 @@ bool ModulePlayer2::CleanUp()
 // Update: draw background
 update_status ModulePlayer2::Update()
 {
-	
+
 	//Els sprites estan ben ficats
 	Animation* current_animation = &idle;
+	collider->type = COLLIDER_NEUTRAL_2;
 
 	collider->SetPos(position.x - 30, position.y - 90);
 
 	// debug camera movement --------------------------------
-	
+
 	int speed = 3;
 
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 		{
-			
+			if (isOnLeft){
+
+				collider->type = COLLIDER_DEFENSE_2;
+			}
+			else{
+				collider->type = COLLIDER_NEUTRAL_2;
+			}
 
 			current_animation = &forward;
 			position.x -= speed;
@@ -114,20 +121,30 @@ update_status ModulePlayer2::Update()
 	{
 		if (position.x < 896.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
-				current_animation = &forward;
-				position.x += speed;
+			if (isOnLeft){
 
-				collider->SetPos(position.x - 30, position.y - 90);
-
-				//App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
-
+				collider->type = COLLIDER_NEUTRAL_2;
 			}
+			else{
+				collider->type = COLLIDER_DEFENSE_2;
+			}
+
+			current_animation = &forward;
+			position.x += speed;
+
+			collider->SetPos(position.x - 30, position.y - 90);
+
+			//App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
+
+		}
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN) && (!isAttacking))
 	{
 		doPunch = true;
 		isAttacking = true;
+		collider->type = COLLIDER_NEUTRAL_2;
+
 		if (isOnLeft){
 
 			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2, this);
@@ -142,6 +159,7 @@ update_status ModulePlayer2::Update()
 	{
 		doPunch2 = true;
 		isAttacking = true;
+		collider->type = COLLIDER_NEUTRAL_2;
 		if (isOnLeft){
 			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
 		}
@@ -156,13 +174,14 @@ update_status ModulePlayer2::Update()
 	{
 		doKick = true;
 		isAttacking = true;
+		collider->type = COLLIDER_NEUTRAL_2;
 		if (isOnLeft){
 			c_kick = App->colision->AddCollider({ position.x + 7.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
 		}
 		else{
 			c_kick = App->colision->AddCollider({ position.x - 57.0, position.y - 92.0, 50, 50 }, COLLIDER_KICK_2, this);
 		}
-		
+
 	}
 
 	//Does attack if called
@@ -184,7 +203,7 @@ update_status ModulePlayer2::Update()
 	if (doPunch2)
 	{
 		current_animation = &punch2;
-		
+
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			doPunch2 = false;
@@ -196,8 +215,8 @@ update_status ModulePlayer2::Update()
 	if (doKick)
 	{
 		current_animation = &kick;
-		
-		
+
+
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
