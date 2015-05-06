@@ -321,7 +321,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
-
+		//t1=temps actual i t2= despres de main t2-t1 > 1000 = 1s divisio t2-t1/ticks i ticks
 		case ST_PUNCH_STANDING_L:
 		{
 			switch (last_input)
