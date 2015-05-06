@@ -109,18 +109,18 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 			case SDLK_ESCAPE:
 				return false;
 				break;
-			case SDLK_DOWN:
+			case SDLK_s:
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
 				break;
-			case SDLK_UP:
+			case SDLK_w:
 				up = false;
 				break;
-			case SDLK_LEFT:
+			case SDLK_a:
 				inputs.Push(IN_LEFT_UP);
 				left = false;
 				break;
-			case SDLK_RIGHT:
+			case SDLK_d:
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
@@ -136,16 +136,16 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 			case SDLK_h:
 				inputs.Push(IN_H);
 				break;
-			case SDLK_UP:
+			case SDLK_w:
 				up = true;
 				break;
-			case SDLK_DOWN:
+			case SDLK_s:
 				down = true;
 				break;
-			case SDLK_LEFT:
+			case SDLK_a:
 				left = true;
 				break;
-			case SDLK_RIGHT:
+			case SDLK_d:
 				right = true;
 				break;
 			}
@@ -414,6 +414,14 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_PUNCH_STANDING_L:
 				//std::cout << "PUNCH STANDING ++++\n";
+				if (isOnLeft){
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+					//collider->SetPos(position.x + 10, position.y - 75);
+				}
+				else{
+					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+					doPunch = true;
+				}
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
 				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
