@@ -188,6 +188,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 	if (punch_timer > 0)
 	{
 		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
+	//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_PUNCH_FINISH);
 			punch_timer = 0;
@@ -325,7 +326,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH: c_punch1->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
 		break;
@@ -420,8 +421,9 @@ update_status ModulePlayer::Update()
 				}
 				else{
 					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-					doPunch = true;
+					
 				}
+				current_animation = &punch;
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
 				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";

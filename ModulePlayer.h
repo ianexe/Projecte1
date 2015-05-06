@@ -26,9 +26,6 @@
 
 };*/
 
-#define JUMP_TIME 3000
-#define PUNCH_TIME 1000
-#define HIT_TIME 500
 
 enum p1_states
 {
@@ -159,9 +156,9 @@ public:
 	
 	//Variables
 	//bools
-	bool isOnLeft;
+	bool isOnLeft = false;
 
-	bool isAttacking;
+	bool isAttacking = false;
 
 	bool doPunch;
 	bool doPunch2;

@@ -18,8 +18,9 @@ enum update_status
 // Timers
 
 #define JUMP_TIME 3000
-#define PUNCH_TIME 1000
+#define PUNCH_TIME 500
 #define HIT_TIME 500
+
 
 
 
