@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
+
 //#include "StateMachine.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -90,7 +91,7 @@ bool ModulePlayer::CleanUp()
 }
 
 //State machine functions
-bool external_input(p2Qeue<p1_inputs>& inputs)
+bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -173,7 +174,7 @@ bool external_input(p2Qeue<p1_inputs>& inputs)
 	return true;
 }
 
-void internal_input(p2Qeue<p1_inputs>& inputs)
+void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{
@@ -203,7 +204,7 @@ void internal_input(p2Qeue<p1_inputs>& inputs)
 	}
 }
 
-p1_states process_fsm(p2Qeue<p1_inputs>& inputs)
+p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 {
 	static p1_states state = ST_IDLE;
 	p1_inputs last_input;
@@ -359,11 +360,11 @@ p1_states process_fsm(p2Qeue<p1_inputs>& inputs)
 update_status ModulePlayer::Update()
 {
 	Animation* current_animation = &idle;
-
+	
 
 
 	p1_states current_state = ST_UNKNOWN;
-	while (external_input(inputs))
+	if (external_input(inputs))
 	{
 
 		internal_input(inputs);
@@ -375,14 +376,14 @@ update_status ModulePlayer::Update()
 			switch (state)
 			{
 			case ST_IDLE:
-				printf("IDLE\n");
+			//	std::cout<<"IDLE\n";
 				break;
 			case ST_HIT:
-				printf("HIT\n");
+			//	std::cout << "HIT\n";
 				break;
 
 			case ST_WALK_FORWARD:
-
+			//	std::cout << "WALK FORWARD >>>>\n";
 					current_animation = &forward;
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
@@ -390,38 +391,38 @@ update_status ModulePlayer::Update()
 				break;
 
 			case ST_WALK_BACKWARD:
-
+			//	std::cout << "WALK BACKWARD <<<<\n";
 					current_animation = &forward;
 					position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 
 				break;
 			case ST_JUMP_NEUTRAL:
-				printf("JUMPING NEUTRAL ^^^^\n");
+				//std::cout << "JUMPING NEUTRAL ^^^^\n";
 				break;
 			case ST_JUMP_FORWARD:
-				printf("JUMPING FORWARD ^^>>\n");
+				//std::cout << "JUMPING FORWARD ^^>>\n";
 				break;
 			case ST_JUMP_BACKWARD:
-				printf("JUMPING BACKWARD ^^<<\n");
+				//std::cout << "JUMPING BACKWARD ^^<<\n";
 				break;
 			case ST_CROUCH:
-				printf("CROUCHING ****\n");
+				//std::cout << "CROUCHING ****\n";
 				break;
 			case ST_PUNCH_CROUCH:
-				printf("PUNCH CROUCHING **++\n");
+				//std::cout << "PUNCH CROUCHING **++\n";
 				break;
 			case ST_PUNCH_STANDING_L:
-				printf("PUNCH STANDING ++++\n");
+				//std::cout << "PUNCH STANDING ++++\n";
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
-				printf("PUNCH JUMP NEUTRAL ^^++\n");
+				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
 				break;
 			case ST_PUNCH_FORWARD_JUMP:
-				printf("PUNCH JUMP FORWARD ^>>+\n");
+				//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
 				break;
 			case ST_PUNCH_BACKWARD_JUMP:
-				printf("PUNCH JUMP BACKWARD ^<<+\n");
+				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
 				break;
 			}
 		}
@@ -435,7 +436,7 @@ update_status ModulePlayer::Update()
 
 	
 
-	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
+	/*if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
@@ -458,7 +459,7 @@ update_status ModulePlayer::Update()
 			collider->SetPos(position.x - 30, position.y - 90);
 			
 		}
-	}
+	}*/
 
 	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
 	{
