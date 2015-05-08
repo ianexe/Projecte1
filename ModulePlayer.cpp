@@ -367,7 +367,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	Animation* current_animation = &idle;
+	current_animation = &idle;
 	
 
 
@@ -400,7 +400,7 @@ update_status ModulePlayer::Update()
 
 			case ST_WALK_BACKWARD:
 			//	std::cout << "WALK BACKWARD <<<<\n";
-					current_animation = &forward;
+					current_animation = &backward;
 					position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 
@@ -422,15 +422,14 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_PUNCH_STANDING_L:
 				//std::cout << "PUNCH STANDING ++++\n";
+				current_animation = &punch;
 				if (isOnLeft){
 					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 					//collider->SetPos(position.x + 10, position.y - 75);
 				}
 				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-					
+					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);	
 				}
-				current_animation = &punch;
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
 				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";

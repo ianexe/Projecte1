@@ -144,6 +144,9 @@ public:
 	SDL_Rect atac;
 	SDL_Rect defense;
 
+	//Pointer to current animation
+	Animation* current_animation;
+
 	//SDL_Rect detection;
 	Collider* collider;
 	Collider* c_punch1;
