@@ -17,11 +17,12 @@ enum update_status
 
 // Timers
 
+//t1=temps actual i t2= despres de main t2-t1 > 1000 = 1s divisio t2-t1/ticks i ticks
+
+// Hauria de ser 1000 +- 1 segon
 #define JUMP_TIME 3000
 #define PUNCH_TIME 500
 #define HIT_TIME 500
-
-
 
 
 // Configuration -----------
@@ -35,3 +36,6 @@ enum update_status
 #define VSYNC true
 #define TITLE "Super Awesome Game"
 #define FADE_TIME 2.5f
+
+
+

@@ -229,14 +229,17 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 			case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: if (isOnLeft){
-						   c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-							}
-					   else{
-						   c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);	
-					   }
-					   punch_timer = SDL_GetTicks();  
-					   state = ST_PUNCH_STANDING_L;   
+			case IN_X:
+			{
+						if (isOnLeft){
+							c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+						}
+						else{
+							c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+						}
+						punch_timer = SDL_GetTicks();
+						state = ST_PUNCH_STANDING_L;
+			}
 					 break;
 			case IN_H: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
 			}
@@ -336,7 +339,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
-		//t1=temps actual i t2= despres de main t2-t1 > 1000 = 1s divisio t2-t1/ticks i ticks
+	
 		case ST_PUNCH_STANDING_L:
 		{
 			switch (last_input)
@@ -398,20 +401,27 @@ update_status ModulePlayer::Update()
 			//	std::cout << "HIT\n";
 				break;
 
-			case ST_WALK_FORWARD:
-			//	std::cout << "WALK FORWARD >>>>\n";
-					current_animation = &forward;
-					position.x += speed;
-					collider->SetPos(position.x - 30, position.y - 90);
-
+			case ST_WALK_FORWARD:{
+					 //	std::cout << "WALK FORWARD >>>>\n";
+					if (App->player->position.x < 860.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+					 {
+							current_animation = &forward;
+							position.x += speed;
+							collider->SetPos(position.x - 30, position.y - 90);
+					 }
+			}
 				break;
 
 			case ST_WALK_BACKWARD:
-			//	std::cout << "WALK BACKWARD <<<<\n";
-					current_animation = &backward;
-					position.x -= speed;
-					collider->SetPos(position.x - 30, position.y - 90);
-
+				//	std::cout << "WALK BACKWARD <<<<\n";
+			{
+				 if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
+				{
+						 current_animation = &backward;
+						 position.x -= speed;
+						 collider->SetPos(position.x - 30, position.y - 90);
+				}
+			}
 				break;
 			case ST_JUMP_NEUTRAL:
 				//std::cout << "JUMPING NEUTRAL ^^^^\n";
@@ -528,7 +538,7 @@ update_status ModulePlayer::Update()
 
 	//Does attack if called
 
-	if (doPunch)
+	/*if (doPunch)
 	{
 		current_animation = &punch;
 		
@@ -539,7 +549,7 @@ update_status ModulePlayer::Update()
 			isAttacking = false;
 			c_punch1->to_delete = true;
 		}
-	}
+	}*/
 
 
 	if (doPunch2)

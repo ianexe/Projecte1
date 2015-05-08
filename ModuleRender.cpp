@@ -59,8 +59,6 @@ update_status ModuleRender::Update()
 
 	//SDL_Rect CameraBorders
 
-	
-
 		camera.x = (-(distance / 2 - 192) * 3);
 	if (camera.x <= -1513){
 	
