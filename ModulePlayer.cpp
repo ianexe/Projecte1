@@ -229,7 +229,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 			case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: punch_timer = SDL_GetTicks();  state = ST_PUNCH_STANDING_L;   break;
+			case IN_X: if (isOnLeft){
+						   c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+							}
+					   else{
+						   c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);	
+					   }
+					   punch_timer = SDL_GetTicks();  
+					   state = ST_PUNCH_STANDING_L;   
+					 break;
 			case IN_H: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
 			}
 		}
@@ -423,13 +431,9 @@ update_status ModulePlayer::Update()
 			case ST_PUNCH_STANDING_L:
 				//std::cout << "PUNCH STANDING ++++\n";
 				current_animation = &punch;
-				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-					//collider->SetPos(position.x + 10, position.y - 75);
-				}
-				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);	
-				}
+				collider->SetPos(position.x + 10, position.y - 75);
+
+				
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
 				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
