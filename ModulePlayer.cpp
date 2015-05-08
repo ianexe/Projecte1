@@ -97,6 +97,7 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 	static bool right = false;
 	static bool down = false;
 	static bool up = false;
+	static bool punch_l = false;
 
 	SDL_Event event;
 
@@ -112,6 +113,9 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 			case SDLK_s:
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
+				break;
+			case SDLK_q:
+				punch_l = false;
 				break;
 			case SDLK_w:
 				up = false;
@@ -130,8 +134,8 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_SPACE:
-				inputs.Push(IN_X);
+			case SDLK_q:
+				punch_l = true;
 				break;
 			case SDLK_h:
 				inputs.Push(IN_H);
@@ -170,7 +174,10 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 		if (up)
 			inputs.Push(IN_JUMP);
 	}
-
+	if (punch_l)
+	{
+		inputs.Push(IN_X);
+	}
 	return true;
 }
 
@@ -222,7 +229,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 			case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: state = ST_PUNCH_STANDING_L; punch_timer = SDL_GetTicks();  break;
+			case IN_X: punch_timer = SDL_GetTicks();  state = ST_PUNCH_STANDING_L;   break;
 			case IN_H: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
 			}
 		}
