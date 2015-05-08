@@ -23,6 +23,7 @@ public:
 	Animation idle;
 	Animation forward;
 	Animation backward;
+	Animation jump;
 	Animation punch;
 	Animation punch2;
 	Animation kick;
@@ -38,6 +39,9 @@ public:
 	bool isOnLeft;
 
 	bool isAttacking;
+
+	bool isJumping;
+	bool isFalling;
 
 	bool doPunch;
 	bool doPunch2;

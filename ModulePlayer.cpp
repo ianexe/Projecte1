@@ -37,6 +37,15 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.frames.PushBack({ 974, 129, 57, 89 });
 	backward.speed = 0.1f;
 
+	// jump animation (arcade sprite sheet)
+	jump.frames.PushBack({ 86, 823, 70, 104 });
+	jump.frames.PushBack({ 156, 805, 70, 122 });
+	jump.frames.PushBack({ 227, 798, 78, 129 });
+	jump.frames.PushBack({ 315, 813, 60, 114 });
+	jump.frames.PushBack({ 389, 810, 56, 117 });
+	jump.frames.PushBack({ 464, 819, 60, 109 });
+	jump.speed = 0.2f;
+
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
@@ -100,6 +109,11 @@ update_status ModulePlayer::Update()
 
 	
 	float speed = 3;
+
+	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) && (!isAttacking))
+	{
+		isJumping = true;
+	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 	{
@@ -175,6 +189,31 @@ update_status ModulePlayer::Update()
 	}
 
 	//Does attack if called
+
+	if (isJumping)
+	{
+		current_animation = &jump;
+		if ((position.y > 135) && (!isFalling))
+		{
+			position.y -= 4;
+		}
+		
+		else
+		{
+			isFalling = true;
+		}
+
+		if (isFalling)
+			position.y += 4;
+		
+		if (position.y > 216)
+		{
+			position.y = 216;
+			isJumping = false;
+			isFalling = false;
+		}
+		
+	}
 
 	if (doPunch)
 	{
