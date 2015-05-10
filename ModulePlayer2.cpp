@@ -69,6 +69,7 @@ bool ModulePlayer2::Start()
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
+	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
 	return true;
 }
 
@@ -89,9 +90,12 @@ update_status ModulePlayer2::Update()
 
 	//Els sprites estan ben ficats
 	Animation* current_animation = &idle;
-	collider->type = COLLIDER_NEUTRAL_2;
+	c_defense->type = COLLIDER_NONE;
+	collider->rect.h = 90;
 
 	collider->SetPos(position.x - 30, position.y - 90);
+	c_defense->SetPos(position.x - 30, position.y - 90);
+
 
 	// debug camera movement --------------------------------
 
@@ -103,16 +107,22 @@ update_status ModulePlayer2::Update()
 		{
 			if (isOnLeft){
 
-				collider->type = COLLIDER_DEFENSE_2;
+				c_defense->type = COLLIDER_DEFENSE_2;
+				collider->rect.h = 50;
+				collider->SetPos(position.x - 30, position.y - 50);
 			}
 			else{
-				collider->type = COLLIDER_NEUTRAL_2;
+				c_defense->type = COLLIDER_NONE;
+				collider->rect.h = 90;
+				collider->SetPos(position.x - 30, position.y - 90);
 			}
 
 			current_animation = &forward;
 			position.x -= speed;
 
-			collider->SetPos(position.x - 30, position.y - 90);
+
+			c_defense->SetPos(position.x - 27, position.y - 90);
+
 
 		}
 	}
@@ -123,18 +133,21 @@ update_status ModulePlayer2::Update()
 		{
 			if (isOnLeft){
 
-				collider->type = COLLIDER_NEUTRAL_2;
+				c_defense->type = COLLIDER_NONE;
+				collider->rect.h = 90;
+				collider->SetPos(position.x - 30, position.y - 90);
 			}
 			else{
-				collider->type = COLLIDER_DEFENSE_2;
+				c_defense->type = COLLIDER_DEFENSE_2;
+				collider->rect.h = 50;
+				collider->SetPos(position.x - 30, position.y - 50);
 			}
 
 			current_animation = &forward;
 			position.x += speed;
 
-			collider->SetPos(position.x - 30, position.y - 90);
 
-			//App->player2_col->AddCollider(detection, COLLIDER_NEUTRAL_2, NULL);
+			c_defense->SetPos(position.x - 27, position.y - 90);
 
 		}
 	}
@@ -143,7 +156,8 @@ update_status ModulePlayer2::Update()
 	{
 		doPunch = true;
 		isAttacking = true;
-		collider->type = COLLIDER_NEUTRAL_2;
+		c_defense->type = COLLIDER_NONE;
+		collider->rect.h = 90;
 
 		if (isOnLeft){
 
@@ -159,7 +173,8 @@ update_status ModulePlayer2::Update()
 	{
 		doPunch2 = true;
 		isAttacking = true;
-		collider->type = COLLIDER_NEUTRAL_2;
+		c_defense->type = COLLIDER_NONE;
+		collider->rect.h = 90;
 		if (isOnLeft){
 			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
 		}
@@ -174,7 +189,8 @@ update_status ModulePlayer2::Update()
 	{
 		doKick = true;
 		isAttacking = true;
-		collider->type = COLLIDER_NEUTRAL_2;
+		c_defense->type = COLLIDER_NONE;
+		collider->rect.h = 90;
 		if (isOnLeft){
 			c_kick = App->colision->AddCollider({ position.x + 7.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
 		}

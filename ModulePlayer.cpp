@@ -70,7 +70,7 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
-	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 55, 40 }, COLLIDER_NONE);
+	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
 
 
 	return true;
@@ -127,7 +127,7 @@ update_status ModulePlayer::Update()
 			position.x -= speed;
 
 
-			c_defense->SetPos(position.x - 30, position.y - 90);
+			c_defense->SetPos(position.x - 27, position.y - 90);
 
 
 		}
@@ -153,7 +153,7 @@ update_status ModulePlayer::Update()
 			position.x += speed;
 
 
-			c_defense->SetPos(position.x - 30, position.y - 90);
+			c_defense->SetPos(position.x - 27, position.y - 90);
 
 		}
 	}
@@ -167,7 +167,6 @@ update_status ModulePlayer::Update()
 		if (isOnLeft){
 
 			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-			//collider->SetPos(position.x + 10, position.y - 75);
 
 		}
 		else{
