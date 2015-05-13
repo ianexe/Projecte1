@@ -38,13 +38,14 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.speed = 0.1f;
 
 	// jump animation (arcade sprite sheet)
-	jump.frames.PushBack({ 86, 823, 70, 104 });
-	jump.frames.PushBack({ 156, 805, 70, 122 });
-	jump.frames.PushBack({ 227, 798, 78, 129 });
-	jump.frames.PushBack({ 315, 813, 60, 114 });
-	jump.frames.PushBack({ 389, 810, 56, 117 });
-	jump.frames.PushBack({ 464, 819, 60, 109 });
-	jump.speed = 0.2f;
+	jump.frames.PushBack({ 16, 847, 56, 85 });
+	jump.frames.PushBack({ 100, 823, 58, 109 });
+	jump.frames.PushBack({ 176, 805, 50, 127 });
+	jump.frames.PushBack({ 239, 798, 66, 134 });
+	jump.frames.PushBack({ 327, 813, 54, 119 });
+	jump.frames.PushBack({ 397, 810, 52, 122 });
+	jump.frames.PushBack({ 464, 819, 60, 113 });
+	jump.speed = 0.17f;
 
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
@@ -193,9 +194,10 @@ update_status ModulePlayer::Update()
 	if (isJumping)
 	{
 		current_animation = &jump;
+		
 		if ((position.y > 135) && (!isFalling))
 		{
-			position.y -= 4;
+			position.y -= 5;
 		}
 		
 		else
@@ -204,7 +206,7 @@ update_status ModulePlayer::Update()
 		}
 
 		if (isFalling)
-			position.y += 4;
+			position.y += 5;
 		
 		if (position.y > 216)
 		{
@@ -212,6 +214,7 @@ update_status ModulePlayer::Update()
 			isJumping = false;
 			isFalling = false;
 		}
+		
 		
 	}
 
