@@ -399,7 +399,7 @@ update_status ModulePlayer2::Update()
 
 			case ST_WALK_FORWARD:{
 									 //	std::cout << "WALK FORWARD >>>>\n";
-									 if (App->player2->position.x < 860.0 && App->player2->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+									 if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 									 {
 										 current_animation = &forward;
 										 position.x += speed;
@@ -411,7 +411,7 @@ update_status ModulePlayer2::Update()
 			case ST_WALK_BACKWARD:
 				//	std::cout << "WALK BACKWARD <<<<\n";
 			{
-									 if (App->player2->position.x > 0.0 && App->player2->position.x > (App->renderer->OpCamera.x) + 20)
+									 if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
 									 {
 										 current_animation = &backward;
 										 position.x -= speed;
@@ -466,7 +466,7 @@ update_status ModulePlayer2::Update()
 	
 	int speed = 3;
 
-	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
+/*	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 		{
@@ -537,7 +537,7 @@ update_status ModulePlayer2::Update()
 
 	//Does attack if called
 
-	if (doPunch)
+	/*if (doPunch)
 	{
 		current_animation = &punch;
 
@@ -576,7 +576,7 @@ update_status ModulePlayer2::Update()
 			c_kick->to_delete = true;
 		}
 	}
-
+	*/
 	//Checks where player is facing
 
 	if (App->player->position.x > App->player2->position.x)
