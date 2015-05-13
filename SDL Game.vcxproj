@@ -88,6 +88,7 @@
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="p2Qeue.h" />
+    <ClInclude Include="States.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />

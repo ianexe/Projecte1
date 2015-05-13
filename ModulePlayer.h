@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "p2Qeue.h"
 #include "ModuleCollision.h"
-
+#include "States.h"
 /*enum p1_states
 {
 	IDLE,
@@ -26,7 +26,7 @@
 
 };*/
 
-
+/*
 enum p1_states
 {
 	ST_UNKNOWN,
@@ -71,14 +71,7 @@ enum p1_inputs
 };
 
 
-
-
-
-
-
-
-
-
+*/
 
 /*
 p1_states states = IDLE;
@@ -173,9 +166,11 @@ public:
 	Uint32 hit_timer;
 
 	//Character basics
+
+	//TODO: Si no s'ajusta la velocitat, cambiar la posicio i la speed float
 	p2Point<int> position;
 	unsigned int Health;
-	float speed;
+	int speed;
 
 
 };
