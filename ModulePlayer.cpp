@@ -178,7 +178,7 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 	{
 		inputs.Push(IN_X);
 	}
-	return true;
+	return false;
 }
 
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
@@ -379,13 +379,10 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 update_status ModulePlayer::Update()
 {
 	current_animation = &idle;
-	
-
 
 	p1_states current_state = ST_UNKNOWN;
 	if (external_input(inputs))
 	{
-
 		internal_input(inputs);
 		
 		p1_states state = process_fsm(inputs);

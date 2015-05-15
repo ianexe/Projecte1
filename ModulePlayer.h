@@ -6,72 +6,10 @@
 #include "p2Qeue.h"
 #include "ModuleCollision.h"
 #include "States.h"
-/*enum p1_states
-{
-	IDLE,
-	WALK_R,
-	WALK_L,
-	CROUCH,
-	JUMP,
-	JUMP_L,
-	JUMP_R,
-	PUNCH_L,
-	PUNCH_M,
-	PUNCH_H,
-	KICK_L,
-	KICK_M,
-	KICK_H,
-	HIT_L,
-	STUN,
-
-};*/
-
-/*
-enum p1_states
-{
-	ST_UNKNOWN,
-
-	ST_IDLE,
-	ST_WALK_FORWARD,
-	ST_WALK_BACKWARD,
-	ST_JUMP_NEUTRAL,
-	ST_JUMP_FORWARD,
-	ST_JUMP_BACKWARD,
-	ST_CROUCH,
-	ST_PUNCH_STANDING_L,
-	ST_PUNCH_STANDING_M,
-	ST_PUNCH_STANDING_H,
-	ST_KICK_STANDING_L,
-	ST_KICK_STANDING_M,
-	ST_KICK_STANDING_H,
-	ST_PUNCH_NEUTRAL_JUMP,
-	ST_PUNCH_FORWARD_JUMP,
-	ST_PUNCH_BACKWARD_JUMP,
-	ST_PUNCH_CROUCH,
-	ST_HIT,
-	ST_STUN
-};
-
-enum p1_inputs
-{
-	IN_LEFT_DOWN,
-	IN_LEFT_UP,
-	IN_RIGHT_DOWN,
-	IN_RIGHT_UP,
-	IN_LEFT_AND_RIGHT,
-	IN_JUMP,
-	IN_CROUCH_UP,
-	IN_CROUCH_DOWN,
-	IN_JUMP_AND_CROUCH,
-	IN_X, // X = PUNCH
-	IN_H, // H = HIT
-	IN_JUMP_FINISH,
-	IN_PUNCH_FINISH,
-	IN_HIT_FINISH
-};
 
 
-*/
+
+
 
 /*
 p1_states states = IDLE;
@@ -166,11 +104,9 @@ public:
 	Uint32 hit_timer;
 
 	//Character basics
-
-	//TODO: Si no s'ajusta la velocitat, cambiar la posicio i la speed float
 	p2Point<int> position;
 	unsigned int Health;
-	int speed;
+	float speed;
 
 
 };
