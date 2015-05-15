@@ -35,14 +35,20 @@ public:
 	Collider* c_kick;
 
 	//State Machine variables
-	p2Qeue<p1_inputs> inputs;
-	p1_states current_state = ST_UNKNOWN;
+	p2Qeue<p2_inputs> inputs;
+	p2_states current_state;
 	//State Machine Methods
+	bool external_input(p2Qeue<p2_inputs>& inputs);
+	void internal_input(p2Qeue<p2_inputs>& inputs);
+	p2_states process_fsm(p2Qeue<p2_inputs>& inputs);
+	//Timers
+	Uint32 jump_timer;
+	Uint32 punch_timer;
+	Uint32 hit_timer;
+	//Not so evil bools
 	bool isOnLeft;
-
-	//Evil bools
 	bool isAttacking;
-
+	//Evil bools
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;

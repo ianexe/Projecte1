@@ -69,6 +69,11 @@ bool ModulePlayer2::Start()
 	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
+	p2_states current_state = ST_UNKNOWN;
+
+	jump_timer = 0;
+	punch_timer = 0;
+	hit_timer = 0;
 	return true;
 }
 
@@ -87,12 +92,13 @@ Uint32 jump_timer = 0;
 Uint32 punch_timer = 0;
 Uint32 hit_timer = 0;
 
-bool external_input(p2Qeue<p1_inputs>& inputs)
+bool ModulePlayer2::external_input(p2Qeue<p2_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
 	static bool down = false;
 	static bool up = false;
+	static bool punch_l = false;
 
 	SDL_Event event;
 
@@ -105,19 +111,22 @@ bool external_input(p2Qeue<p1_inputs>& inputs)
 			case SDLK_ESCAPE:
 				return false;
 				break;
+			case SDLK_KP_1:
+				punch_l = false;
+				break;
 			case SDLK_DOWN:
-				inputs.Push(IN_CROUCH_UP);
+				inputs.Push(_2_IN_CROUCH_UP);
 				down = false;
 				break;
 			case SDLK_UP:
 				up = false;
 				break;
 			case SDLK_LEFT:
-				inputs.Push(IN_LEFT_UP);
+				inputs.Push(_2_IN_LEFT_UP);
 				left = false;
 				break;
 			case SDLK_RIGHT:
-				inputs.Push(IN_RIGHT_UP);
+				inputs.Push(_2_IN_RIGHT_UP);
 				right = false;
 				break;
 			}
@@ -126,11 +135,11 @@ bool external_input(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_SPACE:
-				inputs.Push(IN_X);
+			case SDLK_KP_1:
+				punch_l = false;
 				break;
 			case SDLK_j:
-				inputs.Push(IN_H);
+				inputs.Push(_2_IN_H);
 				break;
 			case SDLK_UP:
 				up = true;
@@ -149,34 +158,38 @@ bool external_input(p2Qeue<p1_inputs>& inputs)
 	}
 
 	if (left && right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
+		inputs.Push(_2_IN_LEFT_AND_RIGHT);
 	{
 		if (left)
-			inputs.Push(IN_LEFT_DOWN);
+			inputs.Push(_2_IN_LEFT_DOWN);
 		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
+			inputs.Push(_2_IN_RIGHT_DOWN);
 	}
 
 	if (up && down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
+		inputs.Push(_2_IN_JUMP_AND_CROUCH);
 	else
 	{
 		if (down)
-			inputs.Push(IN_CROUCH_DOWN);
+			inputs.Push(_2_IN_CROUCH_DOWN);
 		if (up)
-			inputs.Push(IN_JUMP);
+			inputs.Push(_2_IN_JUMP);
 	}
 
+	if (punch_l)
+	{
+		inputs.Push(_2_IN_X);
+	}
 	return true;
 }
 
-void internal_input(p2Qeue<p1_inputs>& inputs)
+void ModulePlayer2::internal_input(p2Qeue<p2_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{
 		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
 		{
-			inputs.Push(IN_JUMP_FINISH);
+			inputs.Push(_2_IN_JUMP_FINISH);
 			jump_timer = 0;
 		}
 	}
@@ -185,7 +198,7 @@ void internal_input(p2Qeue<p1_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
 		{
-			inputs.Push(IN_PUNCH_FINISH);
+			inputs.Push(_2_IN_PUNCH_FINISH);
 			punch_timer = 0;
 		}
 	}
@@ -194,155 +207,155 @@ void internal_input(p2Qeue<p1_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - hit_timer > HIT_TIME)
 		{
-			inputs.Push(IN_HIT_FINISH);
+			inputs.Push(_2_IN_HIT_FINISH);
 			punch_timer = 0;
 		}
 	}
 }
 
-p1_states process_fsm(p2Qeue<p1_inputs>& inputs)
+p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 {
-	static p1_states state = ST_IDLE;
-	p1_inputs last_input;
+	static p2_states state = _2_ST_IDLE;
+	p2_inputs last_input;
 	int speed = 3;
 
 	while (inputs.Pop(last_input))
 	{
 		switch (state)
 		{
-		case ST_IDLE:
+		case _2_ST_IDLE:
 		{
 			switch (last_input)
 			{
-			case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
-			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
-			case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: state = ST_PUNCH_STANDING_L; punch_timer = SDL_GetTicks();  break;
-			case IN_H: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
+			case _2_IN_RIGHT_DOWN: state = _2_ST_WALK_FORWARD; break;
+			case _2_IN_LEFT_DOWN: state = _2_ST_WALK_BACKWARD; break;
+			case _2_IN_JUMP: state = _2_ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
+			case _2_IN_CROUCH_DOWN: state = _2_ST_CROUCH; break;
+			case _2_IN_X: state = _2_ST_PUNCH_STANDING_L; punch_timer = SDL_GetTicks();  break;
+			case _2_IN_H: state = _2_ST_HIT; hit_timer = SDL_GetTicks();  break;
 			}
 		}
 		break;
 
-		case ST_HIT:
+		case _2_ST_HIT:
 		{
 			switch (last_input)
 			{
-			case IN_HIT_FINISH: state = ST_IDLE; break;
+			case _2_IN_HIT_FINISH: state = _2_ST_IDLE; break;
 			}
 		}
 		break;
 
 
-		case ST_WALK_FORWARD:
+		case _2_ST_WALK_FORWARD:
 		{
 			switch (last_input)
 			{
-			case IN_RIGHT_UP: state = ST_IDLE; break;
-			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-			case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+			case _2_IN_RIGHT_UP: state = _2_ST_IDLE; break;
+			case _2_IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case _2_IN_JUMP: state = _2_ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
+			case _2_IN_CROUCH_DOWN: state = _2_ST_CROUCH; break;
 			}
 		}
 		break;
 
-		case ST_WALK_BACKWARD:
+		case _2_ST_WALK_BACKWARD:
 		{
 			switch (last_input)
 			{
-			case IN_LEFT_UP: state = ST_IDLE; break;
-			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-			case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+			case _2_IN_LEFT_UP: state = _2_ST_IDLE; break;
+			case _2_IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case _2_IN_JUMP: state = _2_ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
+			case _2_IN_CROUCH_DOWN: state = _2_ST_CROUCH; break;
 			}
 		}
 		break;
 
-		case ST_JUMP_NEUTRAL:
+		case _2_ST_JUMP_NEUTRAL:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_X: state = _2_ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
 
-		case ST_JUMP_FORWARD:
+		case _2_ST_JUMP_FORWARD:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_X: state = _2_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
 
-		case ST_JUMP_BACKWARD:
+		case _2_ST_JUMP_BACKWARD:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_X: state = _2_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
 
-		case ST_PUNCH_NEUTRAL_JUMP:
+		case _2_ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_PUNCH_FINISH: state = ST_JUMP_NEUTRAL; break;
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_JUMP_NEUTRAL; break;
 			}
 		}
 		break;
 
-		case ST_PUNCH_FORWARD_JUMP:
+		case _2_ST_PUNCH_FORWARD_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_PUNCH_FINISH: state = ST_JUMP_FORWARD; break;
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_JUMP_FORWARD; break;
 			}
 		}
 		break;
 
-		case ST_PUNCH_BACKWARD_JUMP:
+		case _2_ST_PUNCH_BACKWARD_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_PUNCH_FINISH: state = ST_JUMP_BACKWARD; break;
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_JUMP_BACKWARD; break;
 			}
 		}
 		break;
 
-		case ST_PUNCH_STANDING_L:
+		case _2_ST_PUNCH_STANDING_L:
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_IDLE; break;
 			}
 		}
 		break;
 
-		case ST_CROUCH:
+		case _2_ST_CROUCH:
 		{
 			switch (last_input)
 			{
-			case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
-			case IN_CROUCH_UP: state = ST_IDLE; break;
+			case _2_IN_X: state = _2_ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_CROUCH_UP: state = _2_ST_IDLE; break;
 
 			}
 		}
 		break;
-		case ST_PUNCH_CROUCH:
+		case _2_ST_PUNCH_CROUCH:
 		{
 			switch (last_input)
 			{
 
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_IDLE; break;
 			}
 		}
 		break;
@@ -370,23 +383,23 @@ update_status ModulePlayer2::Update()
 	current_state = ST_UNKNOWN;
 	//printf("Listening for WASD + SPACE:\n");
 
-	while (external_input(inputs))
+	if (external_input(inputs))
 	{
 		internal_input(inputs);
 
-		p1_states state = process_fsm(inputs);
+		p2_states state = process_fsm(inputs);
 
 		if (state != current_state)
 		{
 			switch (state)
 			{
-			case ST_IDLE:
+			case _2_ST_IDLE:
 				
 				break;
-			case ST_HIT:
+			case _2_ST_HIT:
 			
 				break;
-			case ST_WALK_FORWARD:
+			case _2_ST_WALK_FORWARD:
 				if (position.x < 896.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 				{
 					current_animation = &forward;
@@ -398,7 +411,7 @@ update_status ModulePlayer2::Update()
 
 				}
 				break;
-			case ST_WALK_BACKWARD:
+			case _2_ST_WALK_BACKWARD:
 				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 10)
 				{
 					current_animation = &forward;
@@ -406,22 +419,22 @@ update_status ModulePlayer2::Update()
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 				break;
-			case ST_JUMP_NEUTRAL:
+			case _2_ST_JUMP_NEUTRAL:
 			
 				break;
-			case ST_JUMP_FORWARD:
+			case _2_ST_JUMP_FORWARD:
 	
 				break;
-			case ST_JUMP_BACKWARD:
+			case _2_ST_JUMP_BACKWARD:
 			
 				break;
-			case ST_CROUCH:
+			case _2_ST_CROUCH:
 				
 				break;
-			case ST_PUNCH_CROUCH:
+			case _2_ST_PUNCH_CROUCH:
 		
 				break;
-			case ST_PUNCH_STANDING_L:
+			case _2_ST_PUNCH_STANDING_L:
 				current_animation = &punch;
 				if (isOnLeft){
 
@@ -432,12 +445,12 @@ update_status ModulePlayer2::Update()
 					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 60, 10 }, COLLIDER_PUNCH_2, this);
 				}
 				break;
-			case ST_PUNCH_NEUTRAL_JUMP:
+			case _2_ST_PUNCH_NEUTRAL_JUMP:
 
 				break;
-			case ST_PUNCH_FORWARD_JUMP:
+			case _2_ST_PUNCH_FORWARD_JUMP:
 				break;
-			case ST_PUNCH_BACKWARD_JUMP:
+			case _2_ST_PUNCH_BACKWARD_JUMP:
 
 				break;
 			}
