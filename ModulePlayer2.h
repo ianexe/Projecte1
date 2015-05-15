@@ -20,9 +20,6 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
-
-	bool external_input(p2Qeue<p1_inputs>& inputs);
-	void internal_input(p2Qeue<p1_inputs>& inputs);
 public:
 
 	//Animation
@@ -38,7 +35,8 @@ public:
 	SDL_Rect detection;
 
 	//State methods
-	
+	bool external_input(p2Qeue<p1_inputs>& inputs);
+	void internal_input(p2Qeue<p1_inputs>& inputs);
 	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
 	//State Variables
 	p2Qeue<p1_inputs> inputs;
