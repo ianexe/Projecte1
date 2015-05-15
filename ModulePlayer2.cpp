@@ -383,7 +383,7 @@ update_status ModulePlayer2::Update()
 	current_state = _2_ST_UNKNOWN;
 	//printf("Listening for WASD + SPACE:\n");
 
-	if (external_input(inputs))
+/*	if (external_input(inputs))
 	{
 		internal_input(inputs);
 
@@ -394,7 +394,7 @@ update_status ModulePlayer2::Update()
 			switch (state)
 			{
 			case _2_ST_IDLE:
-				
+				current_animation = &idle;
 				break;
 			case _2_ST_HIT:
 			
@@ -463,13 +463,11 @@ update_status ModulePlayer2::Update()
 
 
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
-	{
-		
+	{	
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && (!isAttacking))
 	{
-		
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN) && (!isAttacking))
@@ -518,8 +516,8 @@ update_status ModulePlayer2::Update()
 			isAttacking = false;
 			c_punch1->to_delete = true;
 
-		}*/
-	}
+		}
+	}*/
 
 
 	if (doPunch2)
