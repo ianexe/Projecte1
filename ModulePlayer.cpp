@@ -383,7 +383,7 @@ update_status ModulePlayer::Update()
 
 
 	p1_states current_state = ST_UNKNOWN;
-	if (external_input(inputs))
+	/*if (external_input(inputs))
 	{
 
 		internal_input(inputs);
@@ -459,7 +459,7 @@ update_status ModulePlayer::Update()
 		current_state = state;
 	}
 	collider->SetPos(position.x - 30, position.y - 90);
-	
+	*/
 	
 	
 	// debug camera movement --------------------------------
