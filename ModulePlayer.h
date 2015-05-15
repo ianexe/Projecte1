@@ -24,9 +24,13 @@ public:
 	Animation forward;
 	Animation backward;
 	Animation jump;
+	Animation block;
+	Animation crouch;
+	Animation crouchidle;
 	Animation punch;
 	Animation punch2;
 	Animation kick;
+	Animation kick2;
 	SDL_Rect atac;
 	SDL_Rect defense;
 	//SDL_Rect detection;
@@ -46,6 +50,7 @@ public:
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;
+	bool doKick2;
 
 	p2Point<float> position;
 	unsigned int Health;

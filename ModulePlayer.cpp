@@ -47,6 +47,20 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	jump.frames.PushBack({ 464, 819, 60, 113 });
 	jump.speed = 0.17f;
 
+	// block
+	block.frames.PushBack({ 442, 2335, 64, 92 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.speed = 0.1f;
+
+	//crouch
+	crouch.frames.PushBack({ 114, 1227, 58, 69 });
+	crouch.frames.PushBack({ 196, 1235, 62, 61 });
+	crouch.speed = 0.1f;
+
+	//crouchidle
+	crouchidle.frames.PushBack({ 196, 1235, 62, 61 });
+	crouchidle.speed = 0.1f;
+
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
@@ -65,6 +79,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.speed = 0.1f;
 
+	// kick2
+	kick2.frames.PushBack({ 16, 398, 79, 90 });
+	kick2.frames.PushBack({ 99, 394, 98, 94 });
+	kick2.frames.PushBack({ 198, 394, 133, 94 });
+	kick2.frames.PushBack({ 351, 411, 108, 77 });
+	kick2.frames.PushBack({ 482, 407, 98, 81 });
+	kick2.speed = 0.2f;
 	
 
 }
@@ -148,45 +169,54 @@ update_status ModulePlayer::Update()
 	{
 		doPunch = true;
 		isAttacking = true;
-		if (isOnLeft){
-
+		if (isOnLeft)
+		{
 			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 			//collider->SetPos(position.x + 10, position.y - 75);
-
 		}
-		else{
+		else
+		{
 			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
-
-	
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking))
 	{
 		doPunch2 = true;
 		isAttacking = true;
-		if (isOnLeft){
+		if (isOnLeft)
+		{
 			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 		else
 		{
 			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
-		
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking))
 	{
 		doKick = true;
 		isAttacking = true;
-		if (isOnLeft){
+		if (isOnLeft)
+		{
 			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
-		else{
+		else
+		{
 			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
-		}
+		}	
+	}
 
-		
+	if ((App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) && (!isAttacking))
+	{
+		doKick2 = true;
+		isAttacking = true;
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && (!isAttacking))
+	{
+		current_animation = &crouchidle;
 	}
 
 	//Does attack if called
@@ -255,6 +285,18 @@ update_status ModulePlayer::Update()
 			doKick = false;
 			isAttacking = false;
 			c_kick->to_delete = true;
+		}
+	}
+
+	if (doKick2)
+	{
+		current_animation = &kick2;
+
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			doKick2 = false;
+			isAttacking = false;
 		}
 	}
 
