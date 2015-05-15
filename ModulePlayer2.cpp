@@ -69,7 +69,7 @@ bool ModulePlayer2::Start()
 	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
-	p2_states current_state = ST_UNKNOWN;
+	p2_states current_state = _2_ST_UNKNOWN;
 
 	jump_timer = 0;
 	punch_timer = 0;
@@ -252,7 +252,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			switch (last_input)
 			{
 			case _2_IN_RIGHT_UP: state = _2_ST_IDLE; break;
-			case _2_IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case _2_IN_LEFT_AND_RIGHT: state = _2_ST_IDLE; break;
 			case _2_IN_JUMP: state = _2_ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 			case _2_IN_CROUCH_DOWN: state = _2_ST_CROUCH; break;
 			}
@@ -264,7 +264,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			switch (last_input)
 			{
 			case _2_IN_LEFT_UP: state = _2_ST_IDLE; break;
-			case _2_IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case _2_IN_LEFT_AND_RIGHT: state = _2_ST_IDLE; break;
 			case _2_IN_JUMP: state = _2_ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			case _2_IN_CROUCH_DOWN: state = _2_ST_CROUCH; break;
 			}
@@ -380,7 +380,7 @@ update_status ModulePlayer2::Update()
 
 	collider->SetPos(position.x - 30, position.y - 90);
 
-	current_state = ST_UNKNOWN;
+	current_state = _2_ST_UNKNOWN;
 	//printf("Listening for WASD + SPACE:\n");
 
 	if (external_input(inputs))
