@@ -383,7 +383,7 @@ update_status ModulePlayer2::Update()
 	current_state = _2_ST_UNKNOWN;
 	//printf("Listening for WASD + SPACE:\n");
 
-/*	if (external_input(inputs))
+	if (external_input(inputs))
 	{
 		internal_input(inputs);
 
@@ -516,8 +516,8 @@ update_status ModulePlayer2::Update()
 			isAttacking = false;
 			c_punch1->to_delete = true;
 
-		}
-	}*/
+		}*/
+	}
 
 
 	if (doPunch2)

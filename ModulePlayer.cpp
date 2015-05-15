@@ -178,7 +178,7 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 	{
 		inputs.Push(IN_X);
 	}
-	return false;
+	return true;
 }
 
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
@@ -380,7 +380,7 @@ update_status ModulePlayer::Update()
 {
 	current_animation = &idle;
 
-	p1_states current_state = ST_UNKNOWN;
+	current_state = ST_UNKNOWN;
 	if (external_input(inputs))
 	{
 		internal_input(inputs);
@@ -486,7 +486,7 @@ update_status ModulePlayer::Update()
 			collider->SetPos(position.x - 30, position.y - 90);
 			
 		}
-	}*/
+	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
 	{
