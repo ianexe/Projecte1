@@ -58,6 +58,10 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick.speed = 0.1f;
 
 	speed = 3;
+
+	jump_timer = 0;
+	punch_timer = 0;
+	hit_timer = 0;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -72,10 +76,6 @@ bool ModulePlayer::Start()
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	p1_states current_state = ST_UNKNOWN;
-
-	jump_timer = 0;
-	punch_timer = 0;
-	hit_timer = 0;
 	return true;
 }
 
