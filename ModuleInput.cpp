@@ -34,7 +34,7 @@ bool ModuleInput::Init()
 
 
 
-bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs)
+bool ModuleInput::external_input(p2Qeue<player_inputs>& inputs)
 {
 	//Player1
 	static bool left = false;
@@ -83,22 +83,22 @@ bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs)
 
 				//Player2
 			case SDLK_DOWN:
-				inputs.Push(IN_CROUCH_UP);
-				down = false;
+				inputs.Push(_1_IN_CROUCH_UP);
+				down_2 = false;
 				break;
 			case SDLK_KP_1:
-				punch_l = false;
+				punch_l_2 = false;
 				break;
 			case SDLK_UP:
-				up = false;
+				up_2 = false;
 				break;
 			case SDLK_LEFT:
-				inputs.Push(IN_LEFT_UP);
-				left = false;
+				inputs.Push(_1_IN_LEFT_UP);
+				left_2 = false;
 				break;
 			case SDLK_RIGHT:
-				inputs.Push(IN_RIGHT_UP);
-				right = false;
+				inputs.Push(_1_IN_RIGHT_UP);
+				right_2 = false;
 				break;
 			}
 		}
@@ -133,42 +133,71 @@ bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs)
 				hit_2 = true;
 				break;
 			case SDLK_w:
-				up = true;
+				up_2 = true;
 				break;
 			case SDLK_s:
-				down = true;
+				down_2 = true;
 				break;
 			case SDLK_a:
-				left = true;
+				left_2 = true;
 				break;
 			case SDLK_d:
-				right = true;
+				right_2 = true;
 				break;
 			}
 		}
 	}
-
+	//------------
+	//--Player 1-
+	//------------
 	if (left && right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
+		inputs.Push(_1_IN_LEFT_AND_RIGHT);
 	{
 		if (left)
-			inputs.Push(IN_LEFT_DOWN);
+			inputs.Push(_1_IN_LEFT_DOWN);
 		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
+			inputs.Push(_1_IN_RIGHT_DOWN);
 	}
 
 	if (up && down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
+		inputs.Push(_1_IN_JUMP_AND_CROUCH);
 	else
 	{
 		if (down)
-			inputs.Push(IN_CROUCH_DOWN);
+			inputs.Push(_1_IN_CROUCH_DOWN);
 		if (up)
-			inputs.Push(IN_JUMP);
+			inputs.Push(_1_IN_JUMP);
 	}
 	if (punch_l)
 	{
-		inputs.Push(IN_X);
+		inputs.Push(_1_IN_X);
+	}
+
+	//------------
+	//--Player 2-
+	//------------
+
+	if (left_2 && right_2)
+		inputs.Push(_2_IN_LEFT_AND_RIGHT);
+	{
+		if (left_2)
+			inputs.Push(_2_IN_LEFT_DOWN);
+		if (right_2)
+			inputs.Push(_2_IN_RIGHT_DOWN);
+	}
+
+	if (up_2 && down_2)
+		inputs.Push(_2_IN_JUMP_AND_CROUCH);
+	else
+	{
+		if (down_2)
+			inputs.Push(_2_IN_CROUCH_DOWN);
+		if (up)
+			inputs.Push(_2_IN_JUMP);
+	}
+	if (punch_l_2)
+	{
+		inputs.Push(_2_IN_X);
 	}
 	return true;
 }

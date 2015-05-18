@@ -25,7 +25,7 @@ public:
 	bool CleanUp();
 
 	//State Machine Methods
-	bool external_input(p2Qeue<p1_inputs>& inputs);
+	bool external_input(p2Qeue<player_inputs>& inputs);
 	
 	KEY_STATE GetKey(int id) const
 	{
