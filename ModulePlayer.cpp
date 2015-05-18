@@ -91,7 +91,7 @@ bool ModulePlayer::CleanUp()
 }
 
 //State machine functions
-bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
+/*bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -372,7 +372,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 	}
 
 	return state;
-}
+}*/
 
 
 // Update: draw background
@@ -381,7 +381,7 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = ST_UNKNOWN;
-	if (external_input(inputs))
+	/*if (external_input(inputs))
 	{
 		internal_input(inputs);
 		
@@ -454,7 +454,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 		current_state = state;
-	}
+	}*/
 	collider->SetPos(position.x - 30, position.y - 90);
 	
 	
@@ -463,7 +463,7 @@ update_status ModulePlayer::Update()
 
 	
 
-	/*if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 	{
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
@@ -535,7 +535,7 @@ update_status ModulePlayer::Update()
 
 	//Does attack if called
 
-	/*if (doPunch)
+	if (doPunch)
 	{
 		current_animation = &punch;
 		
@@ -546,7 +546,7 @@ update_status ModulePlayer::Update()
 			isAttacking = false;
 			c_punch1->to_delete = true;
 		}
-	}*/
+	}
 
 
 	if (doPunch2)

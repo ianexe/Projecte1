@@ -406,7 +406,7 @@ update_status ModulePlayer2::Update()
 			switch (state)
 			{
 			case ST_IDLE:
-				//	std::cout<<"IDLE\n";
+			//	current_animation = &idle;
 				break;
 			case ST_HIT:
 				//	std::cout << "HIT\n";
