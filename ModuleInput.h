@@ -1,6 +1,9 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "States.h"
+#include "p2Qeue.h"
+
 
 enum KEY_STATE
 {

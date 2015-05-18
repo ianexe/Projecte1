@@ -382,11 +382,11 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = ST_UNKNOWN;
-	if (App->player->external_input(inputs))
+	if (App->input->external_input(inputs))
 	{
-		App->player->internal_input(inputs);
+		App->input->internal_input(inputs);
 
-		p1_states state = App->player->process_fsm(inputs);
+		p1_states state = App->input->process_fsm(inputs);
 
 		if (state != current_state)
 		{

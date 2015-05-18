@@ -109,11 +109,11 @@ update_status ModulePlayer2::Update()
 
 	current_state = ST_UNKNOWN;
 	
-	if (App->player2->external_input(inputs2))
+	if (App->input->external_input(inputs2))
 	{
-		App->player2->internal_input(inputs2);
+		App->input->internal_input(inputs2);
 
-		p1_states state2 = App->player2->process_fsm(inputs2);
+		p1_states state2 = App->input->process_fsm(inputs2);
 
 		if (state2 != current_state)
 		{
