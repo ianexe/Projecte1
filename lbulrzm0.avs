@@ -174,7 +174,12 @@ p1_states ModuleInput::process_fsm(p2Qeue<p1_inputs>& inputs2)
 						case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 						case IN_X:
 						{
-									
+									 if (isOnLeft){
+										 c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+									 }
+									 else{
+										 c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+									 }
 									 punch_timer = SDL_GetTicks();
 									 state = ST_PUNCH_STANDING_L;
 						}

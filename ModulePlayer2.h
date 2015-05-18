@@ -43,10 +43,7 @@ public:
 	Collider* c_kick;
 
 	
-	//State Machine Methods
-	bool external_input(p2Qeue<p1_inputs>& inputs);
-	void internal_input(p2Qeue<p1_inputs>& inputs);
-	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
+
 	
 	//Timers
 	Uint32 jump_timer;
