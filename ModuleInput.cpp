@@ -34,27 +34,35 @@ bool ModuleInput::Init()
 
 
 
-bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs2)
+bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs)
 {
+	//Player1
 	static bool left = false;
 	static bool right = false;
 	static bool down = false;
 	static bool up = false;
 	static bool punch_l = false;
+	static bool hit = false;
+	//Player2
+	static bool left_2 = false;
+	static bool right_2 = false;
+	static bool down_2 = false;
+	static bool up_2 = false;
+	static bool punch_l_2 = false;
+	static bool hit_2 = false;
+	SDL_Event event;
 
-	SDL_Event event2;
-
-	if (SDL_PollEvent(&event2) != 0)
+	if (SDL_PollEvent(&event) != 0)
 	{
-		if (event2.type == SDL_KEYUP && event2.key.repeat == 0)
+		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
-			switch (event2.key.keysym.sym)
+			switch (event.key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
 				return false;
 				break;
 			case SDLK_DOWN:
-				inputs2.Push(IN_CROUCH_UP);
+				inputs.Push(IN_CROUCH_UP);
 				down = false;
 				break;
 			case SDLK_KP_1:
@@ -64,24 +72,45 @@ bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs2)
 				up = false;
 				break;
 			case SDLK_LEFT:
-				inputs2.Push(IN_LEFT_UP);
+				inputs.Push(IN_LEFT_UP);
 				left = false;
 				break;
 			case SDLK_RIGHT:
-				inputs2.Push(IN_RIGHT_UP);
+				inputs.Push(IN_RIGHT_UP);
+				right = false;
+				break;
+
+			//Player2
+			case SDLK_s:
+				inputs.Push(IN_CROUCH_UP);
+				down = false;
+				break;
+			case SDLK_q:
+				punch_l = false;
+				break;
+			case SDLK_w:
+				up = false;
+				break;
+			case SDLK_a:
+				inputs.Push(IN_LEFT_UP);
+				left = false;
+				break;
+			case SDLK_d:
+				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
 			}
 		}
-		if (event2.type == SDL_KEYDOWN && event2.key.repeat == 0)
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
-			switch (event2.key.keysym.sym)
+			switch (event.key.keysym.sym)
 			{
+			//Player 
 			case SDLK_q:
 				punch_l = true;
 				break;
 			case SDLK_h:
-				inputs2.Push(IN_H);
+				hit = true;
 				break;
 			case SDLK_UP:
 				up = true;
@@ -95,31 +124,50 @@ bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs2)
 			case SDLK_RIGHT:
 				right = true;
 				break;
+			//Player 2
+			case SDLK_KP_1:
+				punch_l = true;
+				break;
+			case SDLK_KP_5:
+				hit_2 = true;
+				break;
+			case SDLK_w:
+				up = true;
+				break;
+			case SDLK_s:
+				down = true;
+				break;
+			case SDLK_a:
+				left = true;
+				break;
+			case SDLK_d:
+				right = true;
+				break;
 			}
 		}
 	}
 
 	if (left && right)
-		inputs2.Push(IN_LEFT_AND_RIGHT);
+		inputs.Push(IN_LEFT_AND_RIGHT);
 	{
 		if (left)
-			inputs2.Push(IN_LEFT_DOWN);
+			inputs.Push(IN_LEFT_DOWN);
 		if (right)
-			inputs2.Push(IN_RIGHT_DOWN);
+			inputs.Push(IN_RIGHT_DOWN);
 	}
 
 	if (up && down)
-		inputs2.Push(IN_JUMP_AND_CROUCH);
+		inputs.Push(IN_JUMP_AND_CROUCH);
 	else
 	{
 		if (down)
-			inputs2.Push(IN_CROUCH_DOWN);
+			inputs.Push(IN_CROUCH_DOWN);
 		if (up)
-			inputs2.Push(IN_JUMP);
+			inputs.Push(IN_JUMP);
 	}
 	if (punch_l)
 	{
-		inputs2.Push(IN_X);
+		inputs.Push(IN_X);
 	}
 	return true;
 }

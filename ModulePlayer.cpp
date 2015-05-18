@@ -403,7 +403,7 @@ update_status ModulePlayer::Update()
 
 		case ST_WALK_FORWARD:{
 		//	std::cout << "WALK FORWARD >>>>\n";
-			if (App->player->position.x < 860.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+			if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 			{
 				current_animation = &forward;
 				position.x += speed;
@@ -415,7 +415,7 @@ update_status ModulePlayer::Update()
 		case ST_WALK_BACKWARD:
 		//	std::cout << "WALK BACKWARD <<<<\n";
 		{
-		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
+		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
 		{
 		current_animation = &backward;
 		position.x -= speed;

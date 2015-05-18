@@ -49,7 +49,6 @@ public:
 	Uint32 punch_timer;
 	Uint32 hit_timer;
 
-
 	//Not so evil bools
 	bool isOnLeft;
 	bool isAttacking;

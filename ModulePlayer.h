@@ -86,6 +86,11 @@ public:
 	p2Qeue<p1_inputs> inputs;
 	p1_states current_state;
 	
+	//Timers
+	Uint32 jump_timer;
+	Uint32 punch_timer;
+	Uint32 hit_timer;
+
 	//Variables
 	//bools
 	bool isOnLeft = false;
@@ -95,11 +100,6 @@ public:
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;
-
-	//Timers
-	Uint32 jump_timer;
-	Uint32 punch_timer;
-	Uint32 hit_timer;
 
 	//Character basics
 	p2Point<int> position;

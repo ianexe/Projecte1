@@ -312,10 +312,10 @@ update_status ModulePlayer2::Update()
 
 			case ST_WALK_FORWARD:{
 				//	std::cout << "WALK FORWARD >>>>\n";
-				if (App->player2->position.x < 860.0 && App->player2->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 				{
 					current_animation = &forward;
-					App->player2->position.x += speed;
+					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 			}
@@ -324,10 +324,10 @@ update_status ModulePlayer2::Update()
 			case ST_WALK_BACKWARD:
 				//	std::cout << "WALK BACKWARD <<<<\n";
 			{
-				if (App->player2->position.x > 0.0 && App->player2->position.x > (App->renderer->OpCamera.x) + 20)
+				if (position.x > 0.0 && App->player2->position.x > (App->renderer->OpCamera.x) + 20)
 				{
 					current_animation = &backward;
-					App->player2->position.x -= speed;
+					position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 			}
@@ -403,7 +403,6 @@ update_status ModulePlayer2::Update()
 		else
 		{
 			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
-
 		}
 	}
 
@@ -434,8 +433,6 @@ update_status ModulePlayer2::Update()
 
 		}*/
 	}
-
-
 	if (doPunch2)
 	{
 		current_animation = &punch2;

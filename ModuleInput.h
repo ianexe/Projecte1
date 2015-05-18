@@ -27,13 +27,6 @@ public:
 	//State Machine Methods
 	bool external_input(p2Qeue<p1_inputs>& inputs);
 	
-
-	//Timers
-	Uint32 jump_timer;
-	Uint32 punch_timer;
-	Uint32 hit_timer;
-
-
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];
