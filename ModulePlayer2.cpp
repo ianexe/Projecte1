@@ -88,10 +88,194 @@ bool ModulePlayer2::CleanUp()
 	return true;
 }
 
-Uint32 jump_timer = 0;
-Uint32 punch_timer = 0;
-Uint32 hit_timer = 0;
 
+void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
+{
+	if (jump_timer > 0)
+	{
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
+		{
+			inputs.Push(IN_JUMP_FINISH);
+			jump_timer = 0;
+		}
+	}
+
+	if (punch_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
+			//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_PUNCH_FINISH);
+			punch_timer = 0;
+		}
+	}
+
+	if (hit_timer > 0)
+	{
+		if (SDL_GetTicks() - hit_timer > HIT_TIME)
+		{
+			inputs.Push(IN_HIT_FINISH);
+			punch_timer = 0;
+		}
+	}
+}
+
+p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs2)
+{
+	static p1_states state = ST_IDLE;
+	p1_inputs last_input;
+
+	while (inputs2.Pop(last_input))
+	{
+		switch (state)
+		{
+		case ST_IDLE:
+		{
+			switch (last_input)
+			{
+			case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
+			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
+			case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
+			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+			case IN_X:
+			{
+
+				punch_timer = SDL_GetTicks();
+				state = ST_PUNCH_STANDING_L;
+			}
+			break;
+			case IN_H: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
+			}
+		}
+		break;
+
+		case ST_HIT:
+		{
+			switch (last_input)
+			{
+			case IN_HIT_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+
+		case ST_WALK_FORWARD:
+		{
+			switch (last_input)
+			{
+			case IN_RIGHT_UP: state = ST_IDLE; break;
+			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
+			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+			}
+		}
+		break;
+
+		case ST_WALK_BACKWARD:
+		{
+			switch (last_input)
+			{
+			case IN_LEFT_UP: state = ST_IDLE; break;
+			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
+			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+			}
+		}
+		break;
+
+		case ST_JUMP_NEUTRAL:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_JUMP_FORWARD:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_JUMP_BACKWARD:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH: state = ST_JUMP_NEUTRAL; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH: state = ST_JUMP_FORWARD; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH: state = ST_JUMP_BACKWARD; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_STANDING_L:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH: c_punch1->to_delete = true;  state = ST_IDLE;  break;
+			}
+		}
+		break;
+
+		case ST_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			case IN_CROUCH_UP: state = ST_IDLE; break;
+
+			}
+		}
+		break;
+		case ST_PUNCH_CROUCH:
+		{
+			switch (last_input)
+			{
+
+			case IN_PUNCH_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+		}
+	}
+
+	return state;
+}
 
 
 
@@ -111,9 +295,9 @@ update_status ModulePlayer2::Update()
 	
 	if (App->input->external_input(inputs2))
 	{
-		App->input->internal_input(inputs2);
+		App->player2->internal_input(inputs2);
 
-		p1_states state2 = App->input->process_fsm(inputs2);
+		p1_states state2 = App->player2->process_fsm(inputs2);
 
 		if (state2 != current_state)
 		{

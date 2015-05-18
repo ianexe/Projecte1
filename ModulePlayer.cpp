@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
-
+#include "ModuleInput.h"
 //#include "StateMachine.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -59,9 +59,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	speed = 3;
 
-	jump_timer = 0;
-	punch_timer = 0;
-	hit_timer = 0;
+	
 }
 
 ModulePlayer::~ModulePlayer()
@@ -76,6 +74,10 @@ bool ModulePlayer::Start()
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	p1_states current_state = ST_UNKNOWN;
+
+	jump_timer = 0;
+	punch_timer = 0;
+	hit_timer = 0;
 	return true;
 }
 
@@ -91,7 +93,7 @@ bool ModulePlayer::CleanUp()
 }
 
 //State machine functions
-bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
+/*bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -181,7 +183,7 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 	}
 	return true;
 }
-
+*/
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (jump_timer > 0)
@@ -384,9 +386,9 @@ update_status ModulePlayer::Update()
 	current_state = ST_UNKNOWN;
 	if (App->input->external_input(inputs))
 	{
-		App->input->internal_input(inputs);
+		App->player->internal_input(inputs);
 
-		p1_states state = App->input->process_fsm(inputs);
+		p1_states state = App->player->process_fsm(inputs);
 
 		if (state != current_state)
 		{

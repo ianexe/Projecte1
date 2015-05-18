@@ -18,7 +18,10 @@ public:
 	//State Machine variables
 	p2Qeue<p1_inputs> inputs2;
 	p1_states current_state;
-
+	//State Machine methods
+	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
+	void internal_input(p2Qeue<p1_inputs>& inputs);
+	//What it does when collides
 	void OnCollision(Collider* c1, Collider* c2);
 public:
 	//Animations
@@ -41,9 +44,6 @@ public:
 	Collider* c_punch2;
 	Collider* c_kick;
 
-	
-
-	
 	//Timers
 	Uint32 jump_timer;
 	Uint32 punch_timer;
