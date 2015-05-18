@@ -17,7 +17,7 @@ public:
 	bool CleanUp();
 
 	//State Machine variables
-	p2Qeue<p1_inputs> inputs;
+	p2Qeue<p1_inputs> inputs2;
 	p1_states current_state;
 
 	void OnCollision(Collider* c1, Collider* c2);

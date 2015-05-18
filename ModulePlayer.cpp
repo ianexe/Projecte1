@@ -107,10 +107,7 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (event.key.keysym.sym)
 			{
-			if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
-			{
-			}
-			/*
+			
 			case SDLK_ESCAPE:
 				return false;
 				break;
@@ -377,7 +374,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 	return state;
 }
-*/
+
 
 // Update: draw background
 update_status ModulePlayer::Update()
@@ -385,7 +382,7 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = ST_UNKNOWN;
-	/*if (external_input(inputs))
+	if (external_input(inputs))
 	{
 		internal_input(inputs);
 
@@ -404,12 +401,12 @@ update_status ModulePlayer::Update()
 
 		case ST_WALK_FORWARD:{
 		//	std::cout << "WALK FORWARD >>>>\n";
-		if (App->player->position.x < 860.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
-		{
-		current_animation = &forward;
-		position.x += speed;
-		collider->SetPos(position.x - 30, position.y - 90);
-		}
+			if (App->player->position.x < 860.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+			{
+				current_animation = &forward;
+				position.x += speed;
+				collider->SetPos(position.x - 30, position.y - 90);
+			}
 		}
 		break;
 

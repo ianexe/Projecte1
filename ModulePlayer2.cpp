@@ -94,7 +94,7 @@ Uint32 hit_timer = 0;
 
 
 //TODO SINGLE STATE MACHINE
-bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs)
+bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs2)
 {
 	static bool left = false;
 	static bool right = false;
@@ -114,7 +114,7 @@ bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs)
 				return false;
 				break;
 			case SDLK_DOWN:
-				inputs.Push(IN_CROUCH_UP);
+				inputs2.Push(IN_CROUCH_UP);
 				down = false;
 				break;
 			case SDLK_KP_1:
@@ -124,11 +124,11 @@ bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs)
 				up = false;
 				break;
 			case SDLK_LEFT:
-				inputs.Push(IN_LEFT_UP);
+				inputs2.Push(IN_LEFT_UP);
 				left = false;
 				break;
 			case SDLK_RIGHT:
-				inputs.Push(IN_RIGHT_UP);
+				inputs2.Push(IN_RIGHT_UP);
 				right = false;
 				break;
 			}
@@ -141,7 +141,7 @@ bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs)
 				punch_l = true;
 				break;
 			case SDLK_h:
-				inputs.Push(IN_H);
+				inputs2.Push(IN_H);
 				break;
 			case SDLK_UP:
 				up = true;
@@ -160,37 +160,37 @@ bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs)
 	}
 
 	if (left && right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
+		inputs2.Push(IN_LEFT_AND_RIGHT);
 	{
 		if (left)
-			inputs.Push(IN_LEFT_DOWN);
+			inputs2.Push(IN_LEFT_DOWN);
 		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
+			inputs2.Push(IN_RIGHT_DOWN);
 	}
 
 	if (up && down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
+		inputs2.Push(IN_JUMP_AND_CROUCH);
 	else
 	{
 		if (down)
-			inputs.Push(IN_CROUCH_DOWN);
+			inputs2.Push(IN_CROUCH_DOWN);
 		if (up)
-			inputs.Push(IN_JUMP);
+			inputs2.Push(IN_JUMP);
 	}
 	if (punch_l)
 	{
-		inputs.Push(IN_X);
+		inputs2.Push(IN_X);
 	}
 	return true;
 }
 
-void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
+void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs2)
 {
 	if (jump_timer > 0)
 	{
 		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
 		{
-			inputs.Push(IN_JUMP_FINISH);
+			inputs2.Push(IN_JUMP_FINISH);
 			jump_timer = 0;
 		}
 	}
@@ -200,7 +200,7 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
 			//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
-			inputs.Push(IN_PUNCH_FINISH);
+			inputs2.Push(IN_PUNCH_FINISH);
 			punch_timer = 0;
 		}
 	}
@@ -209,18 +209,18 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - hit_timer > HIT_TIME)
 		{
-			inputs.Push(IN_HIT_FINISH);
+			inputs2.Push(IN_HIT_FINISH);
 			punch_timer = 0;
 		}
 	}
 }
 
-p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
+p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs2)
 {
 	static p1_states state = ST_IDLE;
 	p1_inputs last_input;
 
-	while (inputs.Pop(last_input))
+	while (inputs2.Pop(last_input))
 	{
 		switch (state)
 		{
@@ -395,11 +395,11 @@ update_status ModulePlayer2::Update()
 
 	current_state = ST_UNKNOWN;
 	
-	if (external_input(inputs))
+	if (external_input(inputs2))
 	{
-		internal_input(inputs);
+		internal_input(inputs2);
 
-		p1_states state = process_fsm(inputs);
+		p1_states state = process_fsm(inputs2);
 
 		if (state != current_state)
 		{
@@ -426,10 +426,10 @@ update_status ModulePlayer2::Update()
 			case ST_WALK_BACKWARD:
 				//	std::cout << "WALK BACKWARD <<<<\n";
 			{
-				if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
+				if (App->player2->position.x > 0.0 && App->player2->position.x > (App->renderer->OpCamera.x) + 20)
 				{
 					current_animation = &backward;
-					position.x -= speed;
+					App->player2->position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 			}
