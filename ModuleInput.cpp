@@ -154,7 +154,7 @@ void ModuleInput::internal_input(p2Qeue<p1_inputs>& inputs2)
 		}
 	}
 }
-
+/*
 p1_states ModuleInput::process_fsm(p2Qeue<p1_inputs>& inputs2)
 {
 	static p1_states state = ST_IDLE;
@@ -311,7 +311,7 @@ p1_states ModuleInput::process_fsm(p2Qeue<p1_inputs>& inputs2)
 
 	return state;
 }
-
+*/
 
 
 
@@ -349,11 +349,6 @@ update_status ModuleInput::PreUpdate()
 
 	return UPDATE_CONTINUE;
 }
-
-
-
-
-
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
