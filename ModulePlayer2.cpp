@@ -104,7 +104,7 @@ bool ModulePlayer2::external_input(p2Qeue<p1_inputs>& inputs)
 
 	SDL_Event event;
 
-	while (SDL_PollEvent(&event) != 0)
+	if(SDL_PollEvent(&event) != 0)
 	{
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{

@@ -91,7 +91,7 @@ bool ModulePlayer::CleanUp()
 }
 
 //State machine functions
-/*bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
+bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -101,12 +101,16 @@ bool ModulePlayer::CleanUp()
 
 	SDL_Event event;
 
-	while (SDL_PollEvent(&event) != 0)
+	if(SDL_PollEvent(&event) != 0)
 	{
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
+			if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (!isAttacking))
+			{
+			}
+			/*
 			case SDLK_ESCAPE:
 				return false;
 				break;
@@ -372,8 +376,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 	}
 
 	return state;
-}*/
-
+}
+*/
 
 // Update: draw background
 update_status ModulePlayer::Update()
@@ -384,212 +388,212 @@ update_status ModulePlayer::Update()
 	/*if (external_input(inputs))
 	{
 		internal_input(inputs);
-		
+
 		p1_states state = process_fsm(inputs);
 
 		if (state != current_state)
 		{
-			switch (state)
-			{
-			case ST_IDLE:
-			//	std::cout<<"IDLE\n";
-				break;
-			case ST_HIT:
-			//	std::cout << "HIT\n";
-				break;
+		switch (state)
+		{
+		case ST_IDLE:
+		//	std::cout<<"IDLE\n";
+		break;
+		case ST_HIT:
+		//	std::cout << "HIT\n";
+		break;
 
-			case ST_WALK_FORWARD:{
-					 //	std::cout << "WALK FORWARD >>>>\n";
-					if (App->player->position.x < 860.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
-					 {
-							current_animation = &forward;
-							position.x += speed;
-							collider->SetPos(position.x - 30, position.y - 90);
-					 }
-			}
-				break;
-
-			case ST_WALK_BACKWARD:
-				//	std::cout << "WALK BACKWARD <<<<\n";
-			{
-				 if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
-				{
-						 current_animation = &backward;
-						 position.x -= speed;
-						 collider->SetPos(position.x - 30, position.y - 90);
-				}
-			}
-				break;
-			case ST_JUMP_NEUTRAL:
-				//std::cout << "JUMPING NEUTRAL ^^^^\n";
-				break;
-			case ST_JUMP_FORWARD:
-				//std::cout << "JUMPING FORWARD ^^>>\n";
-				break;
-			case ST_JUMP_BACKWARD:
-				//std::cout << "JUMPING BACKWARD ^^<<\n";
-				break;
-			case ST_CROUCH:
-				//std::cout << "CROUCHING ****\n";
-				break;
-			case ST_PUNCH_CROUCH:
-				//std::cout << "PUNCH CROUCHING **++\n";
-				break;
-			case ST_PUNCH_STANDING_L:
-				//std::cout << "PUNCH STANDING ++++\n";
-				current_animation = &punch;
-				collider->SetPos(position.x + 10, position.y - 75);
-
-				
-				break;
-			case ST_PUNCH_NEUTRAL_JUMP:
-				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
-				break;
-			case ST_PUNCH_FORWARD_JUMP:
-				//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
-				break;
-			case ST_PUNCH_BACKWARD_JUMP:
-				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
-				break;
-			}
+		case ST_WALK_FORWARD:{
+		//	std::cout << "WALK FORWARD >>>>\n";
+		if (App->player->position.x < 860.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+		{
+		current_animation = &forward;
+		position.x += speed;
+		collider->SetPos(position.x - 30, position.y - 90);
 		}
-		current_state = state;
-	}*/
-	collider->SetPos(position.x - 30, position.y - 90);
-	
-	
-	
-	// debug camera movement --------------------------------
+		}
+		break;
 
-	
-
-	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
-	{
+		case ST_WALK_BACKWARD:
+		//	std::cout << "WALK BACKWARD <<<<\n";
+		{
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
-			current_animation = &forward;
-			position.x -= speed;
-			collider->SetPos(position.x - 30, position.y - 90);
+		current_animation = &backward;
+		position.x -= speed;
+		collider->SetPos(position.x - 30, position.y - 90);
+		}
+		}
+		break;
+		case ST_JUMP_NEUTRAL:
+		//std::cout << "JUMPING NEUTRAL ^^^^\n";
+		break;
+		case ST_JUMP_FORWARD:
+		//std::cout << "JUMPING FORWARD ^^>>\n";
+		break;
+		case ST_JUMP_BACKWARD:
+		//std::cout << "JUMPING BACKWARD ^^<<\n";
+		break;
+		case ST_CROUCH:
+		//std::cout << "CROUCHING ****\n";
+		break;
+		case ST_PUNCH_CROUCH:
+		//std::cout << "PUNCH CROUCHING **++\n";
+		break;
+		case ST_PUNCH_STANDING_L:
+		//std::cout << "PUNCH STANDING ++++\n";
+		current_animation = &punch;
+		collider->SetPos(position.x + 10, position.y - 75);
+
+
+		break;
+		case ST_PUNCH_NEUTRAL_JUMP:
+		//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
+		break;
+		case ST_PUNCH_FORWARD_JUMP:
+		//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
+		break;
+		case ST_PUNCH_BACKWARD_JUMP:
+		//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
+		break;
+		}
+		}
+		current_state = state;
+		}
+		collider->SetPos(position.x - 30, position.y - 90);
+
+
+
+		// debug camera movement --------------------------------
+
+
+
+		/*if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
+		{
+		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
+		{
+		current_animation = &forward;
+		position.x -= speed;
+		collider->SetPos(position.x - 30, position.y - 90);
 
 		}
-	}
+		}
 
-	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking))
-	{
+		else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking))
+		{
 		if (App->player->position.x < 896.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
-			
-			current_animation = &forward;
-			position.x += speed;
-			
-		
-			collider->SetPos(position.x - 30, position.y - 90);
-			
-		}
-	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
-	{
+		current_animation = &forward;
+		position.x += speed;
+
+
+		collider->SetPos(position.x - 30, position.y - 90);
+
+		}
+		}
+
+		if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
+		{
 		doPunch = true;
 		isAttacking = true;
 		if (isOnLeft){
 
-			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-			//collider->SetPos(position.x + 10, position.y - 75);
+		c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+		//collider->SetPos(position.x + 10, position.y - 75);
 
 		}
 		else{
-			c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+		c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 
-	
-	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking))
-	{
+		}
+
+		if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking))
+		{
 		doPunch2 = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
+		c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
 		else
 		{
-			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
+		c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 		}
-		
-	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking))
-	{
+		}
+
+		if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking))
+		{
 		doKick = true;
 		isAttacking = true;
 		if (isOnLeft){
-			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+		c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
 		else{
-			c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+		c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 		}
 
-		
-	}
 
-	//Does attack if called
+		}*/
 
-	if (doPunch)
-	{
-		current_animation = &punch;
-		
-		
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		//Does attack if called
+
+		if (doPunch)
 		{
-			doPunch = false;
-			isAttacking = false;
-			c_punch1->to_delete = true;
+			current_animation = &punch;
+
+
+			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+			{
+				doPunch = false;
+				isAttacking = false;
+				c_punch1->to_delete = true;
+			}
 		}
-	}
 
 
-	if (doPunch2)
-	{
-		current_animation = &punch2;
-		
-		
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		if (doPunch2)
 		{
-			doPunch2 = false;
-			isAttacking = false;
-			c_punch2->to_delete = true;
+			current_animation = &punch2;
+
+
+			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+			{
+				doPunch2 = false;
+				isAttacking = false;
+				c_punch2->to_delete = true;
+			}
 		}
-	}
 
-	if (doKick)
-	{
-		current_animation = &kick;
-		
-
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		if (doKick)
 		{
-			doKick = false;
-			isAttacking = false;
-			c_kick->to_delete = true;
+			current_animation = &kick;
+
+
+			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+			{
+				doKick = false;
+				isAttacking = false;
+				c_kick->to_delete = true;
+			}
 		}
+
+		//Checks where player is facing
+
+		if (App->player->position.x < App->player2->position.x)
+			isOnLeft = true;
+		else
+			isOnLeft = false;
+
+		// Draw everything --------------------------------------
+		SDL_Rect r = current_animation->GetCurrentFrame();
+
+		App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
+
+
+		return UPDATE_CONTINUE;
 	}
-
-	//Checks where player is facing
-
-	if (App->player->position.x < App->player2->position.x)
-		isOnLeft = true;
-	else
-		isOnLeft = false;
-
-	// Draw everything --------------------------------------
-	SDL_Rect r = current_animation->GetCurrentFrame();
-
-	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
-
-
-	return UPDATE_CONTINUE;
-}
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {

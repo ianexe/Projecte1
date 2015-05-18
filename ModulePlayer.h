@@ -56,10 +56,10 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
-	//State methods
+	/*//State methods
 	bool external_input(p2Qeue<p1_inputs>& inputs);
 	void internal_input(p2Qeue<p1_inputs>& inputs);
-	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
+	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);*/
 
 public:
 	
