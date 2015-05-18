@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 enum p1_states
 {
 	ST_UNKNOWN,
@@ -35,11 +35,12 @@ enum p1_inputs
 	IN_JUMP_FINISH,
 	IN_PUNCH_FINISH,
 	IN_HIT_FINISH
-};
-/*
-enum p1_states
+};*/
+
+enum player_states
 {
-	ST_UNKNOWN,
+	//Player 1
+	_1_ST_UNKNOWN,
 
 	_1_ST_IDLE,
 	_1_ST_WALK_FORWARD,
@@ -59,29 +60,9 @@ enum p1_states
 	_1_ST_PUNCH_BACKWARD_JUMP,
 	_1_ST_PUNCH_CROUCH,
 	_1_ST_HIT,
-	_1_ST_STUN
-};
+	_1_ST_STUN,
 
-enum p1_inputs
-{
-	_1_IN_LEFT_DOWN,
-	_1_IN_LEFT_UP,
-	_1_IN_RIGHT_DOWN,
-	_1_IN_RIGHT_UP,
-	_1_IN_LEFT_AND_RIGHT,
-	_1_IN_JUMP,
-	_1_IN_CROUCH_UP,
-	_1_IN_CROUCH_DOWN,
-	_1_IN_JUMP_AND_CROUCH,
-	_1_IN_X, // X = PUNCH
-	_1_IN_H, // H = HIT
-	_1_IN_JUMP_FINISH,
-	_1_IN_PUNCH_FINISH,
-	_1_IN_HIT_FINISH
-};*/
-
-enum p2_states
-{
+	//Player 2
 	_2_ST_UNKNOWN,
 
 	_2_ST_IDLE,
@@ -105,8 +86,25 @@ enum p2_states
 	_2_ST_STUN
 };
 
-enum p2_inputs
+enum player_inputs
 {
+	//Player 1
+	_1_IN_LEFT_DOWN,
+	_1_IN_LEFT_UP,
+	_1_IN_RIGHT_DOWN,
+	_1_IN_RIGHT_UP,
+	_1_IN_LEFT_AND_RIGHT,
+	_1_IN_JUMP,
+	_1_IN_CROUCH_UP,
+	_1_IN_CROUCH_DOWN,
+	_1_IN_JUMP_AND_CROUCH,
+	_1_IN_X, // X = PUNCH
+	_1_IN_H, // H = HIT
+	_1_IN_JUMP_FINISH,
+	_1_IN_PUNCH_FINISH,
+	_1_IN_HIT_FINISH,
+
+	//Player 2
 	_2_IN_LEFT_DOWN,
 	_2_IN_LEFT_UP,
 	_2_IN_RIGHT_DOWN,
@@ -122,3 +120,4 @@ enum p2_inputs
 	_2_IN_PUNCH_FINISH,
 	_2_IN_HIT_FINISH
 };
+

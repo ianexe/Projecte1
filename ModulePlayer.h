@@ -56,22 +56,13 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 	//State methods
-	void internal_input(p2Qeue<p1_inputs>& inputs);
-	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
+	void internal_input(p2Qeue<player_inputs>& inputs);
+	player_states process_fsm(p2Qeue<player_inputs>& inputs);
 
 public:
 	
 	SDL_Texture* graphics;
-	//Animations
-
-	Animation idle;
-	Animation forward;
-	Animation backward;
-	Animation punch;
-	Animation punch2;
-	Animation kick;
-	SDL_Rect atac;
-	SDL_Rect defense;
+	
 
 	//Pointer to current animation
 	Animation* current_animation;
@@ -83,8 +74,8 @@ public:
 	Collider* c_kick;
 
 	//State Variables
-	p2Qeue<p1_inputs> inputs;
-	p1_states current_state;
+	p2Qeue<player_inputs> inputs;
+	player_states current_state;
 	
 	//Timers
 	Uint32 jump_timer;
@@ -106,5 +97,14 @@ public:
 	unsigned int Health;
 	float speed;
 
+	//Animations
 
+	Animation idle;
+	Animation forward;
+	Animation backward;
+	Animation punch;
+	Animation punch2;
+	Animation kick;
+	SDL_Rect atac;
+	SDL_Rect defense;
 };

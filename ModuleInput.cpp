@@ -58,9 +58,30 @@ bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_ESCAPE:
+			/*case SDLK_ESCAPE:
 				return false;
+				break;*/
+			//Player 1
+			case SDLK_s:
+				inputs.Push(_2_IN_CROUCH_UP);
+				down = false;
 				break;
+			case SDLK_q:
+				punch_l = false;
+				break;
+			case SDLK_w:
+				up = false;
+				break;
+			case SDLK_a:
+				inputs.Push(_2_IN_LEFT_UP);
+				left = false;
+				break;
+			case SDLK_d:
+				inputs.Push(_2_IN_RIGHT_UP);
+				right = false;
+				break;
+
+				//Player2
 			case SDLK_DOWN:
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
@@ -76,26 +97,6 @@ bool ModuleInput::external_input(p2Qeue<p1_inputs>& inputs)
 				left = false;
 				break;
 			case SDLK_RIGHT:
-				inputs.Push(IN_RIGHT_UP);
-				right = false;
-				break;
-
-			//Player2
-			case SDLK_s:
-				inputs.Push(IN_CROUCH_UP);
-				down = false;
-				break;
-			case SDLK_q:
-				punch_l = false;
-				break;
-			case SDLK_w:
-				up = false;
-				break;
-			case SDLK_a:
-				inputs.Push(IN_LEFT_UP);
-				left = false;
-				break;
-			case SDLK_d:
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
