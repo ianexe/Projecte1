@@ -86,7 +86,7 @@ enum player_states
 	_2_ST_STUN
 };
 
-enum player_inputs
+enum p1_inputs
 {
 	//Player 1
 	_1_IN_LEFT_DOWN,
@@ -103,7 +103,10 @@ enum player_inputs
 	_1_IN_JUMP_FINISH,
 	_1_IN_PUNCH_FINISH,
 	_1_IN_HIT_FINISH,
+};
 
+enum p2_inputs
+{
 	//Player 2
 	_2_IN_LEFT_DOWN,
 	_2_IN_LEFT_UP,

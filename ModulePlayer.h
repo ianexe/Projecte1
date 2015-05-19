@@ -74,9 +74,8 @@ public:
 	Collider* c_kick;
 
 	//State Variables
-	p2Qeue<player_inputs> inputs;
 	player_states current_state;
-	
+	p2Qeue<player_inputs> inputs;
 	//Timers
 	Uint32 jump_timer;
 	Uint32 punch_timer;
