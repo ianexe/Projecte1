@@ -1,8 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModulePlayer.h"
-#include "ModuleCollision.h"
-#include "ModuleInput.h"
+
+
 //#include "StateMachine.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -384,9 +384,8 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = _1_ST_UNKNOWN;
-	//if (App->input->external_input1(inputs))
-	//{
-		App->player->internal_input(inputs);
+	App->input->external_input1(inputs);
+	App->player->internal_input(inputs);
 
 		player_states state = App->player->process_fsm(inputs);
 
@@ -587,10 +586,6 @@ update_status ModulePlayer::Update()
 		SDL_Rect r = current_animation->GetCurrentFrame();
 
 		App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
-
-
-		
-	//}
 	return UPDATE_CONTINUE;
 }
 

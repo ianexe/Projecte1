@@ -293,16 +293,15 @@ update_status ModulePlayer2::Update()
 	
 	//Els sprites estan ben ficats
 	Animation* current_animation = &idle;
-
-	collider->SetPos(position.x - 30, position.y - 90);
+	
 
 	current_state = _2_ST_UNKNOWN;
 	
-	if (App->input->external_input2(inputs2))
-	{
-		App->player2->internal_input(inputs2);
+	App->input->external_input2(inputs2);
+	
+	App->player2->internal_input(inputs2);
 
-		player_states state2 = App->player2->process_fsm(inputs2);
+	player_states state2 = App->player2->process_fsm(inputs2);
 
 		if (state2 != current_state)
 		{
@@ -364,18 +363,18 @@ update_status ModulePlayer2::Update()
 				collider->SetPos(position.x + 10, position.y - 75);
 
 
-				break;
-			case _2_ST_PUNCH_NEUTRAL_JUMP:
-				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
-				break;
-			case _2_ST_PUNCH_FORWARD_JUMP:
-				//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
-				break;
-			case _2_ST_PUNCH_BACKWARD_JUMP:
-				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
-				break;
-			}
+			break;
+		case _2_ST_PUNCH_NEUTRAL_JUMP:
+			//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
+			break;
+		case _2_ST_PUNCH_FORWARD_JUMP:
+			//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
+			break;
+		case _2_ST_PUNCH_BACKWARD_JUMP:
+			//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
+			break;
 		}
+	
 		current_state = state2;
 	}
 
@@ -463,6 +462,9 @@ update_status ModulePlayer2::Update()
 			c_kick->to_delete = true;
 		}
 	}
+
+	//Sets Collider position
+	collider->SetPos(position.x - 30, position.y - 90);
 
 	//Checks where player is facing
 
