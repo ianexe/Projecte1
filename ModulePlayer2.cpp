@@ -89,7 +89,7 @@ bool ModulePlayer2::CleanUp()
 }
 
 
-void ModulePlayer2::internal_input(p2Qeue<player_inputs>& inputs)
+void ModulePlayer2::internal_input(p2Qeue<p2_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{
@@ -120,10 +120,10 @@ void ModulePlayer2::internal_input(p2Qeue<player_inputs>& inputs)
 	}
 }
 
-player_states ModulePlayer2::process_fsm(p2Qeue<player_inputs>& inputs)
+player_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 {
 	static player_states state = _2_ST_IDLE;
-	player_inputs last_input;
+	p2_inputs last_input;
 
 	while (inputs.Pop(last_input))
 	{
@@ -298,7 +298,7 @@ update_status ModulePlayer2::Update()
 
 	current_state = _2_ST_UNKNOWN;
 	
-	if (App->input->external_input(inputs2))
+	if (App->input->external_input2(inputs2))
 	{
 		App->player2->internal_input(inputs2);
 

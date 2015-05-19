@@ -184,7 +184,7 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 */
-void ModulePlayer::internal_input(p2Qeue<player_inputs>& inputs)
+void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{
@@ -215,10 +215,10 @@ void ModulePlayer::internal_input(p2Qeue<player_inputs>& inputs)
 	}
 }
 
-player_states ModulePlayer::process_fsm(p2Qeue<player_inputs>& inputs)
+player_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 {
 	static player_states state = _1_ST_IDLE;
-	player_inputs last_input;
+	p1_inputs last_input;
 
 	while (inputs.Pop(last_input))
 	{
@@ -384,83 +384,81 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = _1_ST_UNKNOWN;
-	if (App->input->external_input(inputs))
-	{
+	//if (App->input->external_input1(inputs))
+	//{
 		App->player->internal_input(inputs);
 
 		player_states state = App->player->process_fsm(inputs);
 
 		if (state != current_state)
 		{
-		switch (state)
-		{
-		case _1_ST_IDLE:
-		//	std::cout<<"IDLE\n";
-		break;
-		case _1_ST_HIT:
-		//	std::cout << "HIT\n";
-		break;
-
-		case _1_ST_WALK_FORWARD:{
-		//	std::cout << "WALK FORWARD >>>>\n";
-			if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+			switch (state)
 			{
-				current_animation = &forward;
-				position.x += speed;
-				collider->SetPos(position.x - 30, position.y - 90);
+			case _1_ST_IDLE:
+				//	std::cout<<"IDLE\n";
+				break;
+			case _1_ST_HIT:
+				//	std::cout << "HIT\n";
+				break;
+
+			case _1_ST_WALK_FORWARD:{
+				//	std::cout << "WALK FORWARD >>>>\n";
+				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
+				{
+					current_animation = &forward;
+					position.x += speed;
+					collider->SetPos(position.x - 30, position.y - 90);
+				}
+			}
+									break;
+
+			case _1_ST_WALK_BACKWARD:
+				//	std::cout << "WALK BACKWARD <<<<\n";
+			{
+				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
+				{
+					current_animation = &backward;
+					position.x -= speed;
+					collider->SetPos(position.x - 30, position.y - 90);
+				}
+			}
+			break;
+			case _1_ST_JUMP_NEUTRAL:
+				//std::cout << "JUMPING NEUTRAL ^^^^\n";
+				break;
+			case _1_ST_JUMP_FORWARD:
+				//std::cout << "JUMPING FORWARD ^^>>\n";
+				break;
+			case _1_ST_JUMP_BACKWARD:
+				//std::cout << "JUMPING BACKWARD ^^<<\n";
+				break;
+			case _1_ST_CROUCH:
+				//std::cout << "CROUCHING ****\n";
+				break;
+			case _1_ST_PUNCH_CROUCH:
+				//std::cout << "PUNCH CROUCHING **++\n";
+				break;
+			case _1_ST_PUNCH_STANDING_L:
+				//std::cout << "PUNCH STANDING ++++\n";
+				current_animation = &punch;
+				collider->SetPos(position.x + 10, position.y - 75);
+
+
+				break;
+			case _1_ST_PUNCH_NEUTRAL_JUMP:
+				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
+				break;
+			case _1_ST_PUNCH_FORWARD_JUMP:
+				//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
+				break;
+			case _1_ST_PUNCH_BACKWARD_JUMP:
+				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
+				break;
 			}
 		}
-		break;
-
-		case _1_ST_WALK_BACKWARD:
-		//	std::cout << "WALK BACKWARD <<<<\n";
-		{
-		if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
-		{
-		current_animation = &backward;
-		position.x -= speed;
-		collider->SetPos(position.x - 30, position.y - 90);
-		}
-		}
-		break;
-		case _1_ST_JUMP_NEUTRAL:
-		//std::cout << "JUMPING NEUTRAL ^^^^\n";
-		break;
-		case _1_ST_JUMP_FORWARD:
-		//std::cout << "JUMPING FORWARD ^^>>\n";
-		break;
-		case _1_ST_JUMP_BACKWARD:
-		//std::cout << "JUMPING BACKWARD ^^<<\n";
-		break;
-		case _1_ST_CROUCH:
-		//std::cout << "CROUCHING ****\n";
-		break;
-		case _1_ST_PUNCH_CROUCH:
-		//std::cout << "PUNCH CROUCHING **++\n";
-		break;
-		case _1_ST_PUNCH_STANDING_L:
-		//std::cout << "PUNCH STANDING ++++\n";
-		current_animation = &punch;
-		collider->SetPos(position.x + 10, position.y - 75);
-
-
-		break;
-		case _1_ST_PUNCH_NEUTRAL_JUMP:
-		//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
-		break;
-		case _1_ST_PUNCH_FORWARD_JUMP:
-		//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
-		break;
-		case _1_ST_PUNCH_BACKWARD_JUMP:
-		//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
-		break;
-		}
-		}
 		current_state = state;
-		}
+
 		collider->SetPos(position.x - 30, position.y - 90);
-
-
 
 		// debug camera movement --------------------------------
 
@@ -591,8 +589,10 @@ update_status ModulePlayer::Update()
 		App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
 
-		return UPDATE_CONTINUE;
-	}
+		
+	//}
+	return UPDATE_CONTINUE;
+}
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {

@@ -56,8 +56,8 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 	//State methods
-	void internal_input(p2Qeue<player_inputs>& inputs);
-	player_states process_fsm(p2Qeue<player_inputs>& inputs);
+	void internal_input(p2Qeue<p1_inputs>& inputs);
+	player_states process_fsm(p2Qeue<p1_inputs>& inputs);
 
 public:
 	
@@ -75,7 +75,7 @@ public:
 
 	//State Variables
 	player_states current_state;
-	p2Qeue<player_inputs> inputs;
+	p2Qeue<p1_inputs> inputs;
 	//Timers
 	Uint32 jump_timer;
 	Uint32 punch_timer;

@@ -16,8 +16,8 @@ public:
 	bool CleanUp();
 
 	//State Machine methods
-	player_states process_fsm(p2Qeue<player_inputs>& inputs);
-	void internal_input(p2Qeue<player_inputs>& inputs);
+	player_states process_fsm(p2Qeue<p2_inputs>& inputs);
+	void internal_input(p2Qeue<p2_inputs>& inputs);
 
 	//What it does when collides
 	void OnCollision(Collider* c1, Collider* c2);
@@ -38,7 +38,7 @@ public:
 	Uint32 hit_timer;
 
 	//State Machine variables
-	p2Qeue<player_inputs> inputs2;
+	p2Qeue<p2_inputs> inputs2;
 	player_states current_state;
 
 	//Not so evil bools
