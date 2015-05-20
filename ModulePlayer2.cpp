@@ -137,7 +137,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			case _2_IN_LEFT_DOWN: state = _2_ST_WALK_BACKWARD; break;
 			case _2_IN_JUMP: state = _2_ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 			case _2_IN_CROUCH_DOWN: state = _2_ST_CROUCH; break;
-			case _2_IN_X:
+			case _2_IN_L_PUNCH:
 			{
 				if (isOnLeft){
 					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
@@ -149,7 +149,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 				state = _2_ST_PUNCH_STANDING_L;
 			}
 			break;
-			case _2_IN_H: state = _2_ST_HIT; hit_timer = SDL_GetTicks();  break;
+			case _2_IN_HIT: state = _2_ST_HIT; hit_timer = SDL_GetTicks();  break;
 			}
 		}
 		break;
@@ -193,7 +193,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			switch (last_input)
 			{
 			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
-			case _2_IN_X: state = _2_ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_L_PUNCH: state = _2_ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -203,7 +203,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			switch (last_input)
 			{
 			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
-			case _2_IN_X: state = _2_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_L_PUNCH: state = _2_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -213,7 +213,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			switch (last_input)
 			{
 			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
-			case _2_IN_X: state = _2_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_L_PUNCH: state = _2_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -261,7 +261,7 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case _2_IN_X: state = _2_ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			case _2_IN_L_PUNCH: state = _2_ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 			case _2_IN_CROUCH_UP: state = _2_ST_IDLE; break;
 
 			}

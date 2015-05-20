@@ -160,7 +160,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p2_inputs>& 
 		}
 		if (punch_l)
 		{
-			inputs.Push(_1_IN_X);
+			inputs.Push(_1_IN_L_PUNCH);
 		}
 
 		if (left_2 && right_2)
@@ -182,7 +182,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p2_inputs>& 
 		}
 		if (punch_l_2)
 		{
-			inputs2.Push(_2_IN_X);
+			inputs2.Push(_2_IN_L_PUNCH);
 		}
 	}
 	return true;
