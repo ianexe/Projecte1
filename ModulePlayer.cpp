@@ -199,6 +199,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (SDL_GetTicks() - punch_timer_l > PUNCH_TIME)
 	//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
+			inputs.Push(_1_IN_PUNCH_L_FINISH);
 			punch_timer_l = 0;
 		}
 	}
@@ -208,6 +209,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (SDL_GetTicks() - punch_timer_h > PUNCH_TIME)
 			//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
+			inputs.Push(_1_IN_PUNCH_H_FINISH);
 			punch_timer_h = 0;
 		}
 	}

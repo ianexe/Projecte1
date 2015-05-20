@@ -41,6 +41,8 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p2_inputs>& 
 	static bool down = false;
 	static bool up = false;
 	static bool punch_l = false;
+	static bool punch_h = false;
+	static bool kick_l = false;
 	static bool hit = false;
 
 	static bool left_2 = false;
@@ -58,12 +60,18 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p2_inputs>& 
 		{
 			switch (event.key.keysym.sym)
 			{
+			case SDLK_z:
+				punch_l = false;
+				break;
+			case SDLK_x:
+				punch_h = false;
+				break;
+			case SDLK_c:
+				kick_l = false;
+				break;
 			case SDLK_s:
 				inputs.Push(_1_IN_CROUCH_UP);
 				down = false;
-				break;
-			case SDLK_q:
-				punch_l = false;
 				break;
 			case SDLK_w:
 				up = false;
@@ -101,8 +109,14 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p2_inputs>& 
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_q:
+			case SDLK_z:
 				punch_l = true;
+				break;
+			case SDLK_x:
+				punch_h = true;
+				break;
+			case SDLK_c:
+				kick_l = true;
 				break;
 			case SDLK_h:
 				hit = true;
@@ -162,7 +176,16 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p2_inputs>& 
 		{
 			inputs.Push(_1_IN_L_PUNCH);
 		}
+		if (punch_h)
+		{
+			inputs.Push(_1_IN_H_PUNCH);
+		}
+		if (kick_l)
+		{
+			inputs.Push(_1_IN_L_KICK);
+		}
 
+		//Player 2
 		if (left_2 && right_2)
 			inputs2.Push(_2_IN_LEFT_AND_RIGHT);
 		{
