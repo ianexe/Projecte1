@@ -382,7 +382,7 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = _1_ST_UNKNOWN;
-	App->input->external_input1(inputs);
+	//App->input->external_input1(inputs);
 	
 	App->player->internal_input(inputs);
 
@@ -536,7 +536,7 @@ update_status ModulePlayer::Update()
 
 		if (doPunch)
 		{
-			current_animation = &punch;
+			/*current_animation = &punch;
 
 
 			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
@@ -544,7 +544,7 @@ update_status ModulePlayer::Update()
 				doPunch = false;
 				isAttacking = false;
 				c_punch1->to_delete = true;
-			}
+			}*/
 		}
 
 

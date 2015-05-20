@@ -297,7 +297,7 @@ update_status ModulePlayer2::Update()
 
 	current_state = _2_ST_UNKNOWN;
 	
-	App->input->external_input2(inputs2);
+	//App->input->external_input2(inputs2);
 	
 	App->player2->internal_input(inputs2);
 
