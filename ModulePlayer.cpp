@@ -439,21 +439,26 @@ update_status ModulePlayer::Update()
 			case ST_CROUCHING:
 				current_animation = &crouch;
 				break;
+
 			case ST_CROUCHED:
 				current_animation = &crouchidle;
 				break;
+
 			case ST_PUNCH_STANDING_L:
 				current_animation = &punch;
 				App->audio->PlayFx(punchFX);
 				break;
+
 			case ST_PUNCH_STANDING_H:
 				current_animation = &punch2;
 				App->audio->PlayFx(punchFX);
 				break;
+
 			case ST_KICK_STANDING_L:
 				current_animation = &kick;
 				App->audio->PlayFx(punchFX);
 				break;
+
 			case ST_KICK_STANDING_H:
 				current_animation = &kick2;
 				App->audio->PlayFx(punchFX);
