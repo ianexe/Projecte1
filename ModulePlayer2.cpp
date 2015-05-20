@@ -158,7 +158,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
 				case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 				case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
-				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+				case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				case IN_L_PUNCH:
 					{
 						if (isOnLeft){
@@ -221,7 +221,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_RIGHT_UP: state = ST_IDLE; break;
 				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 				//case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
-				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+				case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				}
 			}
 			break;
@@ -233,7 +233,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_LEFT_UP: state = ST_IDLE; break;
 				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 			//	case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
-				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+				case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				}
 			}
 			break;
@@ -284,7 +284,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				}
 			}
 			break;
-			case ST_CROUCH:
+			case ST_CROUCHING:
 			{
 				switch (last_input)
 				{
@@ -349,7 +349,7 @@ update_status ModulePlayer2::Update()
 			case ST_JUMP_NEUTRAL:
 				break;
 		
-			case ST_CROUCH:
+			case ST_CROUCHING:
 				break;
 			
 			case ST_PUNCH_STANDING_L:
