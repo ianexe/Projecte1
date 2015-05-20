@@ -140,10 +140,10 @@ p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 			case _2_IN_X:
 			{
 				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
 				}
 				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
 				}
 				punch_timer = SDL_GetTicks();
 				state = _2_ST_PUNCH_STANDING_L;
@@ -353,12 +353,6 @@ update_status ModulePlayer2::Update()
 				break;
 			case _2_ST_PUNCH_STANDING_L:
 				//std::cout << "PUNCH STANDING ++++\n";
-				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-				}
-				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-				}
 				current_animation = &punch;
 				collider->SetPos(position.x + 10, position.y - 75);
 
