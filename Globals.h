@@ -20,9 +20,16 @@ enum update_status
 //t1=temps actual i t2= despres de main t2-t1 > 1000 = 1s divisio t2-t1/ticks i ticks
 
 // Hauria de ser 1000 +- 1 segon
+/*
 #define JUMP_TIME 3000
-#define PUNCH_TIME 500
+#define PUNCH_L_TIME 500
+#define PUNCH_H_TIME 500
+#define KICK_L_TIME 500
 #define HIT_TIME 500
+
+//Condicio
+if (SDL_GetTicks() - jump_timer > JUMP_TIME)
+*/
 
 
 // Configuration -----------

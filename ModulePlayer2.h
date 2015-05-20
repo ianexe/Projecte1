@@ -17,8 +17,8 @@ public:
 	bool CleanUp();
 
 	//State Machine methods
-	p2_states process_fsm(p2Qeue<p2_inputs>& inputs);
-	void internal_input(p2Qeue<p2_inputs>& inputs);
+	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
+	void internal_input(p2Qeue<p1_inputs>& inputs);
 
 	//What it does when collides
 	void OnCollision(Collider* c1, Collider* c2);
@@ -35,12 +35,14 @@ public:
 
 	//Timers
 	Uint32 jump_timer;
-	Uint32 punch_timer;
+	Uint32 punch_timer_l;
+	Uint32 punch_timer_h;
+	Uint32 kick_timer_l;
 	Uint32 hit_timer;
 
 	//State Machine variables
-	p2Qeue<p2_inputs> inputs2;
-	p2_states current_state;
+	p2Qeue<p1_inputs> inputs2;
+	p1_states current_state;
 
 	//Not so evil bools
 	bool isOnLeft;

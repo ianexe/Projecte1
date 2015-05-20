@@ -85,4 +85,81 @@ case _1_ST_PUNCH_CROUCH:
 			}
 		}
 		break;
+// Player 2---------------------------------------------------------------------//
+//Process fms
 
+
+
+case _1_ST_JUMP_FORWARD:
+			{
+				switch (last_input)
+				{
+				case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			//	case _1_IN_L_PUNCH: state = _1_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				}
+			}
+			break;
+
+			case _1_ST_JUMP_BACKWARD:
+			{
+				switch (last_input)
+				{
+				case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			//	case _1_IN_L_PUNCH: state = _1_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				}
+			}
+			break;
+
+	//Punches
+case _2_ST_PUNCH_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_JUMP_FORWARD; break;
+			}
+		}
+		break;
+
+		case _2_ST_PUNCH_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case _2_IN_JUMP_FINISH: state = _2_ST_IDLE; break;
+			case _2_IN_PUNCH_FINISH: state = _2_ST_JUMP_BACKWARD; break;
+			}
+		}
+		break;
+
+//Update
+	case _2_ST_JUMP_FORWARD:
+				//std::cout << "JUMPING FORWARD ^^>>\n";
+				break;
+	case _2_ST_JUMP_BACKWARD:
+				//std::cout << "JUMPING BACKWARD ^^<<\n";
+				break;
+
+//Punches
+case _2_ST_PUNCH_CROUCH:
+				//std::cout << "PUNCH CROUCHING **++\n";
+				break;
+
+	case _2_ST_PUNCH_NEUTRAL_JUMP:
+			//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
+			break;
+		case _2_ST_PUNCH_FORWARD_JUMP:
+			//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
+			break;
+		case _2_ST_PUNCH_BACKWARD_JUMP:
+			//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
+			break;
+
+	case _2_ST_PUNCH_CROUCH:
+		{
+			switch (last_input)
+			{
+
+			case _2_IN_PUNCH_FINISH: state = _2_ST_IDLE; break;
+			}
+		}
+		break;

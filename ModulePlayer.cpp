@@ -187,7 +187,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{
-		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(_1_IN_JUMP_FINISH);
 			jump_timer = 0;
@@ -196,8 +196,8 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 
 	if (punch_timer_l > 0)
 	{
-		if (SDL_GetTicks() - punch_timer_l > PUNCH_TIME)
-	//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		//if (SDL_GetTicks() - punch_timer_l > PUNCH_L_TIME)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(_1_IN_PUNCH_L_FINISH);
 			punch_timer_l = 0;
@@ -206,17 +206,24 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 
 	if (punch_timer_h > 0)
 	{
-		if (SDL_GetTicks() - punch_timer_h > PUNCH_TIME)
-			//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(_1_IN_PUNCH_H_FINISH);
 			punch_timer_h = 0;
 		}
 	}
 
+	if (kick_timer_l > 0)
+	{
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(_1_IN_KICK_L_FINISH);
+			kick_timer_l = 0;
+		}
+	}
 	if (hit_timer > 0)
 	{
-		if (SDL_GetTicks() - hit_timer > HIT_TIME)
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(_1_IN_HIT_FINISH);
 			hit_timer = 0;
@@ -255,27 +262,27 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				break;
 			case _1_IN_H_PUNCH:
 			{
-								  if (isOnLeft){
-									  c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
-								  }
-								  else
-								  {
-									  c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
-								  }
-								  punch_timer_h = SDL_GetTicks();
-								  state = _1_ST_PUNCH_STANDING_H;
+				if (isOnLeft){
+					c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
+				 }
+				 else
+				 {
+					  c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
+				 }
+					punch_timer_h = SDL_GetTicks();
+					state = _1_ST_PUNCH_STANDING_H;
 			}
 				break;
 			case _1_IN_L_KICK:
 			{
-								  if (isOnLeft){
-									  c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-								  }
-								  else{
-									  c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-								  }
-								  punch_timer_l = SDL_GetTicks();
-								  state = _1_ST_PUNCH_STANDING_L;
+				if (isOnLeft){
+					c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+				}
+				else{
+					c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+				}
+				kick_timer_l = SDL_GetTicks();
+				 state = _1_ST_KICK_STANDING_L;
 			}
 				break;
 			case _1_IN_HIT: state = _1_ST_HIT; hit_timer = SDL_GetTicks();  break;
@@ -299,7 +306,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case _1_IN_RIGHT_UP: state = _1_ST_IDLE; break;
 			case _1_IN_LEFT_AND_RIGHT: state = _1_ST_IDLE; break;
-			case _1_IN_JUMP: state = _1_ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
+			//case _1_IN_JUMP: state = _1_ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 			case _1_IN_CROUCH_DOWN: state = _1_ST_CROUCH; break;
 			}
 		}
@@ -311,7 +318,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case _1_IN_LEFT_UP: state = _1_ST_IDLE; break;
 			case _1_IN_LEFT_AND_RIGHT: state = _1_ST_IDLE; break;
-			case _1_IN_JUMP: state = _1_ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
+		//	case _1_IN_JUMP: state = _1_ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			case _1_IN_CROUCH_DOWN: state = _1_ST_CROUCH; break;
 			}
 		}
@@ -350,8 +357,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 		   switch (last_input)
 		   {
-			   case _1_IN_KICK_L_FINISH: c_punch1->to_delete = true;  state = _1_ST_IDLE;  break;
-		 }
+			case _1_IN_KICK_L_FINISH: c_kick->to_delete = true;  state = _1_ST_IDLE;  break;
+		   }
 		}
 			break;
 		case _1_ST_CROUCH:
@@ -378,9 +385,6 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 
 	current_state = _1_ST_UNKNOWN;
-	//App->input->external_input1(inputs);
-	
-	App->player->internal_input(inputs);
 
 	p1_states state = App->player->process_fsm(inputs);
 
@@ -418,87 +422,36 @@ update_status ModulePlayer::Update()
 			}
 			break;
 			case _1_ST_JUMP_NEUTRAL:
-				//std::cout << "JUMPING NEUTRAL ^^^^\n";
 				break;
 			
 			case _1_ST_CROUCH:
-				//std::cout << "CROUCHING ****\n";
 				break;
 		
 			case _1_ST_PUNCH_STANDING_L:
 				current_animation = &punch;
-				collider->SetPos(position.x + 10, position.y - 75);
 				break;
 			case _1_ST_PUNCH_STANDING_H:
 				current_animation = &punch2;
-				collider->SetPos(position.x + 10, position.y - 75);
 				break;
-			
+			case _1_ST_KICK_STANDING_L:
+				current_animation = &kick;
+				break;
 			}
 		}
 		current_state = state;
-
+		App->player->internal_input(inputs);
 		collider->SetPos(position.x - 30, position.y - 90);
-
-		// debug camera movement --------------------------------
-
-
-
-		
-
-		//Does attack if called
-
-		if (doPunch)
-		{
-			/*current_animation = &punch;
-
-
-			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-			{
-				doPunch = false;
-				isAttacking = false;
-				c_punch1->to_delete = true;
-			}*/
-		}
-
-
-		if (doPunch2)
-		{
-			current_animation = &punch2;
-
-
-			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-			{
-				doPunch2 = false;
-				isAttacking = false;
-				c_punch2->to_delete = true;
-			}
-		}
-
-		if (doKick)
-		{
-			current_animation = &kick;
-
-
-			if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-			{
-				doKick = false;
-				isAttacking = false;
-				c_kick->to_delete = true;
-			}
-		}
 
 		//Checks where player is facing
 
-		if (App->player->position.x < App->player2->position.x)
-			isOnLeft = true;
-		else
-			isOnLeft = false;
+	if (App->player->position.x < App->player2->position.x)
+		isOnLeft = true;
+	else
+		isOnLeft = false;
 
-		// Draw everything --------------------------------------
-		SDL_Rect r = current_animation->GetCurrentFrame();
-
-		App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
+	// Draw everything --------------------------------------
+	SDL_Rect r = current_animation->GetCurrentFrame();
+	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 	return UPDATE_CONTINUE;
 }
 
