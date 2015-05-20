@@ -107,7 +107,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	Health = 100;
-	
+	punchFX = App->audio->LoadFx("punch.wav");
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 
@@ -130,14 +130,10 @@ update_status ModulePlayer::Update()
 {
 	
 	Animation* current_animation = &idle;
-
 	collider->SetPos(position.x - 30, position.y - 90);
 	
 	
-	
 	// debug camera movement --------------------------------
-
-
 	
 	float speed = 3;
 
@@ -178,10 +174,10 @@ update_status ModulePlayer::Update()
 	{
 		doPunch = true;
 		isAttacking = true;
+		App->audio->PlayFx(punchFX);
 		if (isOnLeft)
 		{
 			c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
-			//collider->SetPos(position.x + 10, position.y - 75);
 		}
 		else
 		{
@@ -193,6 +189,7 @@ update_status ModulePlayer::Update()
 	{
 		doPunch2 = true;
 		isAttacking = true;
+		App->audio->PlayFx(punchFX);
 		if (isOnLeft)
 		{
 			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
@@ -207,6 +204,7 @@ update_status ModulePlayer::Update()
 	{
 		doKick = true;
 		isAttacking = true;
+		App->audio->PlayFx(punchFX);
 		if (isOnLeft)
 		{
 			c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
@@ -226,6 +224,7 @@ update_status ModulePlayer::Update()
 	if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && (!isAttacking))
 	{
 		current_animation = &crouchidle;
+		isCrouching = true;
 	}
 
 	//Does attack if called

@@ -32,8 +32,8 @@ public:
 	Animation punch2;
 	Animation kick;
 	Animation kick2;
-	SDL_Rect atac;
-	SDL_Rect defense;
+	unsigned int punchFX;
+
 	//SDL_Rect detection;
 	Collider* collider;
 	Collider* c_punch1;
@@ -52,6 +52,8 @@ public:
 	bool doPunch2;
 	bool doKick;
 	bool doKick2;
+
+	bool isCrouching;
 
 	p2Point<float> position;
 	unsigned int Health;
