@@ -20,6 +20,7 @@ public:
 public:
 	
 	SDL_Texture* graphics;
+	SDL_Rect shadow;
 	Animation idle;
 	Animation forward;
 	Animation backward;

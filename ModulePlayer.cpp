@@ -11,6 +11,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	position.x = 80;
 	position.y = 216;
+
+	// shadow
+	shadow.x = 743;
+	shadow.y = 92;
+	shadow.w = 68;
+	shadow.h = 11;
+
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -65,19 +72,21 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
 	punch.frames.PushBack({ 19, 272, 64, 91 });
-	punch.speed = 0.1f;
+	punch.speed = 0.2f;
 
 	// punch2
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
 	punch2.frames.PushBack({ 422, 268, 118, 94 });
+	punch2.frames.PushBack({ 422, 268, 118, 94 });
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
-	punch2.speed = 0.1f;
+	punch2.speed = 0.2f;
 
 	// kick
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.frames.PushBack({ 777, 265, 114, 94 });
+	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
-	kick.speed = 0.1f;
+	kick.speed = 0.2f;
 
 	// kick2
 	kick2.frames.PushBack({ 16, 398, 79, 90 });
@@ -310,6 +319,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
+	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), 208, &shadow, 1.0f);
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
 
