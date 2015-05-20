@@ -11,6 +11,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	position.x = 80;
 	position.y = 216;
+
+	// shadow
+	shadow.x = 743;
+	shadow.y = 92;
+	shadow.w = 68;
+	shadow.h = 11;
+
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -37,30 +44,65 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.frames.PushBack({ 974, 129, 57, 89 });
 	backward.speed = 0.1f;
 
+	// jump animation (arcade sprite sheet)
+	jump.frames.PushBack({ 16, 847, 56, 85 });
+	jump.frames.PushBack({ 100, 823, 58, 109 });
+	jump.frames.PushBack({ 176, 805, 50, 127 });
+	jump.frames.PushBack({ 239, 798, 66, 134 });
+	jump.frames.PushBack({ 327, 813, 54, 119 });
+	jump.frames.PushBack({ 397, 810, 52, 122 });
+	jump.frames.PushBack({ 464, 819, 60, 113 });
+	jump.speed = 0.17f;
+
+	// block
+	block.frames.PushBack({ 442, 2335, 64, 92 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.speed = 0.1f;
+
+	//crouch
+	crouch.frames.PushBack({ 114, 1227, 58, 69 });
+	crouch.frames.PushBack({ 196, 1235, 62, 61 });
+	crouch.speed = 0.1f;
+
+	//crouchidle
+	crouchidle.frames.PushBack({ 196, 1235, 62, 61 });
+	crouchidle.speed = 0.1f;
+
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
 	punch.frames.PushBack({ 19, 272, 64, 91 });
-	punch.speed = 0.1f;
+	punch.speed = 0.2f;
 
 	// punch2
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
 	punch2.frames.PushBack({ 422, 268, 118, 94 });
+	punch2.frames.PushBack({ 422, 268, 118, 94 });
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
-	punch2.speed = 0.1f;
+	punch2.speed = 0.2f;
 
 	// kick
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.frames.PushBack({ 777, 265, 114, 94 });
+	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
-	kick.speed = 0.1f;
-
-	speed = 3;
-
+	kick.speed = 0.2f;
+		
+	// kick2
+	kick2.frames.PushBack({ 16, 398, 79, 90 });
+	kick2.frames.PushBack({ 99, 394, 98, 94 });
+	kick2.frames.PushBack({ 198, 394, 133, 94 });
+	kick2.frames.PushBack({ 351, 411, 108, 77 });
+	kick2.frames.PushBack({ 482, 407, 98, 81 });
+	kick2.speed = 0.2f;
+	
+	//Timers
 	jump_timer = 0;
 	punch_timer_l = 0;
 	punch_timer_h = 0;
 	hit_timer = 0;
+
+	speed = 3;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -71,7 +113,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	Health = 100;
-	
+	punchFX = App->audio->LoadFx("punch.wav");
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	p1_states current_state = _1_ST_UNKNOWN;
@@ -94,94 +136,22 @@ bool ModulePlayer::CleanUp()
 //State machine functions
 /*bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 {
-	static bool left = false;
-	static bool right = false;
-	static bool down = false;
-	static bool up = false;
-	static bool punch_l = false;
+	
+	Animation* current_animation = &idle;
+	collider->SetPos(position.x - 30, position.y - 90);
+	
+	
+	// debug camera movement --------------------------------
+	
+	float speed = 3;
 
-	SDL_Event event;
-
-	if(SDL_PollEvent(&event) != 0)
+	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) && (!isAttacking))
 	{
-		if (event.type == SDL_KEYUP && event.key.repeat == 0)
-		{
-			switch (event.key.keysym.sym)
-			{
-			
-			case SDLK_ESCAPE:
-				return false;
-				break;
-			case SDLK_s:
-				inputs.Push(IN_CROUCH_UP);
-				down = false;
-				break;
-			case SDLK_q:
-				punch_l = false;
-				break;
-			case SDLK_w:
-				up = false;
-				break;
-			case SDLK_a:
-				inputs.Push(IN_LEFT_UP);
-				left = false;
-				break;
-			case SDLK_d:
-				inputs.Push(IN_RIGHT_UP);
-				right = false;
-				break;
-			}
-		}
-		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
-		{
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_q:
-				punch_l = true;
-				break;
-			case SDLK_h:
-				inputs.Push(IN_H);
-				break;
-			case SDLK_w:
-				up = true;
-				break;
-			case SDLK_s:
-				down = true;
-				break;
-			case SDLK_a:
-				left = true;
-				break;
-			case SDLK_d:
-				right = true;
-				break;
-			}
-		}
+		isJumping = true;
 	}
 
-	if (left && right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
-	{
-		if (left)
-			inputs.Push(IN_LEFT_DOWN);
-		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
-	}
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
 
-	if (up && down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
-	else
-	{
-		if (down)
-			inputs.Push(IN_CROUCH_DOWN);
-		if (up)
-			inputs.Push(IN_JUMP);
-	}
-	if (punch_l)
-	{
-		inputs.Push(IN_X);
-	}
-	return true;
-}
 */
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
@@ -206,10 +176,11 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 
 	if (punch_timer_h > 0)
 	{
+
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(_1_IN_PUNCH_H_FINISH);
-			punch_timer_h = 0;
+			punch_timer_h = 0;		
 		}
 	}
 
@@ -230,6 +201,15 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 	}
 }
+
+
+doPunch2 = true;
+isAttacking = true;
+App->audio->PlayFx(punchFX);
+if (isOnLeft)
+{
+	c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
+
 
 p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 {
@@ -275,14 +255,16 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				break;
 			case _1_IN_L_KICK:
 			{
-				if (isOnLeft){
+				if (isOnLeft)
+				{
 					c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 				}
-				else{
+				else
+				{
 					c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 				}
 				kick_timer_l = SDL_GetTicks();
-				 state = _1_ST_KICK_STANDING_L;
+				state = _1_ST_KICK_STANDING_L;
 			}
 				break;
 			case _1_IN_HIT: state = _1_ST_HIT; hit_timer = SDL_GetTicks();  break;
@@ -299,6 +281,24 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 		break;
 
+=======
+		doKick = true;
+		isAttacking = true;
+		App->audio->PlayFx(punchFX);
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) && (!isAttacking))
+	{
+		doKick2 = true;
+		isAttacking = true;
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && (!isAttacking))
+	{
+		current_animation = &crouchidle;
+		isCrouching = true;
+	}
+>>>>>>> origin/Ian
 
 		case _1_ST_WALK_FORWARD:
 		{
@@ -312,7 +312,43 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 		break;
 
+<<<<<<< HEAD
 		case _1_ST_WALK_BACKWARD:
+=======
+	if (isJumping)
+	{
+		current_animation = &jump;
+		
+		if ((position.y > 135) && (!isFalling))
+		{
+			position.y -= 5;
+		}
+		
+		else
+		{
+			isFalling = true;
+		}
+
+		if (isFalling)
+			position.y += 5;
+		
+		if (position.y > 216)
+		{
+			position.y = 216;
+			isJumping = false;
+			isFalling = false;
+		}
+		
+		
+	}
+
+	if (doPunch)
+	{
+		current_animation = &punch;
+		
+		
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+>>>>>>> origin/Ian
 		{
 			switch (last_input)
 			{
@@ -375,6 +411,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 	}
 
+<<<<<<< HEAD
 	return state;
 }
 
@@ -429,6 +466,7 @@ update_status ModulePlayer::Update()
 		
 			case _1_ST_PUNCH_STANDING_L:
 				current_animation = &punch;
+				App->audio->PlayFx(punchFX);
 				break;
 			case _1_ST_PUNCH_STANDING_H:
 				current_animation = &punch2;
@@ -438,11 +476,27 @@ update_status ModulePlayer::Update()
 				break;
 			}
 		}
+
 		current_state = state;
 		App->player->internal_input(inputs);
 		collider->SetPos(position.x - 30, position.y - 90);
 
 		//Checks where player is facing
+=======
+	if (doKick2)
+	{
+		current_animation = &kick2;
+
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			doKick2 = false;
+			isAttacking = false;
+		}
+	}
+
+	//Checks where player is facing
+>>>>>>> origin/Ian
 
 	if (App->player->position.x < App->player2->position.x)
 		isOnLeft = true;
@@ -451,6 +505,11 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
+<<<<<<< HEAD
+=======
+
+	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), 208, &shadow, 1.0f);
+>>>>>>> origin/Ian
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 	return UPDATE_CONTINUE;
 }

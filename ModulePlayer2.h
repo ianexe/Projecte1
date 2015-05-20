@@ -52,6 +52,7 @@ public:
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;
+	bool doKick2;
 
 	//PNJ basics
 	p2Point<int> position;

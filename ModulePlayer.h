@@ -27,10 +27,25 @@ public:
 public:
 	
 	SDL_Texture* graphics;
-	
+
 
 	//Pointer to current animation
 	Animation* current_animation;
+
+	SDL_Rect shadow;
+	Animation idle;
+	Animation forward;
+	Animation backward;
+	Animation jump;
+	Animation block;
+	Animation crouch;
+	Animation crouchidle;
+	Animation punch;
+	Animation punch2;
+	Animation kick;
+	Animation kick2;
+	unsigned int punchFX;
+
 
 	//SDL_Rect detection;
 	Collider* collider;
@@ -50,28 +65,25 @@ public:
 	Uint32 hit_timer;
 
 	//Variables
+	
 	//bools
 	bool isOnLeft = false;
 
 	bool isAttacking = false;
 
+	bool isJumping;
+	bool isFalling;
+
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;
+	bool doKick2;
+
+	bool isCrouching;
 
 	//Character basics
 	p2Point<int> position;
 	unsigned int Health;
 	float speed;
 
-	//Animations
-
-	Animation idle;
-	Animation forward;
-	Animation backward;
-	Animation punch;
-	Animation punch2;
-	Animation kick;
-	SDL_Rect atac;
-	SDL_Rect defense;
 };
