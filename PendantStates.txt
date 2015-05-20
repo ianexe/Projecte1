@@ -22,6 +22,40 @@ case _1_ST_PUNCH_NEUTRAL_JUMP:
 //PROCESS FSM
 
 
+
+	case _1_ST_JUMP_FORWARD:
+		{
+			switch (last_input)
+			{
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case _1_ST_JUMP_BACKWARD:
+		{
+			switch (last_input)
+			{
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		//Punches
+
+			case _1_ST_PUNCH_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_PUNCH_L_FINISH: state = _1_ST_JUMP_NEUTRAL; break;
+			}
+		}
+		break;
+
+
 		case _1_ST_PUNCH_FORWARD_JUMP:
 		{
 			switch (last_input)
@@ -51,3 +85,4 @@ case _1_ST_PUNCH_CROUCH:
 			}
 		}
 		break;
+

@@ -57,7 +57,10 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	speed = 3;
 
-	
+	jump_timer = 0;
+	punch_timer_l = 0;
+	punch_timer_h = 0;
+	hit_timer = 0;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -73,9 +76,7 @@ bool ModulePlayer::Start()
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	p1_states current_state = _1_ST_UNKNOWN;
 
-	jump_timer = 0;
-	punch_timer = 0;
-	hit_timer = 0;
+	
 	return true;
 }
 
@@ -193,13 +194,21 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 	}
 
-	if (punch_timer > 0)
+	if (punch_timer_l > 0)
 	{
-		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
+		if (SDL_GetTicks() - punch_timer_l > PUNCH_TIME)
 	//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
-			inputs.Push(_1_IN_PUNCH_L_FINISH);
-			punch_timer = 0;
+			punch_timer_l = 0;
+		}
+	}
+
+	if (punch_timer_h > 0)
+	{
+		if (SDL_GetTicks() - punch_timer_h > PUNCH_TIME)
+			//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			punch_timer_h = 0;
 		}
 	}
 
@@ -208,7 +217,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (SDL_GetTicks() - hit_timer > HIT_TIME)
 		{
 			inputs.Push(_1_IN_HIT_FINISH);
-			punch_timer = 0;
+			hit_timer = 0;
 		}
 	}
 }
@@ -238,7 +247,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 						else{
 							c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 						}
-						punch_timer = SDL_GetTicks();
+						punch_timer_l = SDL_GetTicks();
 						state = _1_ST_PUNCH_STANDING_L;
 			}
 				break;
@@ -251,7 +260,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 								  {
 									  c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 								  }
-								  punch_timer = SDL_GetTicks();
+								  punch_timer_h = SDL_GetTicks();
 								  state = _1_ST_PUNCH_STANDING_H;
 			}
 				break;
@@ -263,7 +272,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 								  else{
 									  c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 								  }
-								  punch_timer = SDL_GetTicks();
+								  punch_timer_l = SDL_GetTicks();
 								  state = _1_ST_PUNCH_STANDING_L;
 			}
 				break;
@@ -311,37 +320,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
-			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
-			}
-		}
-		break;
-
-		case _1_ST_JUMP_FORWARD:
-		{
-			switch (last_input)
-			{
-			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
-			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
-			}
-		}
-		break;
-
-		case _1_ST_JUMP_BACKWARD:
-		{
-			switch (last_input)
-			{
-			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
-			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
-			}
-		}
-		break;
-
-		case _1_ST_PUNCH_NEUTRAL_JUMP:
-		{
-			switch (last_input)
-			{
-			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
-			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_NEUTRAL; break;
+		//	case _1_IN_L_PUNCH: state = _1_ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -377,7 +356,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			//case _1_IN_L_PUNCH: state = _1_ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 			case _1_IN_CROUCH_UP: state = _1_ST_IDLE; break;
 
 			}

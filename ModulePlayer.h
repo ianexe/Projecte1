@@ -43,7 +43,10 @@ public:
 	p2Qeue<p1_inputs> inputs;
 	//Timers
 	Uint32 jump_timer;
-	Uint32 punch_timer;
+	Uint32 punch_timer_l;
+	Uint32 punch_timer_h;
+	Uint32 kick_timer_l;
+
 	Uint32 hit_timer;
 
 	//Variables
