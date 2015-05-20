@@ -1,8 +1,6 @@
-#include "Globals.h"
 #include "Application.h"
-#include "ModulePlayer.h"
-
-
+#include "ModulePlayer2.h"
+#include "Globals.h"
 //#include "StateMachine.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -73,7 +71,7 @@ bool ModulePlayer::Start()
 	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
-	player_states current_state = _1_ST_UNKNOWN;
+	p1_states current_state = _1_ST_UNKNOWN;
 
 	jump_timer = 0;
 	punch_timer = 0;
@@ -215,9 +213,9 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 	}
 }
 
-player_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
+p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 {
-	static player_states state = _1_ST_IDLE;
+	static p1_states state = _1_ST_IDLE;
 	p1_inputs last_input;
 
 	while (inputs.Pop(last_input))
@@ -385,9 +383,10 @@ update_status ModulePlayer::Update()
 
 	current_state = _1_ST_UNKNOWN;
 	App->input->external_input1(inputs);
+	
 	App->player->internal_input(inputs);
 
-		player_states state = App->player->process_fsm(inputs);
+	p1_states state = App->player->process_fsm(inputs);
 
 		if (state != current_state)
 		{

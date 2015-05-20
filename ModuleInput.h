@@ -27,8 +27,9 @@ public:
 	
 
 	//State Machine Methods
-	bool external_input1(p2Qeue<p1_inputs>& inputs);
 	bool external_input2(p2Qeue<p2_inputs>& inputs2);
+	bool external_input1(p2Qeue<p1_inputs>& inputs);
+	
 	
 	//Getters
 	KEY_STATE GetKey(int id) const

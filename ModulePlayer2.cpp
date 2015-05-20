@@ -69,7 +69,7 @@ bool ModulePlayer2::Start()
 	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
-	player_states current_state = _2_ST_UNKNOWN;
+	p2_states current_state = _2_ST_UNKNOWN;
 
 	jump_timer = 0;
 	punch_timer = 0;
@@ -120,9 +120,9 @@ void ModulePlayer2::internal_input(p2Qeue<p2_inputs>& inputs)
 	}
 }
 
-player_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
+p2_states ModulePlayer2::process_fsm(p2Qeue<p2_inputs>& inputs)
 {
-	static player_states state = _2_ST_IDLE;
+	static p2_states state = _2_ST_IDLE;
 	p2_inputs last_input;
 
 	while (inputs.Pop(last_input))
@@ -301,7 +301,7 @@ update_status ModulePlayer2::Update()
 	
 	App->player2->internal_input(inputs2);
 
-	player_states state2 = App->player2->process_fsm(inputs2);
+	p2_states state2 = App->player2->process_fsm(inputs2);
 
 		if (state2 != current_state)
 		{

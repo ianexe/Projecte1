@@ -1,46 +1,11 @@
 #pragma once
 #include "Module.h"
 #include "Animation.h"
-#include "Globals.h"
-#include "p2Point.h"
-#include "ModuleCollision.h"
 #include "States.h"
 //#include "ModuleInput.h"
-
-
-
-
-/*
-p1_states states = IDLE;
-switch (states)
-{
-case IDLE:
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-	{
-		state = WALK_R;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		state = WALK_L;
-	}
-	break;
-	WALK_R,
-	WALK_L,
-	CROUCH,
-	JUMP,
-	JUMP_L,
-	JUMP_R,
-	PUNCH_L,
-	PUNCH_M,
-	PUNCH_H,
-	KICK_L,
-	KICK_M,
-	KICK_H,
-	HIT_L,
-	STUN,
-}
-*/
+//#include "Globals.h"
+//#include "p2Point.h"
+//#include "ModuleCollision.h"
 
 
 class ModulePlayer : public Module
@@ -57,7 +22,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 	//State methods
 	void internal_input(p2Qeue<p1_inputs>& inputs);
-	player_states process_fsm(p2Qeue<p1_inputs>& inputs);
+	p1_states process_fsm(p2Qeue<p1_inputs>& inputs);
 
 public:
 	
@@ -74,7 +39,7 @@ public:
 	Collider* c_kick;
 
 	//State Variables
-	player_states current_state;
+	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;
 	//Timers
 	Uint32 jump_timer;

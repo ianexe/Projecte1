@@ -37,7 +37,11 @@ enum p1_inputs
 	IN_HIT_FINISH
 };*/
 
-enum player_states
+/**
+*States
+**/
+
+enum p1_states
 {
 	//Player 1
 	_1_ST_UNKNOWN,
@@ -61,7 +65,8 @@ enum player_states
 	_1_ST_PUNCH_CROUCH,
 	_1_ST_HIT,
 	_1_ST_STUN,
-
+};
+enum p2_states{
 	//Player 2
 	_2_ST_UNKNOWN,
 
@@ -85,7 +90,9 @@ enum player_states
 	_2_ST_HIT,
 	_2_ST_STUN
 };
-
+/**
+*Inputs
+**/
 enum p1_inputs
 {
 	//Player 1

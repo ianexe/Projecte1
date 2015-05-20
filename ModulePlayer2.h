@@ -2,8 +2,8 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Globals.h"
-#include "p2Point.h"
-#include "ModuleCollision.h"
+//#include "p2Point.h"
+//#include "ModuleCollision.h"
 #include "States.h"
 //#include "ModuleInput.h"
 class ModulePlayer2 : public Module
@@ -17,7 +17,7 @@ public:
 	bool CleanUp();
 
 	//State Machine methods
-	player_states process_fsm(p2Qeue<p2_inputs>& inputs);
+	p2_states process_fsm(p2Qeue<p2_inputs>& inputs);
 	void internal_input(p2Qeue<p2_inputs>& inputs);
 
 	//What it does when collides
@@ -40,7 +40,7 @@ public:
 
 	//State Machine variables
 	p2Qeue<p2_inputs> inputs2;
-	player_states current_state;
+	p2_states current_state;
 
 	//Not so evil bools
 	bool isOnLeft;

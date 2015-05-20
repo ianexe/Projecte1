@@ -217,7 +217,7 @@ bool ModuleInput::external_input2(p2Qeue<p2_inputs>& inputs2)
 		{
 			inputs2.Push(_2_IN_X);
 		}
-		}
+	}
 	return true;
 }
 
