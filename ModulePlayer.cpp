@@ -198,7 +198,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
 	//	if(current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
-			inputs.Push(_1_IN_PUNCH_FINISH);
+			inputs.Push(_1_IN_PUNCH_L_FINISH);
 			punch_timer = 0;
 		}
 	}
@@ -245,10 +245,11 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case _1_IN_H_PUNCH:
 			{
 								  if (isOnLeft){
-									  c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+									  c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 								  }
-								  else{
-									  c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
+								  else
+								  {
+									  c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 								  }
 								  punch_timer = SDL_GetTicks();
 								  state = _1_ST_PUNCH_STANDING_H;
@@ -345,50 +346,31 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 		break;
 
-		case _1_ST_PUNCH_FORWARD_JUMP:
-		{
-			switch (last_input)
-			{
-			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
-			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_FORWARD; break;
-			}
-		}
-		break;
-
-		case _1_ST_PUNCH_BACKWARD_JUMP:
-		{
-			switch (last_input)
-			{
-			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
-			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_BACKWARD; break;
-			}
-		}
-		break;
 	
 		case _1_ST_PUNCH_STANDING_L:
 		{
 			switch (last_input)
 			{
-			case _1_IN_PUNCH_FINISH: c_punch1->to_delete = true;  state = _1_ST_IDLE;  break;
+			case _1_IN_PUNCH_L_FINISH: c_punch1->to_delete = true;  state = _1_ST_IDLE;  break;
 			}
 		}
 		break;
 
 		case _1_ST_PUNCH_STANDING_H:
 		{
-					 switch (last_input)
-					{
-					  case _1_IN_PUNCH_FINISH: c_punch2->to_delete = true;  state = _1_ST_IDLE;  break;
-					 }
+			switch (last_input)
+			{
+				case _1_IN_PUNCH_H_FINISH: c_punch2->to_delete = true;  state = _1_ST_IDLE;  break;
+		    }
 		}
 			break;
 
 		case _1_ST_KICK_STANDING_L:
 		{
-									   switch (last_input)
-									   {
-									   case _1_IN_PUNCH_FINISH: c_punch1->to_delete = true;  state = _1_ST_IDLE;  break;
-									   }
+		   switch (last_input)
+		   {
+			   case _1_IN_KICK_L_FINISH: c_punch1->to_delete = true;  state = _1_ST_IDLE;  break;
+		 }
 		}
 			break;
 		case _1_ST_CROUCH:
@@ -401,15 +383,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
-		case _1_ST_PUNCH_CROUCH:
-		{
-			switch (last_input)
-			{
-
-			case _1_IN_PUNCH_FINISH: state = _1_ST_IDLE; break;
-			}
-		}
-		break;
+		
 		}
 	}
 
@@ -471,8 +445,11 @@ update_status ModulePlayer::Update()
 				break;
 		
 			case _1_ST_PUNCH_STANDING_L:
-				//std::cout << "PUNCH STANDING ++++\n";
 				current_animation = &punch;
+				collider->SetPos(position.x + 10, position.y - 75);
+				break;
+			case _1_ST_PUNCH_STANDING_H:
+				current_animation = &punch2;
 				collider->SetPos(position.x + 10, position.y - 75);
 				break;
 			

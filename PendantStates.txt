@@ -1,3 +1,4 @@
+//UPDATE
 case _1_ST_JUMP_FORWARD:
 				//std::cout << "JUMPING FORWARD ^^>>\n";
 				break;
@@ -18,3 +19,35 @@ case _1_ST_PUNCH_NEUTRAL_JUMP:
 			case _1_ST_PUNCH_BACKWARD_JUMP:
 				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
 				break;
+//PROCESS FSM
+
+
+		case _1_ST_PUNCH_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_FORWARD; break;
+			}
+		}
+		break;
+
+		case _1_ST_PUNCH_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_BACKWARD; break;
+			}
+		}
+		break;
+
+case _1_ST_PUNCH_CROUCH:
+		{
+			switch (last_input)
+			{
+
+			case _1_IN_PUNCH_FINISH: state = _1_ST_IDLE; break;
+			}
+		}
+		break;
