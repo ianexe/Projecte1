@@ -369,7 +369,9 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 }
 
 /**
-*TODO: Optimize jump & crouch (2 states)
+*TODO: Fer el salt Ian
+
+Optimize jump & crouch (2 states)
 **/
 // Update: draw background
 update_status ModulePlayer::Update()
