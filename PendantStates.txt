@@ -1,0 +1,20 @@
+case _1_ST_JUMP_FORWARD:
+				//std::cout << "JUMPING FORWARD ^^>>\n";
+				break;
+case _1_ST_JUMP_BACKWARD:
+			//std::cout << "JUMPING BACKWARD ^^<<\n";
+				break;
+
+	case _1_ST_PUNCH_CROUCH:
+				//std::cout << "PUNCH CROUCHING **++\n";
+				break;
+
+case _1_ST_PUNCH_NEUTRAL_JUMP:
+				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
+				break;
+			case _1_ST_PUNCH_FORWARD_JUMP:
+				//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
+				break;
+			case _1_ST_PUNCH_BACKWARD_JUMP:
+				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
+				break;
