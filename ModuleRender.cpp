@@ -65,14 +65,14 @@ update_status ModuleRender::Update()
 		camera.x = -1513;
 	}
 	
-	//CAMBIAR-HO
-	/*if(App->input->GetKey(SDL_SCANCODE_UP) == 1)
-		App->renderer->camera.x += speed;
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == 1){
 	
-		App->renderer->camera.x -= speed;
-	}*/
+	if(App->input->GetKey(SDL_SCANCODE_KP_8) == 1)
+		App->renderer->camera.y += speed;
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_5) == 1){
+	
+		App->renderer->camera.y -= speed;
+	}
 
 
 		if (App->renderer->camera.x >= 0)

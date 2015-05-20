@@ -168,6 +168,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_CROUCH_FINISH);
+			current_animation = &crouchidle;
 			isCrouching = false;
 		}
 	//Attacks
@@ -358,7 +359,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_CROUCH_UP: state = ST_IDLE; break;
-				//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
