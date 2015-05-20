@@ -2,12 +2,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-
-//Scroll
-//Input
-//Select stage?
-//Que el joc torni a la intro quan mors!!!
-//Que et moris!!
 class ModuleIntro : public Module
 {
 public:

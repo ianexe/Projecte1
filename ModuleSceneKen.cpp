@@ -48,11 +48,6 @@ ModuleSceneKen::ModuleSceneKen(Application* app, bool start_enabled) : Module(ap
 	foreground_pos = 0;
 	forward = true;
 
-	// Life Bar
-	lifebar.x = 31;
-	lifebar.y = 18;
-	lifebar.w = 322;
-	lifebar.h = 14;
 }
 
 ModuleSceneKen::~ModuleSceneKen()
@@ -64,11 +59,9 @@ bool ModuleSceneKen::Start()
 	LOG("Loading ken scene");
 	
 	graphics = App->textures->Load("ken_stage.png");
-	ui = App->textures->Load("ui.png");
 	App->colision->Enable();
 	App->player->Enable();
 	App->player2->Enable();
-	
 	App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
 	return true;
@@ -115,7 +108,6 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
 	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 0.92f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
-	App->renderer->Blit(ui, 31, 18, &lifebar);
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{

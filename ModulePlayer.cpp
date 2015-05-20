@@ -52,7 +52,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	jump.frames.PushBack({ 327, 813, 54, 119 });
 	jump.frames.PushBack({ 397, 810, 52, 122 });
 	jump.frames.PushBack({ 464, 819, 60, 113 });
-	jump.speed = 0.17f;
+	jump.speed = 0.23f;
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
@@ -233,6 +233,7 @@ update_status ModulePlayer::Update()
 	{
 		current_animation = &jump;
 		
+		/*
 		if ((position.y > 135) && (!isFalling))
 		{
 			position.y -= 5;
@@ -245,15 +246,18 @@ update_status ModulePlayer::Update()
 
 		if (isFalling)
 			position.y += 5;
-		
+
 		if (position.y > 216)
 		{
 			position.y = 216;
 			isJumping = false;
 			isFalling = false;
 		}
-		
-		
+		*/
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			isJumping = false;
+		}
 	}
 
 	if (doPunch)
@@ -318,7 +322,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
-	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), 208, &shadow, 1.0f);
+	App->renderer->Blit(graphics, position.x - 35, 208, &shadow, 1.0f);
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
 
