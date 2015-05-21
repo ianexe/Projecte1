@@ -104,7 +104,7 @@ update_status ModulePlayer::Update()
 
 	float speed = 3;
 
-	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking) && (!doDefense))
 	{
 
 
@@ -132,7 +132,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking))
+	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && (!isAttacking) && (!doDefense))
 	{
 		if (App->player->position.x < 896.0 && App->player->position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 		{
@@ -155,7 +155,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) && (!isAttacking) && (!doDefense))
 	{
 		doPunch = true;
 		isAttacking = true;
@@ -173,7 +173,7 @@ update_status ModulePlayer::Update()
 
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) && (!isAttacking) && (!doDefense))
 	{
 		doPunch2 = true;
 		isAttacking = true;
@@ -189,7 +189,7 @@ update_status ModulePlayer::Update()
 
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking))
+	if ((App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) && (!isAttacking) && (!doDefense))
 	{
 		doKick = true;
 		isAttacking = true;
