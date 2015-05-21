@@ -362,6 +362,16 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
+
+		case ST_KICK_STANDING_H:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_L_FINISH: c_kick->to_delete = true;  state = ST_IDLE;  break;
+			}
+		}
+		break;
+
 		case ST_CROUCHING:
 		{
 			switch (last_input)
