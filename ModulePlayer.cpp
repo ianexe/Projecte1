@@ -335,6 +335,9 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_RIGHT_UP: state = ST_IDLE; collider->rect.h = 90; doDefense = false; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false;  break;
 				//case IN_JUMP_DOWN: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
+				/**
+				*TODO: COLISIO CROUCH
+				**/
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -459,12 +462,10 @@ update_status ModulePlayer::Update()
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
-				if (!isOnLeft && App->player2->isAttacking)
+				if (!isOnLeft/* && App->player2->isAttacking*/)
 				{
 					doDefense = true;
 				}
-				else
-					doDefense = false;
 
 				if (doDefense)
 				{
@@ -488,12 +489,10 @@ update_status ModulePlayer::Update()
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
-				if (isOnLeft && App->player2->isAttacking)
+				if (isOnLeft/* && App->player2->isAttacking*/)
 				{
 					doDefense = true;
 				}
-				else
-					doDefense = false;
 
 				if (doDefense)
 				{
@@ -580,13 +579,9 @@ update_status ModulePlayer::Update()
 
 		if (isCrouching)
 		{
+			
 			collider->SetPos(position.x - 30, position.y - 60);
 			c_defense->SetPos(position.x - 30, position.y - 60);
-		}
-
-		if (doDefense)
-		{
-			collider->SetPos(position.x - 30, position.y - 50);
 		}
 		current_state = state;
 		App->player->internal_input(inputs);
