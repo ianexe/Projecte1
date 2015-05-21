@@ -159,7 +159,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (jumping_n)
 	{
-		if (isFalling && App->player->position.y > 216);
+		if (isFalling && App->player->position.y > 216)
 		{
 			App->player->position.y = 216;
 			inputs.Push(IN_JUMP_FINISH);
