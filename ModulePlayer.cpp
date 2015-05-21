@@ -46,15 +46,16 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	// jump animation (arcade sprite sheet)
 	//jump.frames.PushBack({ 16, 847, 56, 85 });
-	jump.frames.PushBack({ 100, 823, 58, 109 });
-	jump.frames.PushBack({ 176, 805, 50, 127 });
+	//jump.frames.PushBack({ 100, 823, 58, 109 });
+	//jump.frames.PushBack({ 176, 805, 50, 127 });
 	jump.frames.PushBack({ 239, 798, 66, 134 });
 	jump.speed = 0.23f;
 
 	// jump down animation (arcade sprite sheet)
-	jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
-	jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
+	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
+	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
 	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
+
 	jumpfalling.speed = 0.23f;
 
 	// block
@@ -438,9 +439,10 @@ update_status ModulePlayer::Update()
 			}
 			else
 			{
-				current_animation = &jumpfalling;
 				position.y += 5;
+				current_animation = &jumpfalling;
 			}
+
 				break;
 			case ST_CROUCHING:
 				current_animation = &crouch;
