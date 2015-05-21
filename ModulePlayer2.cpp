@@ -270,7 +270,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 						c_kick = App->colision->AddCollider({ position.x + 7, position.y - 85, 37, 25 }, COLLIDER_KICK_2, this);
 					}
 					else{
-						c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 37, 25 }, COLLIDER_KICK_2, this);
+						c_kick = App->colision->AddCollider({ position.x - 57, position.y - 85, 37, 25 }, COLLIDER_KICK_2, this);
 					}
 					isKicking_L = true;
 					state = ST_KICK_STANDING_L;
@@ -368,12 +368,22 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				}
 			}
 			break;
+
+			case ST_KICK_STANDING_H:
+			{
+				switch (last_input)
+				{
+				case IN_KICK_H_FINISH: c_kick2->to_delete = true; state = ST_IDLE;  break;
+				}
+			}
+			break;
+
 			case ST_CROUCHING:
 			{
 				switch (last_input)
 				{
 				//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
-				  case IN_CROUCH_UP: state = ST_IDLE; break;
+				  case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
 				}	
 			}
 			break;
