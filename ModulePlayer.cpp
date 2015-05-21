@@ -159,8 +159,9 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (jumping_n)
 	{
-		if (isFalling)
+		if (isFalling && App->player->position.y > 216);
 		{
+			App->player->position.y = 216;
 			inputs.Push(IN_JUMP_FINISH);
 		}
 	}
@@ -323,7 +324,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_J_NEUTRAL_FALLING:
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; isJumping = false; break;
+			case IN_JUMP_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
 			}
 		break;
 
@@ -425,27 +426,16 @@ update_status ModulePlayer::Update()
 			case ST_JUMPING_NEUTRAL:
 				current_animation = &jump;
 
-				if ((position.y > 135) && (!isFalling))
-				{
+				//if (position.y < 135)
+				//{
 					position.y -= 5;
-				}
-
-				else
-				{
-					isFalling = true;
-				}
-
-				if (isFalling)
-					
+				//}
+				
 				break;
 			case ST_J_NEUTRAL_FALLING:
 				position.y += 5;
-				if (position.y > 216)
-				{
-					position.y = 216;
-					isFalling = false;
-				}
 				break;
+
 			case ST_CROUCHING:
 				current_animation = &crouch;
 				break;
