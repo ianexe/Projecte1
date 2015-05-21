@@ -158,12 +158,20 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
-	if (jumping_n)
+	if (isJumping)
 	{
-		if (isFalling && App->player->position.y > 216)
+
+		if (isFalling)
 		{
-			App->player->position.y = 216;
-			inputs.Push(IN_JUMP_FINISH);
+			if (App->player->position.y > 216)
+			{
+				App->player->position.y = 216;
+				inputs.Push(IN_JUMP_N_FINISH);
+			}
+		}
+		if (App->player->position.y < 135)
+		{
+			inputs.Push(IN_JUMP_N_FINISH);
 		}
 	}
 	
@@ -178,7 +186,6 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		//Attacks
 	if (punch_timer_l > 0)
 	{
-	  //if (SDL_GetTicks() - punch_timer_l > PUNCH_L_TIME)
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_PUNCH_L_FINISH);
@@ -320,6 +327,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_UP: state = ST_J_NEUTRAL_FALLING; isFalling = true; break;
+			case IN_JUMP_N_FINISH: state = ST_J_NEUTRAL_FALLING; isFalling = true; break;
 			//	case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
@@ -328,7 +336,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_J_NEUTRAL_FALLING:
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
+			case IN_FALLING_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
 			}
 		break;
 
