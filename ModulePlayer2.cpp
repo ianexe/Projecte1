@@ -52,7 +52,6 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 
 	jumpfalling.speed = 0.23f;
 
-
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
 	block.frames.PushBack({ 525, 2334, 64, 93 });
@@ -71,7 +70,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
 	punch.frames.PushBack({ 19, 272, 64, 91 });
-	punch.speed = 0.1f;
+	punch.speed = 0.2f;
 
 	// punch2
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
