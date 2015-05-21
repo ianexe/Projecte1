@@ -69,9 +69,10 @@ public:
 	//Variables
 	
 	//bools
-	bool isOnLeft = false;
+	bool isOnLeft;
 	bool isJumping;
 	bool isFalling;
+	bool isAttacking;
 
 	/*bool doPunch;s
 	bool doPunch2;

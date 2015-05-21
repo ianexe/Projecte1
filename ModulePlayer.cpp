@@ -164,23 +164,18 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (isJumping)
 	{
-
-		if (isFalling)
+		if (position.y < 135 && !isFalling)
 		{
-			if (App->player->position.y > 216)
-			{
-				App->player->position.y = 216;
-				inputs.Push(IN_JUMP_N_FINISH);
-			}
+			isFalling = true;
 		}
-		else{
-			if (App->player->position.y < 135)
-			{
-				inputs.Push(IN_JUMP_N_FINISH);
-			}
+		
+		if (position.y <= 216 && isFalling)
+		{
+			position.y = 216;
+			inputs.Push(IN_JUMP_N_FINISH);
 		}
+			
 	}
-	
 	if (isCrouching)
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
@@ -243,7 +238,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
-			case IN_JUMP: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
+			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; isCrouching = true; break;
 
 			case IN_L_PUNCH:
@@ -310,7 +305,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_RIGHT_UP: state = ST_IDLE; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-				//case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
+				//case IN_JUMP_DOWN: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -323,7 +318,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-				//	case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
+				//	case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -333,20 +328,13 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_UP: state = ST_J_NEUTRAL_FALLING; isFalling = true; break;
-			case IN_JUMP_N_FINISH: state = ST_J_NEUTRAL_FALLING; isFalling = true; break;
-			//	case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+			case IN_JUMP_UP: isFalling = true; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
+			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+
 			}
 		}
 		break;
-
-		case ST_J_NEUTRAL_FALLING:
-			switch (last_input)
-			{
-			case IN_FALLING_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
-			}
-		break;
-
 		case ST_PUNCH_STANDING_L:
 		{
 			switch (last_input)
@@ -444,14 +432,13 @@ update_status ModulePlayer::Update()
 			break;
 			case ST_JUMPING_NEUTRAL:
 				current_animation = &jump;
-					position.y -= 5;
-				
-				
-				break;
-			case ST_J_NEUTRAL_FALLING:
+			if (!isFalling)
+				position.y -= 5;
+			else
 				position.y += 5;
+			if (App->player->position.y > 216)
+					position.y = 216;
 				break;
-
 			case ST_CROUCHING:
 				current_animation = &crouch;
 				break;
@@ -477,6 +464,8 @@ update_status ModulePlayer::Update()
 				break;
 			}
 		}
+
+
 
 		current_state = state;
 		App->player->internal_input(inputs);

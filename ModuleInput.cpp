@@ -212,7 +212,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 			if (down)
 				inputs.Push(IN_CROUCH_DOWN);
 			if (up)
-				inputs.Push(IN_JUMP);
+				inputs.Push(IN_JUMP_DOWN);
 		}
 
 		//Attacks
@@ -249,7 +249,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 			if (down_2)
 				inputs2.Push(IN_CROUCH_DOWN);
 			if (up_2)
-				inputs2.Push(IN_JUMP);
+				inputs2.Push(IN_JUMP_DOWN);
 		}
 		//Attacks
 		if (punch_l_2)

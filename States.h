@@ -7,7 +7,6 @@
 
 enum p1_states
 {
-	//Player 1
 	ST_UNKNOWN,
 
 	ST_IDLE,
@@ -38,13 +37,12 @@ enum p1_states
 **/
 enum p1_inputs
 {
-	//Player 1
 	IN_LEFT_DOWN,
 	IN_LEFT_UP,
 	IN_RIGHT_DOWN,
 	IN_RIGHT_UP,
 	IN_LEFT_AND_RIGHT,
-	IN_JUMP,
+	IN_JUMP_DOWN,
 	IN_JUMP_UP,
 	IN_CROUCH_UP,
 	IN_CROUCH_DOWN,
