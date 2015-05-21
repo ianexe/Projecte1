@@ -176,7 +176,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		else{
 			if (App->player->position.y < 135)
 			{
-				inputs.Push(IN_FALLING_N_FINISH);
+				inputs.Push(IN_JUMP_N_FINISH);
 			}
 		}
 	}
