@@ -242,6 +242,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_1, this);
 				}
 				punch_timer_l = SDL_GetTicks();
+				App->audio->PlayFx(punchFX);
 				state = ST_PUNCH_STANDING_L;
 			}
 			break;
@@ -256,6 +257,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 				}
 				punch_timer_h = SDL_GetTicks();
+				App->audio->PlayFx(punchFX);
 				state = ST_PUNCH_STANDING_H;
 			}
 			break;
@@ -270,6 +272,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
 				}
 				kick_timer_l = SDL_GetTicks();
+				App->audio->PlayFx(punchFX);
 				state = ST_KICK_STANDING_L;
 			}
 			break;
