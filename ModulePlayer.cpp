@@ -121,6 +121,7 @@ bool ModulePlayer::Start()
 	Health = 100;
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
+	fallingFX = App->audio->LoadFx("falling.wav");
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	p1_states current_state = ST_UNKNOWN;
@@ -173,6 +174,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (position.y >= 216 && isFalling)
 		{
 			position.y = 216;
+			App->audio->PlayFx(fallingFX);
 			inputs.Push(IN_JUMP_N_FINISH);
 		}
 			

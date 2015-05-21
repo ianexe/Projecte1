@@ -47,6 +47,7 @@ public:
 	Animation kick2;
 	unsigned int normalFX;
 	unsigned int strongFX;
+	unsigned int fallingFX;
 
 
 	//SDL_Rect detection;
