@@ -244,12 +244,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_RIGHT_DOWN: 
-				state = ST_WALK_RIGHT;
-				break;
-			case IN_LEFT_DOWN: 
-					state = ST_WALK_LEFT;
-				break;
+			case IN_RIGHT_DOWN: state = ST_WALK_RIGHT;	break;
+			case IN_LEFT_DOWN: state = ST_WALK_LEFT;break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
 

@@ -243,7 +243,8 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 						else{
 							c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
 						}
-						isPunching_L = SDL_GetTicks();
+						isPunching_L = true;
+						App->audio->PlayFx(normalFX);
 						state = ST_PUNCH_STANDING_L;
 					}
 					break;
@@ -257,7 +258,8 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 					{
 						c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
 					}
-					isPunching_H = SDL_GetTicks();
+					isPunching_H = true;
+					App->audio->PlayFx(strongFX);
 					state = ST_PUNCH_STANDING_H;
 				}
 				break;
@@ -272,9 +274,24 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 					}
 					isKicking_L = true;
 					state = ST_KICK_STANDING_L;
+					App->audio->PlayFx(normalFX);
 				}
 				break;
-
+				case IN_H_KICK:
+				{
+					if (isOnLeft)
+					{
+						c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 45, 50 }, COLLIDER_KICK_1, this);
+					}
+					else
+					{
+						c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 45, 50 }, COLLIDER_KICK_1, this);
+					}
+					isKicking_H = true;
+					App->audio->PlayFx(strongFX);
+					state = ST_KICK_STANDING_H;
+				}
+				break;
 				case IN_HIT: state = ST_HIT; isHit = true;  break;
 				}
 			}
@@ -294,8 +311,8 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_RIGHT_UP: state = ST_IDLE; break;
-				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+				case IN_RIGHT_UP: state = ST_IDLE; collider->rect.h = 90; doDefense = false; break;
+				case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false; break;
 				//case IN_JUMP_DOWN: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 				//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				}
@@ -318,18 +335,9 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_N_FINISH: state = ST_IDLE; break;
+				//case IN_JUMP_UP: isFalling = true; break;
+				case IN_JUMP_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
 			  //case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
-				}
-			}
-			break;
-
-			case ST_PUNCH_NEUTRAL_JUMP:
-			{
-				switch (last_input)
-				{
-				case IN_JUMP_N_FINISH: state = ST_IDLE; break;
-			//	case IN_PUNCH_FINISH: state = ST_JUMP_NEUTRAL; break;
 				}
 			}
 			break;
@@ -382,7 +390,6 @@ update_status ModulePlayer2::Update()
 {
 	if (Health < 0)
 		Health = 0;
-	int speed = 3;
 	
 	current_animation = &idle;
 	current_state = ST_UNKNOWN;
