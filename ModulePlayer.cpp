@@ -425,11 +425,8 @@ update_status ModulePlayer::Update()
 			break;
 			case ST_JUMPING_NEUTRAL:
 				current_animation = &jump;
-
-				//if (position.y < 135)
-				//{
 					position.y -= 5;
-				//}
+				
 				
 				break;
 			case ST_J_NEUTRAL_FALLING:
