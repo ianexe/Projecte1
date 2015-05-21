@@ -15,6 +15,7 @@ Application::Application()
 	fade = new ModuleFadeToBlack(this);
 	colision = new ModuleCollision(this);
 	scene_intro = new ModuleIntro(this, false);
+	ui = new ModuleUI(this);
 
 
 	// The order of calls is very important!
@@ -39,6 +40,7 @@ Application::Application()
 	AddModule(player2);
 
 	// Misc
+	AddModule(ui);
 	AddModule(fade); // let this after all drawing
 
 	
@@ -58,6 +60,7 @@ Application::~Application()
 	delete scene_ken;
 	delete player;
 	delete player2;
+	delete ui;
 	delete fade;
 	
 }

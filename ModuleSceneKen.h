@@ -16,7 +16,6 @@ public:
 public:
 	
 	SDL_Texture* graphics;
-	SDL_Texture* ui;
 	SDL_Rect ground;
 	SDL_Rect foreground;
 	SDL_Rect background;
