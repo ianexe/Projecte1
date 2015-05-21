@@ -11,6 +11,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 
 	position.x = 380;
 	position.y = 216;
+
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -37,6 +38,35 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	backward.frames.PushBack({ 974, 129, 57, 89 });
 	backward.speed = 0.1f;
 
+	// jump animation (arcade sprite sheet)
+	//jump.frames.PushBack({ 16, 847, 56, 85 });
+	//jump.frames.PushBack({ 100, 823, 58, 109 });
+	//jump.frames.PushBack({ 176, 805, 50, 127 });
+	jump.frames.PushBack({ 239, 798, 66, 134 });
+	jump.speed = 0.23f;
+
+	// jump down animation (arcade sprite sheet)
+	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
+	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
+	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
+
+	jumpfalling.speed = 0.23f;
+
+
+	// block
+	block.frames.PushBack({ 442, 2335, 64, 92 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.speed = 0.1f;
+
+	//crouch
+	crouch.frames.PushBack({ 114, 1227, 58, 69 });
+	crouch.frames.PushBack({ 196, 1235, 62, 61 });
+	crouch.speed = 0.1f;
+
+	//crouchidle
+	crouchidle.frames.PushBack({ 196, 1235, 62, 61 });
+	crouchidle.speed = 0.1f;
+
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
@@ -46,21 +76,35 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	// punch2
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
 	punch2.frames.PushBack({ 422, 268, 118, 94 });
+	punch2.frames.PushBack({ 422, 268, 118, 94 });
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
-	punch2.speed = 0.1f;
+	punch2.speed = 0.2f;
 
 	// kick
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.frames.PushBack({ 777, 265, 114, 94 });
+	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
-	kick.speed = 0.1f;
+	kick.speed = 0.2f;
 
-	//Set timers
-	jump_timer = 0;
-	punch_timer_l = 0;
-	punch_timer_h = 0;
-	kick_timer_l = 0;
-	hit_timer = 0;
+	// kick2
+	kick2.frames.PushBack({ 16, 398, 79, 90 });
+	kick2.frames.PushBack({ 99, 394, 98, 94 });
+	kick2.frames.PushBack({ 198, 394, 133, 94 });
+	kick2.frames.PushBack({ 351, 411, 108, 77 });
+	kick2.frames.PushBack({ 482, 407, 98, 81 });
+	kick2.speed = 0.2f;
+	
+	//Bools 
+	isJumping = false;
+	isOnLeft = false;
+	isJumping = false;
+	isFalling = false;
+	isPunching_L = false;
+	isPunching_H = false;
+	isKicking_L = false;
+	isKicking_H = false;
+	doDefense = false;
 	
 }
 
