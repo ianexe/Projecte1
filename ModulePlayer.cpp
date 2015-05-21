@@ -99,14 +99,14 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick2.frames.PushBack({ 482, 407, 98, 81 });
 	kick2.speed = 0.2f;
 	
-	//Timers
+	//Timer
 	
 	punch_timer_l = 0;
 	punch_timer_h = 0;
 	hit_timer = 0;
 
 	//Bools 
-	jumping_n = isOnLeft = false;
+	isJumping = isOnLeft = false;
 	speed = 3;
 }
 
@@ -173,9 +173,11 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 				inputs.Push(IN_JUMP_N_FINISH);
 			}
 		}
-		if (App->player->position.y < 135)
-		{
-			inputs.Push(IN_JUMP_N_FINISH);
+		else{
+			if (App->player->position.y < 135)
+			{
+				inputs.Push(IN_FALLING_N_FINISH);
+			}
 		}
 	}
 	
@@ -241,7 +243,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
-			case IN_JUMP: state = ST_JUMPING_NEUTRAL; jumping_n = true;  break;
+			case IN_JUMP: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; isCrouching = true; break;
 
 			case IN_L_PUNCH:
@@ -287,6 +289,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				state = ST_KICK_STANDING_L;
 			}
 			break;
+
 			case IN_HIT: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
 			}
 		}
@@ -340,7 +343,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_J_NEUTRAL_FALLING:
 			switch (last_input)
 			{
-			case IN_FALLING_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
+			case IN_FALLING_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
 			}
 		break;
 

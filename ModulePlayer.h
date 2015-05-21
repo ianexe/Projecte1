@@ -70,11 +70,10 @@ public:
 	
 	//bools
 	bool isOnLeft = false;
-	bool jumping_n;
 	bool isJumping;
 	bool isFalling;
 
-	/*bool doPunch;
+	/*bool doPunch;s
 	bool doPunch2;
 	bool doKick;
 	bool doKick2;
