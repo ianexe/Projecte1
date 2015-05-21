@@ -305,11 +305,11 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				if (isOnLeft)
 				{
-					c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 50, 50 }, COLLIDER_KICK_1, this);
+					c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 45, 50 }, COLLIDER_KICK_1, this);
 				}
 				else
 				{
-					c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 50, 50 }, COLLIDER_KICK_1, this);
+					c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 45, 50 }, COLLIDER_KICK_1, this);
 				}
 				isKicking_H = true;
 				App->audio->PlayFx(strongFX);
@@ -556,10 +556,11 @@ update_status ModulePlayer::Update()
 				break;
 			}
 		}
+
 		/**
 		*TODO: COLISIO BONA
 		**/
-		c_defense->SetPos(position.x - 27, position.y - 90);
+		c_defense->SetPos(position.x - 30, position.y - 90);
 		collider->SetPos(position.x - 30, position.y - 90);
 
 		current_state = state;
