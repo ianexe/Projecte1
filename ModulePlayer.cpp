@@ -179,7 +179,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_CROUCH_FINISH);
-			current_animation = &crouchidle;
+			//current_animation = &crouchidle;
 			isCrouching = false;
 		}
 	}
@@ -253,7 +253,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					state = ST_WALK_LEFT;
 				break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCHING; isCrouching = true; break;
+			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
 
 			case IN_L_PUNCH:
 			{
@@ -537,6 +537,7 @@ update_status ModulePlayer::Update()
 
 			case ST_CROUCHED:
 				current_animation = &crouchidle;
+				collider->rect.h = 60;
 				collider->SetPos(position.x - 30, position.y - 60);
 				break;
 
