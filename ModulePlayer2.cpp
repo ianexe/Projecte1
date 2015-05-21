@@ -105,6 +105,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	isKicking_L = false;
 	isKicking_H = false;
 	doDefense = false;
+	//isAttacking = false;
 	
 }
 
@@ -137,51 +138,51 @@ bool ModulePlayer2::CleanUp()
 
 void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 {
-	if (jump_timer > 0)
+	if (isJumping)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_JUMP_N_FINISH);
-			jump_timer = 0;
+			isJumping = false;
 		}
 	}
 
-	if (punch_timer_l > 0)
+	if (isPunching_L)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 			
 		{
 			inputs.Push(IN_PUNCH_L_FINISH);
-			punch_timer_l = 0;
+			isPunching_L = false;
 		}
 	}
 
-	if (punch_timer_h > 0)
+	if (isPunching_H)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 
 		{
 			inputs.Push(IN_PUNCH_H_FINISH);
-			punch_timer_h = 0;
+			isPunching_H = false;
 		}
 	}
 
-	if (kick_timer_l > 0)
+	if (isKicking_L)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 
 		{
 			inputs.Push(IN_KICK_L_FINISH);
-			punch_timer_l = 0;
+			isKicking_L = false;
 		}
 	}
 
-	if (hit_timer > 0)
+	if (isHit)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_HIT_FINISH);
-			hit_timer = 0;
+			isHit = false;
 		}
 	}
 }
@@ -201,7 +202,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 				case IN_RIGHT_DOWN: state = ST_WALK_RIGHT; break;
 				case IN_LEFT_DOWN: state = ST_WALK_LEFT; break;
-				case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; jump_timer = SDL_GetTicks();  break;
+				case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				case IN_L_PUNCH:
 					{
@@ -211,7 +212,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 						else{
 							c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
 						}
-						punch_timer_l = SDL_GetTicks();
+						isPunching_L = SDL_GetTicks();
 						state = ST_PUNCH_STANDING_L;
 					}
 					break;
@@ -225,7 +226,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 					{
 						c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
 					}
-					punch_timer_h = SDL_GetTicks();
+					isPunching_H = SDL_GetTicks();
 					state = ST_PUNCH_STANDING_H;
 				}
 				break;
@@ -238,12 +239,12 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 					else{
 						c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 37, 25 }, COLLIDER_KICK_2, this);
 					}
-					kick_timer_l = SDL_GetTicks();
+					isKicking_L = true;
 					state = ST_KICK_STANDING_L;
 				}
 				break;
 
-				case IN_HIT: state = ST_HIT; hit_timer = SDL_GetTicks();  break;
+				case IN_HIT: state = ST_HIT; isHit = true;  break;
 				}
 			}
 			break;

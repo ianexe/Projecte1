@@ -63,6 +63,7 @@ public:
 	bool isKicking_H;
 
 	bool isHit;
+	bool doDefense;
 	//PNJ basics
 	p2Point<int> position;
 	unsigned int Health;
