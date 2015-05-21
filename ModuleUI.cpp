@@ -35,7 +35,7 @@ bool ModuleUI::CleanUp()
 
 update_status ModuleUI::Update()
 {
-	App->renderer->Blit(graphics, position.x, position.y, &lifebar);
+	App->renderer->Blit(graphics, App->renderer->OpCamera.x + position.x, position.y, &lifebar);
 	return UPDATE_CONTINUE;
 }
 
