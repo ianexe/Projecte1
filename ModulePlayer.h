@@ -61,25 +61,22 @@ public:
 	p2Qeue<p1_inputs> inputs;
 	//Timers
 	
-	Uint32 punch_timer_l;
-	Uint32 punch_timer_h;
-	Uint32 kick_timer_l;
-
-	Uint32 hit_timer;
+	
 
 	//Variables
 	
 	//bools
 	bool isOnLeft;
+	
 	bool isJumping;
 	bool isFalling;
-	bool isAttacking;
+	//bool isAttacking;
+	bool isPunching_L;
+	bool isPunching_H;
+	bool isKicking_L;
+	bool isKicking_H;
 
-	/*bool doPunch;s
-	bool doPunch2;
-	bool doKick;
-	bool doKick2;
-	*/
+	bool isHit;
 
 	bool isCrouching;
 
