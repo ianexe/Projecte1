@@ -431,12 +431,16 @@ update_status ModulePlayer::Update()
 			}
 			break;
 			case ST_JUMPING_NEUTRAL:
-				current_animation = &jump;
 			if (!isFalling)
+			{
+				current_animation = &jump;
 				position.y -= 5;
+			}
 			else
+			{
+				current_animation = &jumpfalling;
 				position.y += 5;
-		
+			}
 				break;
 			case ST_CROUCHING:
 				current_animation = &crouch;
