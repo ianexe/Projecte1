@@ -71,7 +71,7 @@ ModulePlayer2::~ModulePlayer2()
 bool ModulePlayer2::Start()
 {
 	LOG("Loading player");
-	Health = 100;
+	Health = 144;
 	
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);

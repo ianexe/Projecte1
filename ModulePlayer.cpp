@@ -125,7 +125,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-	Health = 100;
+	Health = 144;
 	// Load SFC
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");

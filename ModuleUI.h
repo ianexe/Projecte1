@@ -16,6 +16,10 @@ public:
 public:
 	SDL_Texture* graphics;
 	SDL_Rect lifebar;
+	SDL_Rect life1;
+	SDL_Rect life2;
 
+	int life1X;
+	int life2X;
 	p2Point<int> position;
 };
