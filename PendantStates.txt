@@ -1,88 +1,87 @@
 //UPDATE
-
-case ST_JUMP_FORWARD:
+case _1_ST_JUMP_FORWARD:
 				//std::cout << "JUMPING FORWARD ^^>>\n";
 				break;
-case ST_JUMP_BACKWARD:
+case _1_ST_JUMP_BACKWARD:
 			//std::cout << "JUMPING BACKWARD ^^<<\n";
 				break;
 
-	case ST_PUNCH_CROUCH:
+	case _1_ST_PUNCH_CROUCH:
 				//std::cout << "PUNCH CROUCHING **++\n";
 				break;
 
-case ST_PUNCH_NEUTRAL_JUMP:
+case _1_ST_PUNCH_NEUTRAL_JUMP:
 				//std::cout << "PUNCH JUMP NEUTRAL ^^++\n";
 				break;
-			case ST_PUNCH_FORWARD_JUMP:
+			case _1_ST_PUNCH_FORWARD_JUMP:
 				//std::cout << "PUNCH JUMP FORWARD ^>>+\n";
 				break;
-			case ST_PUNCH_BACKWARD_JUMP:
+			case _1_ST_PUNCH_BACKWARD_JUMP:
 				//std::cout << "PUNCH JUMP BACKWARD ^<<+\n";
 				break;
 //PROCESS FSM
 
 
 
-	case ST_JUMP_FORWARD:
+	case _1_ST_JUMP_FORWARD:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_L_PUNCH: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
 
-		case ST_JUMP_BACKWARD:
+		case _1_ST_JUMP_BACKWARD:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_L_PUNCH: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_L_PUNCH: state = _1_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
 
 		//Punches
 
-			case ST_PUNCH_NEUTRAL_JUMP:
+			case _1_ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_PUNCH_L_FINISH: state = ST_JUMP_NEUTRAL; break;
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_PUNCH_L_FINISH: state = _1_ST_JUMP_NEUTRAL; break;
 			}
 		}
 		break;
 
 
-		case ST_PUNCH_FORWARD_JUMP:
+		case _1_ST_PUNCH_FORWARD_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_PUNCH_FINISH: state = ST_JUMP_FORWARD; break;
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_FORWARD; break;
 			}
 		}
 		break;
 
-		case ST_PUNCH_BACKWARD_JUMP:
+		case _1_ST_PUNCH_BACKWARD_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			case IN_PUNCH_FINISH: state = ST_JUMP_BACKWARD; break;
+			case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			case _1_IN_PUNCH_FINISH: state = _1_ST_JUMP_BACKWARD; break;
 			}
 		}
 		break;
 
-case ST_PUNCH_CROUCH:
+case _1_ST_PUNCH_CROUCH:
 		{
 			switch (last_input)
 			{
 
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
+			case _1_IN_PUNCH_FINISH: state = _1_ST_IDLE; break;
 			}
 		}
 		break;
@@ -91,22 +90,22 @@ case ST_PUNCH_CROUCH:
 
 
 
-case ST_JUMP_FORWARD:
+case _1_ST_JUMP_FORWARD:
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
-			//	case IN_L_PUNCH: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			//	case _1_IN_L_PUNCH: state = _1_ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
 
-			case ST_JUMP_BACKWARD:
+			case _1_ST_JUMP_BACKWARD:
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
-			//	case IN_L_PUNCH: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				case _1_IN_JUMP_FINISH: state = _1_ST_IDLE; break;
+			//	case _1_IN_L_PUNCH: state = _1_ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;

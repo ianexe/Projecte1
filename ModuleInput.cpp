@@ -75,24 +75,24 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 				kick_l = false;
 				break;
 			case SDLK_s:
-				inputs.Push(IN_CROUCH_UP);
+				inputs.Push(_1_IN_CROUCH_UP);
 				down = false;
 				break;
 			case SDLK_w:
 				up = false;
 				break;
 			case SDLK_a:
-				inputs.Push(IN_LEFT_UP);
+				inputs.Push(_1_IN_LEFT_UP);
 				left = false;
 				break;
 			case SDLK_d:
-				inputs.Push(IN_RIGHT_UP);
+				inputs.Push(_1_IN_RIGHT_UP);
 				right = false;
 				break;
 
 		//Player 2
 			case SDLK_DOWN:
-				inputs2.Push(IN_CROUCH_UP);
+				inputs2.Push(_1_IN_CROUCH_UP);
 				down_2 = false;
 				break;
 			case SDLK_KP_1:
@@ -108,11 +108,11 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 				up_2 = false;
 				break;
 			case SDLK_LEFT:
-				inputs2.Push(IN_LEFT_UP);
+				inputs2.Push(_1_IN_LEFT_UP);
 				left_2 = false;
 				break;
 			case SDLK_RIGHT:
-				inputs2.Push(IN_RIGHT_UP);
+				inputs2.Push(_1_IN_RIGHT_UP);
 				right_2 = false;
 				break;
 			}
@@ -176,67 +176,67 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 		}
 	//Player1
 		if (left && right)
-			inputs.Push(IN_LEFT_AND_RIGHT);
+			inputs.Push(_1_IN_LEFT_AND_RIGHT);
 		{
 			if (left)
-				inputs.Push(IN_LEFT_DOWN);
+				inputs.Push(_1_IN_LEFT_DOWN);
 			if (right)
-				inputs.Push(IN_RIGHT_DOWN);
+				inputs.Push(_1_IN_RIGHT_DOWN);
 		}
 		if (up && down)
-			inputs.Push(IN_JUMP_AND_CROUCH);
+			inputs.Push(_1_IN_JUMP_AND_CROUCH);
 		else
 		{
 			if (down)
-				inputs.Push(IN_CROUCH_DOWN);
+				inputs.Push(_1_IN_CROUCH_DOWN);
 			if (up)
-				inputs.Push(IN_JUMP);
+				inputs.Push(_1_IN_JUMP);
 		}
 
 		//Attacks
 		if (punch_l)
 		{
-			inputs.Push(IN_L_PUNCH);
+			inputs.Push(_1_IN_L_PUNCH);
 		}
 		if (punch_h)
 		{
-			inputs.Push(IN_H_PUNCH);
+			inputs.Push(_1_IN_H_PUNCH);
 		}
 		if (kick_l)
 		{
-			inputs.Push(IN_L_KICK);
+			inputs.Push(_1_IN_L_KICK);
 		}
 
 	//Player 2
 		if (left_2 && right_2)
-			inputs2.Push(IN_LEFT_AND_RIGHT);
+			inputs2.Push(_1_IN_LEFT_AND_RIGHT);
 		{
 			if (left_2)
-				inputs2.Push(IN_LEFT_DOWN);
+				inputs2.Push(_1_IN_LEFT_DOWN);
 			if (right_2)
-				inputs2.Push(IN_RIGHT_DOWN);
+				inputs2.Push(_1_IN_RIGHT_DOWN);
 		}
 		if (up_2 && down_2)
-			inputs2.Push(IN_JUMP_AND_CROUCH);
+			inputs2.Push(_1_IN_JUMP_AND_CROUCH);
 		else
 		{
 			if (down_2)
-				inputs2.Push(IN_CROUCH_DOWN);
+				inputs2.Push(_1_IN_CROUCH_DOWN);
 			if (up_2)
-				inputs2.Push(IN_JUMP);
+				inputs2.Push(_1_IN_JUMP);
 		}
 		//Attacks
 		if (punch_l_2)
 		{
-			inputs2.Push(IN_L_PUNCH);
+			inputs2.Push(_1_IN_L_PUNCH);
 		}
 		if (punch_h_2)
 		{
-			inputs2.Push(IN_H_PUNCH);
+			inputs2.Push(_1_IN_H_PUNCH);
 		}
 		if (kick_l_2)
 		{
-			inputs2.Push(IN_L_KICK);
+			inputs2.Push(_1_IN_L_KICK);
 		}
 		
 	}
@@ -258,7 +258,7 @@ bool ModuleInput::external_input2(p2Qeue<p2_inputs>& inputs2)
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_DOWN:
-				inputs2.Push(IN_CROUCH_UP);
+				inputs2.Push(_1_IN_CROUCH_UP);
 				down_2 = false;
 				break;
 			case SDLK_KP_1:
@@ -268,11 +268,11 @@ bool ModuleInput::external_input2(p2Qeue<p2_inputs>& inputs2)
 				up_2 = false;
 				break;
 			case SDLK_LEFT:
-				inputs2.Push(IN_LEFT_UP);
+				inputs2.Push(_1_IN_LEFT_UP);
 				left_2 = false;
 				break;
 			case SDLK_RIGHT:
-				inputs2.Push(IN_RIGHT_UP);
+				inputs2.Push(_1_IN_RIGHT_UP);
 				right_2 = false;
 				break;
 			}
@@ -303,25 +303,25 @@ bool ModuleInput::external_input2(p2Qeue<p2_inputs>& inputs2)
 		}
 
 		if (left_2 && right_2)
-			inputs2.Push(IN_LEFT_AND_RIGHT);
+			inputs2.Push(_1_IN_LEFT_AND_RIGHT);
 		{
 			if (left_2)
-				inputs2.Push(IN_LEFT_DOWN);
+				inputs2.Push(_1_IN_LEFT_DOWN);
 			if (right_2)
-				inputs2.Push(IN_RIGHT_DOWN);
+				inputs2.Push(_1_IN_RIGHT_DOWN);
 		}
 		if (up_2 && down_2)
-			inputs2.Push(IN_JUMP_AND_CROUCH);
+			inputs2.Push(_1_IN_JUMP_AND_CROUCH);
 		else
 		{
 			if (down_2)
-			inputs2.Push(IN_CROUCH_DOWN);
+			inputs2.Push(_1_IN_CROUCH_DOWN);
 			if (up_2)
-			inputs2.Push(IN_JUMP);
+			inputs2.Push(_1_IN_JUMP);
 		}
 		if (punch_l_2)
 		{
-			inputs2.Push(IN_X);
+			inputs2.Push(_1_IN_X);
 		}
 	}
 	return true;
