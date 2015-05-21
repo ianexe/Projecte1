@@ -29,17 +29,17 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_PUNCH_1][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_DEFENSE_2] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_PUNCH_1] = false;
-	matrix[COLLIDER_PUNCH_1][COLLIDER_PUNCH_2] = true;
+	matrix[COLLIDER_PUNCH_1][COLLIDER_PUNCH_2] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_KICK_1] = false;
-	matrix[COLLIDER_PUNCH_1][COLLIDER_KICK_2] = true;
+	matrix[COLLIDER_PUNCH_1][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_NEUTRAL_2] = true;
 
 	matrix[COLLIDER_PUNCH_2][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_DEFENSE_2] = false;
-	matrix[COLLIDER_PUNCH_2][COLLIDER_PUNCH_1] = true;
+	matrix[COLLIDER_PUNCH_2][COLLIDER_PUNCH_1] = false;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_PUNCH_2] = false;
-	matrix[COLLIDER_PUNCH_2][COLLIDER_KICK_1] = true;
+	matrix[COLLIDER_PUNCH_2][COLLIDER_KICK_1] = false;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_NEUTRAL_1] = true;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_NEUTRAL_2] = false;
@@ -47,17 +47,17 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_KICK_1][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_DEFENSE_2] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_PUNCH_1] = false;
-	matrix[COLLIDER_KICK_1][COLLIDER_PUNCH_2] = true;
+	matrix[COLLIDER_KICK_1][COLLIDER_PUNCH_2] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_KICK_1] = false;
-	matrix[COLLIDER_KICK_1][COLLIDER_KICK_2] = true;
+	matrix[COLLIDER_KICK_1][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_NEUTRAL_2] = true;
 
 	matrix[COLLIDER_KICK_2][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_KICK_2][COLLIDER_DEFENSE_2] = false;
-	matrix[COLLIDER_KICK_2][COLLIDER_PUNCH_1] = true;
+	matrix[COLLIDER_KICK_2][COLLIDER_PUNCH_1] = false;
 	matrix[COLLIDER_KICK_2][COLLIDER_PUNCH_2] = false;
-	matrix[COLLIDER_KICK_2][COLLIDER_KICK_1] = true;
+	matrix[COLLIDER_KICK_2][COLLIDER_KICK_1] = false;
 	matrix[COLLIDER_KICK_2][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_KICK_2][COLLIDER_NEUTRAL_1] = true;
 	matrix[COLLIDER_KICK_2][COLLIDER_NEUTRAL_2] = false;
