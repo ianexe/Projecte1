@@ -26,7 +26,7 @@ Application::Application()
 	AddModule(renderer);
 	AddModule(textures);
 	AddModule(input);
-	//AddModule(audio);
+	AddModule(audio);
 	
 	// Scenes
 	AddModule(scene_intro);

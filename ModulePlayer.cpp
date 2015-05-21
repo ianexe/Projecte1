@@ -1,7 +1,7 @@
 #include "Application.h"
-#include "ModulePlayer2.h"
+#include "ModulePlayer.h"
 #include "Globals.h"
-//#include "StateMachine.h"
+
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -444,22 +444,18 @@ update_status ModulePlayer::Update()
 
 			case ST_PUNCH_STANDING_L:
 				current_animation = &punch;
-				App->audio->PlayFx(punchFX);
 				break;
 
 			case ST_PUNCH_STANDING_H:
 				current_animation = &punch2;
-				App->audio->PlayFx(punchFX);
 				break;
 
 			case ST_KICK_STANDING_L:
 				current_animation = &kick;
-				App->audio->PlayFx(punchFX);
 				break;
 
 			case ST_KICK_STANDING_H:
 				current_animation = &kick2;
-				App->audio->PlayFx(punchFX);
 				break;
 			}
 		}
