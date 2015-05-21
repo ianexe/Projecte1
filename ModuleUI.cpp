@@ -12,8 +12,8 @@ ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_ena
 	lifebar.w = 322;
 	lifebar.h = 14;
 
-	x = 31;
-	y = 18;
+	position.x = 31;
+	position.y = 18;
 }
 
 
@@ -35,7 +35,7 @@ bool ModuleUI::CleanUp()
 
 update_status ModuleUI::Update()
 {
-	App->renderer->Blit(graphics, x, y, &lifebar);
+	App->renderer->Blit(graphics, position.x, position.y, &lifebar);
 	return UPDATE_CONTINUE;
 }
 

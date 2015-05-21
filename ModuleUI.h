@@ -17,6 +17,5 @@ public:
 	SDL_Texture* graphics;
 	SDL_Rect lifebar;
 
-	float x;
-	float y;
+	p2Point<int> position;
 };
