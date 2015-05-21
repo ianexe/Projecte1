@@ -329,7 +329,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			//case IN_JUMP_UP: isFalling = true; break;
-			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
 			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
 			}
@@ -436,8 +436,7 @@ update_status ModulePlayer::Update()
 				position.y -= 5;
 			else
 				position.y += 5;
-			if (App->player->position.y > 216)
-					position.y = 216;
+		
 				break;
 			case ST_CROUCHING:
 				current_animation = &crouch;
