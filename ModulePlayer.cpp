@@ -338,7 +338,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				/**
 				*TODO: COLISIO CROUCH
 				**/
-			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
+			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
 		break;
@@ -351,7 +351,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_LEFT_UP: state = ST_IDLE; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
+			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
 		break;
