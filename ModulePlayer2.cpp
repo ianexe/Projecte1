@@ -113,10 +113,9 @@ update_status ModulePlayer2::Update()
 
 			if (isOnLeft && App->player->isAttacking){
 
-				c_defense->type = COLLIDER_DEFENSE_2;
-				collider->rect.h = 50;
-				collider->SetPos(position.x - 30, position.y - 50);
+				doDefense = true;
 			}
+
 			else{
 				c_defense->type = COLLIDER_NONE;
 				collider->rect.h = 90;
@@ -144,9 +143,8 @@ update_status ModulePlayer2::Update()
 				collider->SetPos(position.x - 30, position.y - 90);
 			}
 			else if (App->player->isAttacking){
-				c_defense->type = COLLIDER_DEFENSE_2;
-				collider->rect.h = 50;
-				collider->SetPos(position.x - 30, position.y - 50);
+				
+				doDefense = true;
 			}
 
 			current_animation = &forward;
@@ -250,6 +248,20 @@ update_status ModulePlayer2::Update()
 		}
 	}
 
+	if (doDefense){
+
+		current_animation = &kick;
+
+		c_defense->type = COLLIDER_DEFENSE_2;
+		collider->rect.h = 50;
+		collider->SetPos(position.x - 30, position.y - 50);
+
+		if (!App->player->isAttacking)
+		{
+			doDefense = false;
+		}
+
+	}
 
 	if (App->player->position.x > App->player2->position.x)
 		isOnLeft = true;

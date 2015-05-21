@@ -40,6 +40,7 @@ public:
 
 	bool isAttacking;
 
+	bool doDefense;
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;
