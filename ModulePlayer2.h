@@ -2,10 +2,9 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Globals.h"
-//#include "p2Point.h"
-//#include "ModuleCollision.h"
 #include "States.h"
-//#include "ModuleInput.h"
+
+
 class ModulePlayer2 : public Module
 {
 public:
