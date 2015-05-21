@@ -20,20 +20,26 @@ public:
 public:
 	
 	SDL_Texture* graphics;
+	SDL_Rect shadow;
 	Animation idle;
 	Animation forward;
 	Animation backward;
+	Animation jump;
+	Animation block;
+	Animation crouch;
+	Animation crouchidle;
 	Animation punch;
 	Animation punch2;
 	Animation kick;
-	SDL_Rect atac;
-	SDL_Rect defense;
-	//SDL_Rect detection;
+	Animation kick2;
+	unsigned int punchFX;
+
 	Collider* collider;
 	Collider* c_defense;
 	Collider* c_punch1;
 	Collider* c_punch2;
 	Collider* c_kick;
+	Collider* c_kick2;
 
 	//Variables
 	bool isOnLeft;
@@ -41,9 +47,15 @@ public:
 	bool isAttacking;
 
 	bool doDefense;
+	bool isJumping;
+	bool isFalling;
+
 	bool doPunch;
 	bool doPunch2;
 	bool doKick;
+	bool doKick2;
+
+	bool isCrouching;
 
 	p2Point<float> position;
 	unsigned int Health;

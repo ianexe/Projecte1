@@ -11,6 +11,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 
 	position.x = 80;
 	position.y = 216;
+
+	// shadow
+	shadow.x = 743;
+	shadow.y = 92;
+	shadow.w = 68;
+	shadow.h = 11;
+
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -37,24 +44,57 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.frames.PushBack({ 974, 129, 57, 89 });
 	backward.speed = 0.1f;
 
+	// jump animation (arcade sprite sheet)
+	jump.frames.PushBack({ 16, 847, 56, 85 });
+	jump.frames.PushBack({ 100, 823, 58, 109 });
+	jump.frames.PushBack({ 176, 805, 50, 127 });
+	jump.frames.PushBack({ 239, 798, 66, 134 });
+	jump.frames.PushBack({ 327, 813, 54, 119 });
+	jump.frames.PushBack({ 397, 810, 52, 122 });
+	jump.frames.PushBack({ 464, 819, 60, 113 });
+	jump.speed = 0.23f;
+
+	// block
+	block.frames.PushBack({ 442, 2335, 64, 92 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.speed = 0.1f;
+
+	//crouch
+	crouch.frames.PushBack({ 114, 1227, 58, 69 });
+	crouch.frames.PushBack({ 196, 1235, 62, 61 });
+	crouch.speed = 0.1f;
+
+	//crouchidle
+	crouchidle.frames.PushBack({ 196, 1235, 62, 61 });
+	crouchidle.speed = 0.1f;
+
 	// punch
 	punch.frames.PushBack({ 19, 272, 64, 91 });
 	punch.frames.PushBack({ 84, 272, 116, 91 });
 	punch.frames.PushBack({ 19, 272, 64, 91 });
-	punch.speed = 0.1f;
+	punch.speed = 0.2f;
 
 	// punch2
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
 	punch2.frames.PushBack({ 422, 268, 118, 94 });
+	punch2.frames.PushBack({ 422, 268, 118, 94 });
 	punch2.frames.PushBack({ 333, 268, 90, 95 });
-	punch2.speed = 0.1f;
+	punch2.speed = 0.2f;
 
 	// kick
 	kick.frames.PushBack({ 689, 267, 66, 92 });
 	kick.frames.PushBack({ 777, 265, 114, 94 });
+	kick.frames.PushBack({ 777, 265, 114, 94 });
 	kick.frames.PushBack({ 689, 267, 66, 92 });
-	kick.speed = 0.1f;
+	kick.speed = 0.2f;
 
+	// kick2
+	kick2.frames.PushBack({ 16, 398, 79, 90 });
+	kick2.frames.PushBack({ 99, 394, 98, 94 });
+	kick2.frames.PushBack({ 198, 394, 133, 94 });
+	kick2.frames.PushBack({ 351, 411, 108, 77 });
+	kick2.frames.PushBack({ 482, 407, 98, 81 });
+	kick2.speed = 0.2f;
 
 
 }
@@ -68,6 +108,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	Health = 100;
 
+	punchFX = App->audio->LoadFx("punch.wav");
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
@@ -103,6 +144,14 @@ update_status ModulePlayer::Update()
 
 
 	float speed = 3;
+
+	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) && (!isAttacking) && (!doDefense))
+	{
+		isJumping = true;
+		c_defense->type = COLLIDER_NONE;
+
+		
+	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking) && (!doDefense))
 	{
@@ -159,6 +208,7 @@ update_status ModulePlayer::Update()
 	{
 		doPunch = true;
 		isAttacking = true;
+		App->audio->PlayFx(punchFX);
 		c_defense->type = COLLIDER_NONE;
 		collider->rect.h = 90;
 		if (isOnLeft){
@@ -177,6 +227,7 @@ update_status ModulePlayer::Update()
 	{
 		doPunch2 = true;
 		isAttacking = true;
+		App->audio->PlayFx(punchFX);
 		c_defense->type = COLLIDER_NONE;
 		collider->rect.h = 90;
 		if (isOnLeft){
@@ -193,6 +244,7 @@ update_status ModulePlayer::Update()
 	{
 		doKick = true;
 		isAttacking = true;
+		App->audio->PlayFx(punchFX);
 		c_defense->type = COLLIDER_NONE;
 		collider->rect.h = 90;
 		if (isOnLeft){
@@ -205,7 +257,71 @@ update_status ModulePlayer::Update()
 
 	}
 
+	if ((App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) && (!isAttacking) && (!doDefense))
+	{
+		doKick2 = true;
+		isAttacking = true;
+		c_defense->type = COLLIDER_NONE;
+		collider->rect.h = 90;
+		if (isOnLeft){
+			c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 50, 50 }, COLLIDER_KICK_1, this);
+		}
+		else{
+			c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 50, 50 }, COLLIDER_KICK_1, this);
+		}
+
+
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && (!isAttacking) && (!doDefense))
+	{
+		current_animation = &crouchidle;
+		isCrouching = true;
+		c_defense->type = COLLIDER_NONE;
+		collider->rect.h = 60;
+		collider->SetPos(position.x - 30, position.y - 60);
+
+	}
+
+
 	//Does attack if called
+
+	if (isJumping)
+	{
+		current_animation = &jump;
+
+		/*
+		if ((position.y > 135) && (!isFalling))
+		{
+		position.y -= 5;
+		}
+
+		else
+		{
+		isFalling = true;
+		}
+
+		if (isFalling)
+		position.y += 5;
+
+		if (position.y > 216)
+		{
+		position.y = 216;
+		isJumping = false;
+		isFalling = false;
+		}
+		*/
+
+		collider->rect.h = 90;
+		collider->SetPos(position.x - 30, position.y + 90);
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			isJumping = false;
+		}
+	}
+
+
 
 	if (doPunch)
 	{
@@ -247,6 +363,20 @@ update_status ModulePlayer::Update()
 		}
 	}
 
+	if (doKick2)
+	{
+		current_animation = &kick2;
+
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			doKick2 = false;
+			isAttacking = false;
+			c_kick2->to_delete = true;
+		}
+	}
+
+
 	if (doDefense){
 
 		current_animation = &kick;
@@ -263,6 +393,7 @@ update_status ModulePlayer::Update()
 
 	}
 
+	//Checks where player is facing
 
 	if (App->player->position.x < App->player2->position.x)
 		isOnLeft = true;
@@ -272,6 +403,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
+	App->renderer->Blit(graphics, position.x - 35, 208, &shadow, 1.0f);
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 
 
