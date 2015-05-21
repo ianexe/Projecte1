@@ -27,7 +27,7 @@ case ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			case IN_L_PUNCH: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
@@ -37,7 +37,7 @@ case ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			case IN_L_PUNCH: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
@@ -49,7 +49,7 @@ case ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			case IN_PUNCH_L_FINISH: state = ST_JUMP_NEUTRAL; break;
 			}
 		}
@@ -60,7 +60,7 @@ case ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			case IN_PUNCH_FINISH: state = ST_JUMP_FORWARD; break;
 			}
 		}
@@ -70,7 +70,7 @@ case ST_PUNCH_NEUTRAL_JUMP:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			case IN_PUNCH_FINISH: state = ST_JUMP_BACKWARD; break;
 			}
 		}
@@ -94,7 +94,7 @@ case ST_JUMP_FORWARD:
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+				case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			//	case IN_L_PUNCH: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
@@ -104,7 +104,7 @@ case ST_JUMP_FORWARD:
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+				case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			//	case IN_L_PUNCH: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
@@ -115,7 +115,7 @@ case _2ST_PUNCH_FORWARD_JUMP:
 		{
 			switch (last_input)
 			{
-			case _2_IN_JUMP_FINISH: state = _2ST_IDLE; break;
+			case _2_IN_JUMP_N_FINISH: state = _2ST_IDLE; break;
 			case _2_IN_PUNCH_FINISH: state = _2ST_JUMP_FORWARD; break;
 			}
 		}
@@ -125,7 +125,7 @@ case _2ST_PUNCH_FORWARD_JUMP:
 		{
 			switch (last_input)
 			{
-			case _2_IN_JUMP_FINISH: state = _2ST_IDLE; break;
+			case _2_IN_JUMP_N_FINISH: state = _2ST_IDLE; break;
 			case _2_IN_PUNCH_FINISH: state = _2ST_JUMP_BACKWARD; break;
 			}
 		}

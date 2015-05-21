@@ -97,7 +97,7 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
-			inputs.Push(IN_JUMP_FINISH);
+			inputs.Push(IN_JUMP_N_FINISH);
 			jump_timer = 0;
 		}
 	}
@@ -242,7 +242,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+				case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			  //case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
@@ -252,7 +252,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+				case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			//	case IN_PUNCH_FINISH: state = ST_JUMP_NEUTRAL; break;
 				}
 			}
