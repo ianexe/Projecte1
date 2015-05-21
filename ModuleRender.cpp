@@ -67,7 +67,7 @@ update_status ModuleRender::Update()
 	
 	/**
 	*TODO: Recomment this
-	**/
+	
 	if(App->input->GetKey(SDL_SCANCODE_KP_8) == 1)
 		App->renderer->camera.y += speed;
 
@@ -75,7 +75,7 @@ update_status ModuleRender::Update()
 	
 		App->renderer->camera.y -= speed;
 	}
-
+	**/
 
 		if (App->renderer->camera.x >= 0)
 		{
