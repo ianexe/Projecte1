@@ -174,15 +174,13 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			
 	}
 
-	if (isCrouching)
+	/*if (isCrouching)
 	{
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-		{
-			inputs.Push(IN_CROUCH_FINISH);
+		inputs.Push(IN_CROUCH_FINISH);
 			//current_animation = &crouchidle;
-			isCrouching = false;
+		isCrouching = false;
 		}
-	}
+	}*/
 
 	//Attacks
 	if (isPunching_L)
@@ -419,7 +417,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; break;
+			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
 			//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 			}
 		}
@@ -537,7 +535,7 @@ update_status ModulePlayer::Update()
 
 			case ST_CROUCHED:
 				current_animation = &crouchidle;
-			
+				collider->rect.h = 60;
 				break;
 
 			case ST_PUNCH_STANDING_L:
@@ -562,18 +560,29 @@ update_status ModulePlayer::Update()
 		*TODO: COLISIO BONA
 		**/
 		
+
+		c_defense->SetPos(position.x - 30, position.y - 90);
+		collider->SetPos(position.x - 30, position.y - 90);
+		
+		if (isJumping)
+		{
+			c_defense->SetPos(position.x - 30, position.y - 150);
+			collider->SetPos(position.x - 30, position.y - 150);
+		}
+
+		if (isFalling)
+		{
+			c_defense->SetPos(position.x - 30, position.y - 90);
+			collider->SetPos(position.x - 30, position.y - 90);
+
+		}
+
 		if (isCrouching)
 		{
-			collider->rect.h = 60;
+			
 			collider->SetPos(position.x - 30, position.y - 60);
 			c_defense->SetPos(position.x - 30, position.y - 60);
 		}
-		else 
-		{
-			collider->SetPos(position.x - 30, position.y - 90);
-			c_defense->SetPos(position.x - 30, position.y - 90);
-		}
-
 		current_state = state;
 		App->player->internal_input(inputs);
 		

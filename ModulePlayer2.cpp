@@ -189,10 +189,10 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_L_KICK:
 				{
 					if (isOnLeft){
-						c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
+						c_kick = App->colision->AddCollider({ position.x + 7, position.y - 85, 37, 25 }, COLLIDER_KICK_2, this);
 					}
 					else{
-						c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
+						c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 37, 25 }, COLLIDER_KICK_2, this);
 					}
 					kick_timer_l = SDL_GetTicks();
 					state = ST_KICK_STANDING_L;
