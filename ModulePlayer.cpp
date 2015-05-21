@@ -271,7 +271,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_H_PUNCH:
 			{
-
 				if (isOnLeft){
 					c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_1, this);
 				}
@@ -289,11 +288,11 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				if (isOnLeft)
 				{
-					c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+					c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 37, 50 }, COLLIDER_KICK_1, this);
 				}
 				else
 				{
-					c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+					c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92,37 , 50 }, COLLIDER_KICK_1, this);
 				}
 				isKicking_L = true;
 				App->audio->PlayFx(normalFX);
