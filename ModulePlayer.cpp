@@ -405,7 +405,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 		break;
 
-		case ST_CROUCHING:
+		/*case ST_CROUCHING:
 		{
 			switch (last_input)
 			{
@@ -413,7 +413,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_CROUCH_UP: state = ST_IDLE; break;
 			}
 		}
-		break;
+		break;*/
+
 		case ST_CROUCHED:
 		{
 			switch (last_input)
@@ -529,9 +530,10 @@ update_status ModulePlayer::Update()
 			}
 			collider->rect.h = 90;
 				break;
-			case ST_CROUCHING:
+
+			/*case ST_CROUCHING:
 				current_animation = &crouch;
-				break;
+				break;*/
 
 			case ST_CROUCHED:
 				current_animation = &crouchidle;

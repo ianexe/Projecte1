@@ -36,8 +36,9 @@ Application::Application()
 	
 	AddModule(colision);
 	// Characters
-	AddModule(player);
 	AddModule(player2);
+	AddModule(player);
+	
 
 	// Misc
 	AddModule(ui);
