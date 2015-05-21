@@ -45,7 +45,8 @@ public:
 	Animation punch2;
 	Animation kick;
 	Animation kick2;
-	unsigned int punchFX;
+	unsigned int normalFX;
+	unsigned int strongFX;
 
 
 	//SDL_Rect detection;
