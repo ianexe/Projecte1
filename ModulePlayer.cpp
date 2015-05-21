@@ -169,7 +169,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			isFalling = true;
 		}
 		
-		if (position.y <= 216 && isFalling)
+		if (position.y >= 216 && isFalling)
 		{
 			position.y = 216;
 			inputs.Push(IN_JUMP_N_FINISH);
@@ -328,7 +328,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_UP: isFalling = true; break;
+			//case IN_JUMP_UP: isFalling = true; break;
 			case IN_JUMP_N_FINISH: state = ST_IDLE; break;
 			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
