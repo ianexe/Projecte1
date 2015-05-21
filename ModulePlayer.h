@@ -56,7 +56,7 @@ public:
 	Collider* c_punch1;
 	Collider* c_punch2;
 	Collider* c_kick;
-
+	Collider* c_kick2;
 	//State Variables
 	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;

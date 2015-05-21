@@ -173,14 +173,18 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 			
 	}
+
 	if (isCrouching)
+	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_CROUCH_FINISH);
 			current_animation = &crouchidle;
 			isCrouching = false;
 		}
-		//Attacks
+	}
+
+	//Attacks
 	if (isPunching_L)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
@@ -301,11 +305,11 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				if (isOnLeft)
 				{
-					c_kick = App->colision->AddCollider({ position.x + 7, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+					c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 50, 50 }, COLLIDER_KICK_1, this);
 				}
 				else
 				{
-					c_kick = App->colision->AddCollider({ position.x - 57, position.y - 92, 50, 50 }, COLLIDER_KICK_1, this);
+					c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 50, 50 }, COLLIDER_KICK_1, this);
 				}
 				isKicking_H = true;
 				App->audio->PlayFx(strongFX);
@@ -331,9 +335,12 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_RIGHT_UP: state = ST_IDLE; break;
-			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case IN_RIGHT_UP: state = ST_IDLE; collider->rect.h = 90; doDefense = false; break;
+			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false;  break;
 				//case IN_JUMP_DOWN: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
+				/**
+				*TODO: COLISIO CROUCH
+				**/
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -394,7 +401,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_KICK_H_FINISH: c_kick->to_delete = true; state = ST_IDLE;  break;
+			case IN_KICK_H_FINISH: c_kick2->to_delete = true; state = ST_IDLE;  break;
 			}
 		}
 		break;
@@ -422,11 +429,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 	return state;
 }
 
-/**
-*TODO: Fer el salt Ian
-
-Optimize jump & crouch
-**/
 // Update: draw background
 update_status ModulePlayer::Update()
 {
@@ -441,7 +443,11 @@ update_status ModulePlayer::Update()
 			switch (state)
 			{
 			case ST_IDLE:
-			
+				if (!doDefense)
+				{
+					c_defense->type = COLLIDER_NONE;
+				}
+
 				break;
 			case ST_HIT:
 			
@@ -458,13 +464,21 @@ update_status ModulePlayer::Update()
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
-				if (!isOnLeft && App->player2->isAttacking)
+				if (!isOnLeft/* && App->player2->isAttacking*/)
 				{
 					doDefense = true;
 				}
+
+				if (doDefense)
+				{
+					current_animation = &block;
+
+					c_defense->type = COLLIDER_DEFENSE_1;
+					collider->rect.h = 50;
+					doDefense = false;
+				}
 			}
 									break;
-
 			case ST_WALK_LEFT:
 			{
 				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
@@ -477,17 +491,18 @@ update_status ModulePlayer::Update()
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
-				if (!doDefense)
+				if (isOnLeft/* && App->player2->isAttacking*/)
 				{
-					c_defense->type = COLLIDER_NONE;
-					collider->rect.h = 90;
+					doDefense = true;
 				}
-				else
+
+				if (doDefense)
 				{
 					current_animation = &block;
 
 					c_defense->type = COLLIDER_DEFENSE_1;
 					collider->rect.h = 50;
+					doDefense = false;
 				}
 			}
 			break;
@@ -496,6 +511,17 @@ update_status ModulePlayer::Update()
 			{
 				current_animation = &jump;
 				position.y -= 5;
+				/*
+				
+				
+				
+				collider->rect.h = 90;
+				collider->SetPos(position.x - 30, position.y + 90);
+				
+				
+				
+				*/
+				
 			}
 			else
 			{
@@ -510,6 +536,7 @@ update_status ModulePlayer::Update()
 
 			case ST_CROUCHED:
 				current_animation = &crouchidle;
+				collider->SetPos(position.x - 30, position.y - 60);
 				break;
 
 			case ST_PUNCH_STANDING_L:
@@ -529,12 +556,15 @@ update_status ModulePlayer::Update()
 				break;
 			}
 		}
+		/**
+		*TODO: COLISIO BONA
+		**/
+		c_defense->SetPos(position.x - 27, position.y - 90);
+		collider->SetPos(position.x - 30, position.y - 90);
 
 		current_state = state;
 		App->player->internal_input(inputs);
-
-		collider->SetPos(position.x - 30, position.y - 90);
-		c_defense->SetPos(position.x - 27, position.y - 90);
+		
 
 	//Checks where player is facing
 	if (App->player->position.x < App->player2->position.x)
@@ -544,7 +574,6 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
-
 	App->renderer->Blit(graphics, position.x - 35, 208, &shadow, 1.0f);
 	App->renderer->Blit(graphics, position.x - (r.w / 2.0f), position.y - r.h, &r, 1.0f, isOnLeft);
 	return UPDATE_CONTINUE;
