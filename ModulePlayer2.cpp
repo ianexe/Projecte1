@@ -107,6 +107,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	doDefense = false;
 	//isAttacking = false;
 	
+	speed = 3;
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -117,9 +118,14 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player");
 	Health = 144;
-	
+	// Load SFC
+	normalFX = App->audio->LoadFx("normal.wav");
+	strongFX = App->audio->LoadFx("strong.wav");
+	fallingFX = App->audio->LoadFx("falling.wav");
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
+	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
+
 	p1_states current_state = ST_UNKNOWN;
 	return true;
 }
@@ -142,10 +148,28 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
-			inputs.Push(IN_JUMP_N_FINISH);
-			isJumping = false;
+			if (position.y < 135 && !isFalling)
+			{
+				isFalling = true;
+			}
+
+			if (position.y >= 216 && isFalling)
+			{
+				position.y = 216;
+				App->audio->PlayFx(fallingFX);
+				inputs.Push(IN_JUMP_N_FINISH);
+			}
+
 		}
 	}
+
+	/*if (isCrouching)
+	{
+	inputs.Push(IN_CROUCH_FINISH);
+	//current_animation = &crouchidle;
+	isCrouching = false;
+	}
+	}*/
 
 	if (isPunching_L)
 	{
@@ -177,6 +201,14 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 	}
 
+	if (isKicking_H)
+	{
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_KICK_H_FINISH);
+			isKicking_H = false;
+		}
+	}
 	if (isHit)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)

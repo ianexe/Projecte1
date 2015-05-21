@@ -67,7 +67,7 @@ public:
 	//PNJ basics
 	p2Point<int> position;
 	unsigned int Health;
-
+	float speed;
 
 	//SDL_Rect detection;
 	Collider* collider;
