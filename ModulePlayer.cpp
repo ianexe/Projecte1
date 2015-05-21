@@ -562,8 +562,21 @@ update_status ModulePlayer::Update()
 		/**
 		*TODO: COLISIO BONA
 		**/
+		
 		c_defense->SetPos(position.x - 30, position.y - 90);
 		collider->SetPos(position.x - 30, position.y - 90);
+		
+		if (isJumping)
+		{
+			c_defense->SetPos(position.x - 30, position.y - 150);
+			collider->SetPos(position.x - 30, position.y - 150);
+		}
+
+		if (isFalling)
+		{
+			c_defense->SetPos(position.x - 30, position.y - 90);
+			collider->SetPos(position.x - 30, position.y - 90);
+		}
 
 		current_state = state;
 		App->player->internal_input(inputs);
