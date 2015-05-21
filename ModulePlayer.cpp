@@ -45,14 +45,17 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.speed = 0.1f;
 
 	// jump animation (arcade sprite sheet)
-	jump.frames.PushBack({ 16, 847, 56, 85 });
+	//jump.frames.PushBack({ 16, 847, 56, 85 });
 	jump.frames.PushBack({ 100, 823, 58, 109 });
 	jump.frames.PushBack({ 176, 805, 50, 127 });
 	jump.frames.PushBack({ 239, 798, 66, 134 });
-	jump.frames.PushBack({ 327, 813, 54, 119 });
-	jump.frames.PushBack({ 397, 810, 52, 122 });
-	jump.frames.PushBack({ 464, 819, 60, 113 });
 	jump.speed = 0.23f;
+
+	// jump down animation (arcade sprite sheet)
+	jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
+	jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
+	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
+	jumpfalling.speed = 0.23f;
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
