@@ -92,19 +92,13 @@ bool ModulePlayer::CleanUp()
 }
 
 //State machine functions
-bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
+/*bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
 	static bool down = false;
 	static bool up = false;
 	static bool punch_l = false;
-
-	static bool _2left = false;
-	static bool _2right = false;
-	static bool _2down = false;
-	static bool _2up = false;
-	static bool _2punch_l = false;
 
 	SDL_Event event;
 
@@ -136,35 +130,12 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
-			
-			//Player 2
-			case SDLK_DOWN:
-				inputs.Push(IN_CROUCH_UP);
-				_2down = false;
-				break;
-			case SDLK_KP_1:
-				_2punch_l = false;
-				break;
-			case SDLK_UP:
-				_2up = false;
-				break;
-			case SDLK_LEFT:
-				inputs.Push(IN_LEFT_UP);
-				_2left = false;
-				break;
-			case SDLK_RIGHT:
-				inputs.Push(IN_RIGHT_UP);
-				_2right = false;
-				break;
 			}
 		}
-
-		
 		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
-			//Player 1
 			case SDLK_q:
 				punch_l = true;
 				break;
@@ -182,25 +153,6 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 				break;
 			case SDLK_d:
 				right = true;
-				break;
-		//Player 2
-			case SDLK_KP_1:
-				_2punch_l = true;
-				break;
-			case SDLK_KP_5:
-				inputs.Push(IN_H);
-				break;
-			case SDLK_UP:
-				_2up = true;
-				break;
-			case SDLK_DOWN:
-				_2down = true;
-				break;
-			case SDLK_LEFT:
-				_2left = true;
-				break;
-			case SDLK_RIGHT:
-				_2right = true;
 				break;
 			}
 		}
@@ -228,30 +180,6 @@ bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
 	{
 		inputs.Push(IN_X);
 	}
-
-	if (_2left && _2right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
-	{
-		if (_2left)
-			inputs.Push(IN_LEFT_DOWN);
-		if (_2right)
-			inputs.Push(IN_RIGHT_DOWN);
-	}
-
-	if (_2up && _2down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
-	else
-	{
-		if (_2down)
-			inputs.Push(IN_CROUCH_DOWN);
-		if (_2up)
-			inputs.Push(IN_JUMP);
-	}
-	if (_2punch_l)
-	{
-		inputs.Push(IN_X);
-	}
-
 	return true;
 }
 */
