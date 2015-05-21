@@ -111,7 +111,7 @@ update_status ModulePlayer::Update()
 		if (App->player->position.x > 0.0 && App->player->position.x > (App->renderer->OpCamera.x) + 20)
 		{
 
-			if (isOnLeft){
+			if (isOnLeft && App->player2->isAttacking){
 
 				c_defense->type = COLLIDER_DEFENSE_1;
 				collider->rect.h = 50;
@@ -143,7 +143,7 @@ update_status ModulePlayer::Update()
 				collider->rect.h = 90;
 				collider->SetPos(position.x - 30, position.y - 90);
 			}
-			else{
+			else if (App->player2->isAttacking){
 				c_defense->type = COLLIDER_DEFENSE_1;
 				collider->rect.h = 50;
 				collider->SetPos(position.x - 30, position.y - 50);
