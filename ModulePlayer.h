@@ -52,6 +52,7 @@ public:
 
 	//SDL_Rect detection;
 	Collider* collider;
+	Collider* c_defense;
 	Collider* c_punch1;
 	Collider* c_punch2;
 	Collider* c_kick;
@@ -67,7 +68,8 @@ public:
 	
 	//bools
 	bool isOnLeft;
-	
+
+	bool isCrouching;
 	bool isJumping;
 	bool isFalling;
 	//bool isAttacking;
@@ -77,9 +79,8 @@ public:
 	bool isKicking_H;
 
 	bool isHit;
-
-	bool isCrouching;
-
+	
+	bool doDefense;
 	//Character basics
 	p2Point<int> position;
 	unsigned int Health;

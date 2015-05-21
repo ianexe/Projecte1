@@ -155,8 +155,8 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
-				case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
+				case IN_RIGHT_DOWN: state = ST_WALK_RIGHT; break;
+				case IN_LEFT_DOWN: state = ST_WALK_LEFT; break;
 				case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				case IN_L_PUNCH:
@@ -214,7 +214,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			break;
 
 
-			case ST_WALK_FORWARD:
+			case ST_WALK_RIGHT:
 			{
 				switch (last_input)
 				{
@@ -226,7 +226,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 			break;
 
-			case ST_WALK_BACKWARD:
+			case ST_WALK_LEFT:
 			{
 				switch (last_input)
 				{
@@ -326,7 +326,7 @@ update_status ModulePlayer2::Update()
 			
 				break;
 
-			case ST_WALK_FORWARD:{
+			case ST_WALK_RIGHT:{
 				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 				{
 					current_animation = &forward;
@@ -336,7 +336,7 @@ update_status ModulePlayer2::Update()
 			}
 								 break;
 
-			case ST_WALK_BACKWARD:
+			case ST_WALK_LEFT:
 			{
 				if (position.x > 0.0 && App->player2->position.x > (App->renderer->OpCamera.x) + 20)
 				{

@@ -112,7 +112,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	 isPunching_H= false;
 	 isKicking_L= false;
 	 isKicking_H= false;
-
+	 doDefense = false;
 
 
 	speed = 3;
@@ -126,11 +126,16 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	Health = 100;
+	// Load SFC
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
+
 	graphics = App->textures->Load("ryu4.png"); // arcade version
+
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
+	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
+
 	p1_states current_state = ST_UNKNOWN;
 
 	
@@ -149,25 +154,7 @@ bool ModulePlayer::CleanUp()
 }
 
 //State machine functions
-/*bool ModulePlayer::external_input(p2Qeue<p1_inputs>& inputs)
-{
-	
-	Animation* current_animation = &idle;
-	collider->SetPos(position.x - 30, position.y - 90);
-	
-	
-	// debug camera movement --------------------------------
-	
-	float speed = 3;
 
-	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) && (!isAttacking))
-	{
-		isJumping = true;
-	}
-
-	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && (!isAttacking))
-
-*/
 
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
@@ -256,8 +243,12 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
-			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
+			case IN_RIGHT_DOWN: 
+				state = ST_WALK_RIGHT;
+				break;
+			case IN_LEFT_DOWN: 
+					state = ST_WALK_LEFT;
+				break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; isCrouching = true; break;
 
@@ -337,7 +328,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 		break;
 
-		case ST_WALK_FORWARD:
+		case ST_WALK_RIGHT:
 		{
 			switch (last_input)
 			{
@@ -350,7 +341,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		break;
 
 
-		case ST_WALK_BACKWARD:
+		case ST_WALK_LEFT:
 		{
 			switch (last_input)
 			{
@@ -457,22 +448,28 @@ update_status ModulePlayer::Update()
 			
 				break;
 
-			case ST_WALK_FORWARD:{
+			case ST_WALK_RIGHT:{
 				
 				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 				{
-					current_animation = &forward;
+					if (position.x < App->player2->position.x)
+						current_animation = &forward;
+					else 
+						current_animation = &backward;
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 			}
 									break;
 
-			case ST_WALK_BACKWARD:
+			case ST_WALK_LEFT:
 			{
 				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
 				{
-					current_animation = &backward;
+					if (position.x > App->player2->position.x)
+						current_animation = &forward;
+					else
+						current_animation = &backward;
 					position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
@@ -489,7 +486,7 @@ update_status ModulePlayer::Update()
 				position.y += 5;
 				current_animation = &jumpfalling;
 			}
-
+			collider->rect.h = 90;
 				break;
 			case ST_CROUCHING:
 				current_animation = &crouch;
