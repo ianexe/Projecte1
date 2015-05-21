@@ -180,7 +180,6 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			current_animation = &crouchidle;
 			isCrouching = false;
 		}
-	
 		//Attacks
 	if (isPunching_L)
 	{
@@ -347,7 +346,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-				//	case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
+			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -459,6 +458,10 @@ update_status ModulePlayer::Update()
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
+				if (!isOnLeft && App->player2->isAttacking)
+				{
+					doDefense = true;
+				}
 			}
 									break;
 
@@ -472,6 +475,19 @@ update_status ModulePlayer::Update()
 						current_animation = &backward;
 					position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
+				}
+
+				if (!doDefense)
+				{
+					c_defense->type = COLLIDER_NONE;
+					collider->rect.h = 90;
+				}
+				else
+				{
+					current_animation = &block;
+
+					c_defense->type = COLLIDER_DEFENSE_1;
+					collider->rect.h = 50;
 				}
 			}
 			break;
@@ -516,7 +532,9 @@ update_status ModulePlayer::Update()
 
 		current_state = state;
 		App->player->internal_input(inputs);
+
 		collider->SetPos(position.x - 30, position.y - 90);
+		c_defense->SetPos(position.x - 27, position.y - 90);
 
 	//Checks where player is facing
 	if (App->player->position.x < App->player2->position.x)
