@@ -8,6 +8,7 @@
 class ModulePlayer2 : public Module
 {
 public:
+	//Methods
 	ModulePlayer2(Application* app, bool start_enabled = true);
 	~ModulePlayer2();
 
@@ -27,14 +28,14 @@ public:
 	Animation kick;
 	SDL_Rect atac;
 	SDL_Rect defense;
-	SDL_Rect detection;
-
+	//SDL_Rect detection;
 	Collider* collider;
 	Collider* c_defense;
 	Collider* c_punch1;
 	Collider* c_punch2;
 	Collider* c_kick;
 
+	//Variables
 	bool isOnLeft;
 
 	bool isAttacking;
