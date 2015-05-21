@@ -97,11 +97,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick2.speed = 0.2f;
 	
 	//Timers
-	jump_timer = 0;
+	
 	punch_timer_l = 0;
 	punch_timer_h = 0;
 	hit_timer = 0;
 
+	//Bools 
+	jumping_n = isOnLeft = false;
 	speed = 3;
 }
 
@@ -155,12 +157,11 @@ bool ModulePlayer::CleanUp()
 */
 void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
-	if (jump_timer > 0)
+	if (jumping_n)
 	{
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		if (isFalling)
 		{
 			inputs.Push(IN_JUMP_FINISH);
-			jump_timer = 0;
 		}
 	}
 	
@@ -171,7 +172,8 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			current_animation = &crouchidle;
 			isCrouching = false;
 		}
-	//Attacks
+	
+		//Attacks
 	if (punch_timer_l > 0)
 	{
 		//if (SDL_GetTicks() - punch_timer_l > PUNCH_L_TIME)
@@ -226,7 +228,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
-			case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
+			case IN_JUMP: state = ST_JUMPING_NEUTRAL; jumping_n = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHING; isCrouching = true; break;
 
 			case IN_L_PUNCH:
@@ -308,16 +310,22 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 		break;
 
-		case ST_JUMP_NEUTRAL:
+		case ST_JUMPING_NEUTRAL:
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_UP: state = ST_J_NEUTRAL_FALLING; isFalling = true; break;
 				//	case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
 
+		case ST_J_NEUTRAL_FALLING:
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH: state = ST_IDLE; isJumping = false; break;
+			}
+		break;
 
 		case ST_PUNCH_STANDING_L:
 		{
@@ -414,7 +422,7 @@ update_status ModulePlayer::Update()
 				}
 			}
 			break;
-			case ST_JUMP_NEUTRAL:
+			case ST_JUMPING_NEUTRAL:
 				current_animation = &jump;
 
 				if ((position.y > 135) && (!isFalling))
@@ -428,16 +436,16 @@ update_status ModulePlayer::Update()
 				}
 
 				if (isFalling)
-					position.y += 5;
-
+					
+				break;
+			case ST_J_NEUTRAL_FALLING:
+				position.y += 5;
 				if (position.y > 216)
 				{
 					position.y = 216;
-					isJumping = false;
 					isFalling = false;
 				}
 				break;
-			
 			case ST_CROUCHING:
 				current_animation = &crouch;
 				break;

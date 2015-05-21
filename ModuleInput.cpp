@@ -84,6 +84,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 				down = false;
 				break;
 			case SDLK_w:
+				inputs.Push(IN_JUMP_UP);
 				up = false;
 				break;
 			case SDLK_a:

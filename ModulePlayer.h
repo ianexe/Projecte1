@@ -57,7 +57,7 @@ public:
 	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;
 	//Timers
-	Uint32 jump_timer;
+	
 	Uint32 punch_timer_l;
 	Uint32 punch_timer_h;
 	Uint32 kick_timer_l;
@@ -68,16 +68,15 @@ public:
 	
 	//bools
 	bool isOnLeft = false;
-
-	bool isAttacking = false;
-
+	bool jumping_n;
 	bool isJumping;
 	bool isFalling;
 
-	bool doPunch;
+	/*bool doPunch;
 	bool doPunch2;
 	bool doKick;
 	bool doKick2;
+	*/
 
 	bool isCrouching;
 
