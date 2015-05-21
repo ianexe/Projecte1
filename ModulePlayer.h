@@ -37,6 +37,7 @@ public:
 	Animation forward;
 	Animation backward;
 	Animation jump;
+	Animation jumpfalling;
 	Animation block;
 	Animation crouch;
 	Animation crouchidle;
