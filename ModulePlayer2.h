@@ -56,7 +56,7 @@ public:
 	bool isCrouching;
 	bool isJumping;
 	bool isFalling;
-	//bool isAttacking;
+	bool isAttacking;
 	bool isPunching_L;
 	bool isPunching_H;
 	bool isKicking_L;

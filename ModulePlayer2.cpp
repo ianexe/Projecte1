@@ -293,7 +293,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 					}
 					else
 					{
-						c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 45, 50 }, COLLIDER_KICK_2, this);
+						c_kick2 = App->colision->AddCollider({ position.x - 60, position.y - 94, 45, 50 }, COLLIDER_KICK_2, this);
 					}
 					isKicking_H = true;
 					App->audio->PlayFx(strongFX);
