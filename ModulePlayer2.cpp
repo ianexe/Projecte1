@@ -234,7 +234,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_RIGHT_DOWN: state = ST_WALK_RIGHT; break;
 				case IN_LEFT_DOWN: state = ST_WALK_LEFT; break;
 				case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
-				case IN_CROUCH_DOWN: state = ST_CROUCHED; break;
+				case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
 				case IN_L_PUNCH:
 					{
 						if (isOnLeft){
@@ -534,9 +534,6 @@ update_status ModulePlayer2::Update()
 				break;
 	
 		}
-	
-		current_state = state2;
-		
 	}
 	
 
@@ -577,9 +574,37 @@ update_status ModulePlayer2::Update()
 	else
 		isOnLeft = false;
 
+	
+	
+	
+	c_defense2->SetPos(position.x - 30, position.y - 90);
+	collider->SetPos(position.x - 30, position.y - 90);
+
+	if (isJumping)
+	{
+		c_defense2->SetPos(position.x - 30, position.y - 150);
+		collider->SetPos(position.x - 30, position.y - 150);
+	}
+
+	if (isFalling)
+	{
+		c_defense2->SetPos(position.x - 30, position.y - 90);
+		collider->SetPos(position.x - 30, position.y - 90);
+
+	}
+
+	if (isCrouching)
+	{
+		collider->SetPos(position.x - 30, position.y - 60);
+		c_defense2->SetPos(position.x - 30, position.y - 60);
+	}
+
+	current_state = state2;
 	App->player2->internal_input(inputs2);
 	// Draw everything --------------------------------------
+
 	SDL_Rect r = current_animation->GetCurrentFrame();
+	App->renderer->Blit(graphics, position.x - 35, 208, &shadow, 1.0f);
 	App->renderer->Blit(graphics, position.x - (r.w / 2), position.y - r.h, &r, 1, isOnLeft);
 
 	return UPDATE_CONTINUE;
