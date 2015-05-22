@@ -550,6 +550,26 @@ update_status ModulePlayer2::Update()
 	collider->SetPos(position.x - 30, position.y - 90);
 	c_defense2->SetPos(position.x - 30, position.y - 90);
 
+	if (isJumping)
+	{
+		c_defense2->SetPos(position.x - 30, position.y - 150);
+		collider->SetPos(position.x - 30, position.y - 150);
+	}
+
+	if (isFalling)
+	{
+		c_defense2->SetPos(position.x - 30, position.y - 90);
+		collider->SetPos(position.x - 30, position.y - 90);
+
+	}
+
+	if (isCrouching)
+	{
+
+		collider->SetPos(position.x - 30, position.y - 60);
+		c_defense2->SetPos(position.x - 30, position.y - 60);
+	}
+
 	//Checks where player is facing
 
 	if (App->player->position.x > App->player2->position.x)
