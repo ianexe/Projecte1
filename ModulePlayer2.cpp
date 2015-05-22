@@ -238,10 +238,10 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_L_PUNCH:
 					{
 						if (isOnLeft){
-							c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
+							c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_2, this);
 						}
 						else{
-							c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 75, 50, 10 }, COLLIDER_PUNCH_2, this);
+							c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_2, this);
 						}
 						isPunching_L = true;
 						App->audio->PlayFx(normalFX);
