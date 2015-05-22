@@ -234,7 +234,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_RIGHT_DOWN: state = ST_WALK_RIGHT; break;
 				case IN_LEFT_DOWN: state = ST_WALK_LEFT; break;
 				case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
-				case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
+				case IN_CROUCH_DOWN: state = ST_CROUCHED; break;
 				case IN_L_PUNCH:
 					{
 						if (isOnLeft){
@@ -378,13 +378,24 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 			break;
 
-			case ST_CROUCHING:
+			/*case ST_CROUCHING:
+			{
+			switch (last_input)
+			{
+			case IN_CROUCH_FINISH: state = ST_CROUCHED; break;
+			case IN_CROUCH_UP: state = ST_IDLE; break;
+			}
+			}
+			break;*/
+
+			case ST_CROUCHED:
 			{
 				switch (last_input)
 				{
-				//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
-				  case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
-				}	
+				case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
+					//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+
+				}
 			}
 			break;
 		}
@@ -532,80 +543,9 @@ update_status ModulePlayer2::Update()
 	// debug camera movement --------------------------------
 	
 
-	/*
-	if ((App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN) && (!isAttacking))
-	{
-		doPunch = true;
-		isAttacking = true;
-		
-	}
-
-	if ((App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN) && (!isAttacking))
-	{
-		doPunch2 = true;
-		isAttacking = true;
-		if (isOnLeft){
-			c_punch2 = App->colision->AddCollider({ position.x + 10, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
-		}
-		else
-		{
-			c_punch2 = App->colision->AddCollider({ position.x - 60, position.y - 77, 50, 10 }, COLLIDER_PUNCH_2, this);
-		}
-	}
-
-	if ((App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN) && (!isAttacking))
-	{
-		doKick = true;
-		isAttacking = true;
-		if (isOnLeft){
-			c_kick = App->colision->AddCollider({ position.x + 7.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
-		}
-		else{
-			c_kick = App->colision->AddCollider({ position.x - 57.0, position.y - 92, 50, 50 }, COLLIDER_KICK_2, this);
-		}
-		
-	}
-	*/
+	
 	//Does attack if called
-		/*
-	if (doPunch)
-	{
-		/*current_animation = &punch;
-
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-		{
-			doPunch = false;
-			isAttacking = false;
-			c_punch1->to_delete = true;
-
-		}*
-	}
-	if (doPunch2)
-	{
-		current_animation = &punch2;
 		
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-		{
-			doPunch2 = false;
-			isAttacking = false;
-			c_punch2->to_delete = true;
-		}
-	}
-
-	if (doKick)
-	{
-		current_animation = &kick;
-		
-		
-
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
-		{
-			doKick = false;
-			isAttacking = false;
-			c_kick->to_delete = true;
-		}
-	}
-	*/
 	//Sets Collider position
 	collider->SetPos(position.x - 30, position.y - 90);
 	c_defense2->SetPos(position.x - 30, position.y - 90);
