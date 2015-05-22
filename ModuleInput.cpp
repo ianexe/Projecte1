@@ -107,7 +107,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 			case SDLK_KP_3:
 				kick_l_2 = false;
 				break;
-			case SDLK_KP_4:
+			case SDLK_KP_0:
 				kick_h_2 = false;
 				break;
 			//Movement
@@ -175,12 +175,9 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 			case SDLK_KP_3:
 				kick_l_2 = true;
 				break;
-			case SDLK_KP_5:
+			case SDLK_KP_0:
 				kick_h_2 = true;
 				break;
-			/*case SDLK_KP_5:
-				hit_2 = true;
-				break;*/
 			//Movement
 			case SDLK_UP:
 				up_2 = true;

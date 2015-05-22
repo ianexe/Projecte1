@@ -12,6 +12,12 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	position.x = 380;
 	position.y = 216;
 
+	// shadow
+	shadow.x = 743;
+	shadow.y = 92;
+	shadow.w = 68;
+	shadow.h = 11;
+
 	// idle animation (arcade sprite sheet)
 	idle.frames.PushBack({ 7, 14, 60, 90 });
 	idle.frames.PushBack({ 95, 15, 60, 89 });
@@ -104,7 +110,7 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	isKicking_L = false;
 	isKicking_H = false;
 	doDefense = false;
-	//isAttacking = false;
+	isAttacking = false;
 	
 	speed = 3;
 }
@@ -172,6 +178,7 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 
 	if (isPunching_L)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 			
 		{
@@ -273,19 +280,20 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 						c_kick = App->colision->AddCollider({ position.x - 57, position.y - 85, 37, 25 }, COLLIDER_KICK_2, this);
 					}
 					isKicking_L = true;
-					state = ST_KICK_STANDING_L;
 					App->audio->PlayFx(normalFX);
+					state = ST_KICK_STANDING_L;
+					
 				}
 				break;
 				case IN_H_KICK:
 				{
 					if (isOnLeft)
 					{
-						c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 45, 50 }, COLLIDER_KICK_1, this);
+						c_kick2 = App->colision->AddCollider({ position.x + 15, position.y - 94, 45, 50 }, COLLIDER_KICK_2, this);
 					}
 					else
 					{
-						c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 45, 50 }, COLLIDER_KICK_1, this);
+						c_kick2 = App->colision->AddCollider({ position.x - 65, position.y - 94, 45, 50 }, COLLIDER_KICK_2, this);
 					}
 					isKicking_H = true;
 					App->audio->PlayFx(strongFX);
@@ -531,6 +539,9 @@ update_status ModulePlayer2::Update()
 				break;
 			case ST_KICK_STANDING_L:
 				current_animation = &kick;
+				break;
+			case ST_KICK_STANDING_H:
+				current_animation = &kick2;
 				break;
 	
 		}
