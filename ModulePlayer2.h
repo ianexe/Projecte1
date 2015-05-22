@@ -71,7 +71,7 @@ public:
 
 	//SDL_Rect detection;
 	Collider* collider;
-	Collider* c_defense;
+	Collider* c_defense2;
 	Collider* c_punch1;
 	Collider* c_punch2;
 	Collider* c_kick;

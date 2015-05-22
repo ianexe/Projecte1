@@ -123,7 +123,7 @@ bool ModulePlayer2::Start()
 	fallingFX = App->audio->LoadFx("falling.wav");
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
-	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
+	c_defense2 = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
 
 	p1_states current_state = ST_UNKNOWN;
 	return true;
@@ -414,41 +414,107 @@ update_status ModulePlayer2::Update()
 			{
 			case ST_IDLE:
 				//current_animation = &idle;
+				if (!doDefense)
+				{
+					c_defense2->type = COLLIDER_NONE;
+				}
+				collider->rect.h = 90;
 				break;
 			case ST_HIT:
 			
 				break;
 
-			case ST_WALK_RIGHT:{
+			case ST_WALK_RIGHT:
+			{
+				
 				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 				{
-					current_animation = &forward;
+					if (position.x < App->player->position.x)
+						current_animation = &forward;
+					else
+						current_animation = &backward;
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
+				if (!isOnLeft /*&& App->player->isAttacking*/)
+				{
+					doDefense = true;
+				}
+
+				if (doDefense)
+				{
+					current_animation = &block;
+
+					c_defense2->type = COLLIDER_DEFENSE_2;
+					collider->rect.h = 50;
+					doDefense = false;
+				}
 			}
-								 break;
+				
+			 break;
 
 			case ST_WALK_LEFT:
 			{
-				if (position.x > 0.0 && App->player2->position.x > (App->renderer->OpCamera.x) + 20)
+				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
 				{
-					current_animation = &backward;
+					if (position.x > App->player->position.x)
+						current_animation = &forward;
+					else
+						current_animation = &backward;
 					position.x -= speed;
 					collider->SetPos(position.x - 30, position.y - 90);
+				}
+
+				if (isOnLeft/* && App->player->isAttacking*/)
+				{
+					doDefense = true;
+				}
+
+				if (doDefense)
+				{
+					current_animation = &block;
+
+					c_defense2->type = COLLIDER_DEFENSE_2;
+					collider->rect.h = 50;
+					doDefense = false;
 				}
 			}
 			break;
 			case ST_JUMPING_NEUTRAL:
+				if (!isFalling)
+				{
+					current_animation = &jump;
+					position.y -= 5;
+					/*
+					
+					collider->rect.h = 90;
+					collider->SetPos(position.x - 30, position.y + 90);
+
+					*/
+
+				}
+				else
+				{
+					position.y += 5;
+					current_animation = &jumpfalling;
+				}
+				collider->rect.h = 90;
 				break;
 		
-			case ST_CROUCHING:
-				break;
+
+				/*case ST_CROUCHING:
+				current_animation = &crouch;
+				break;*/
 			
+			case ST_CROUCHED:
+				current_animation = &crouchidle;
+				collider->rect.h = 60;
+				break;
+
 			case ST_PUNCH_STANDING_L:
 				current_animation = &punch;
-				collider->SetPos(position.x + 10, position.y - 75);
-			break;
+				break;
+
 			case ST_PUNCH_STANDING_H:
 				current_animation = &punch2;
 				break;
@@ -462,6 +528,7 @@ update_status ModulePlayer2::Update()
 		
 	}
 	
+
 	// debug camera movement --------------------------------
 	
 
@@ -541,6 +608,7 @@ update_status ModulePlayer2::Update()
 	*/
 	//Sets Collider position
 	collider->SetPos(position.x - 30, position.y - 90);
+	c_defense2->SetPos(position.x - 30, position.y - 90);
 
 	//Checks where player is facing
 
