@@ -61,6 +61,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
 	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
 	block.speed = 0.1f;
 
 	//crouch
@@ -458,12 +460,18 @@ update_status ModulePlayer::Update()
 						current_animation = &forward;
 					else 
 						current_animation = &backward;
-					position.x += speed;
+					
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 				if (!isOnLeft && App->player2->isAttacking)
 				{
 					doDefense = true;
+				}
+
+				else
+				{
+					doDefense = false;
+					position.x += speed;
 				}
 
 				if (doDefense)
@@ -484,13 +492,19 @@ update_status ModulePlayer::Update()
 						current_animation = &forward;
 					else
 						current_animation = &backward;
-					position.x -= speed;
+					
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
 				if (isOnLeft && App->player2->isAttacking)
 				{
 					doDefense = true;
+				}
+
+				else
+				{
+					doDefense = false;
+					position.x -= speed;
 				}
 
 				if (doDefense)
@@ -582,8 +596,8 @@ update_status ModulePlayer::Update()
 		}
 		if (doDefense)
 		{
-			collider->SetPos(position.x - 30, position.y - 90);
 			collider->SetPos(position.x - 30, position.y - 30);
+			c_defense->SetPos(position.x - 30, position.y - 90);
 		}
 		current_state = state;
 		App->player->internal_input(inputs);

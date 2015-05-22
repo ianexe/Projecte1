@@ -61,6 +61,8 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
 	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
+	block.frames.PushBack({ 525, 2334, 64, 93 });
 	block.speed = 0.1f;
 
 	//crouch
@@ -448,19 +450,25 @@ update_status ModulePlayer2::Update()
 
 			case ST_WALK_RIGHT:
 			{
-				
+
 				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
 				{
 					if (position.x < App->player->position.x)
 						current_animation = &forward;
 					else
 						current_animation = &backward;
-					position.x += speed;
+					
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 				if (!isOnLeft && App->player->isAttacking)
 				{
 					doDefense = true;
+				}
+
+				else
+				{
+					doDefense = false;
+					position.x += speed;
 				}
 
 				if (doDefense)
@@ -483,13 +491,19 @@ update_status ModulePlayer2::Update()
 						current_animation = &forward;
 					else
 						current_animation = &backward;
-					position.x -= speed;
+					
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
 				if (isOnLeft && App->player->isAttacking)
 				{
 					doDefense = true;
+				}
+
+				else
+				{
+					doDefense = false;
+					position.x -= speed;
 				}
 
 				if (doDefense)
