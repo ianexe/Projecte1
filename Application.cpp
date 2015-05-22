@@ -8,14 +8,14 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this);
-	scene_ken = new ModuleSceneKen(this, true);
+	scene_ken = new ModuleSceneKen(this, false);
 	player = new ModulePlayer(this, false);
 	player2 = new ModulePlayer2(this, false);
 	scene_honda = new ModuleSceneHonda(this, false);
 	fade = new ModuleFadeToBlack(this);
 	colision = new ModuleCollision(this);
-	scene_intro = new ModuleIntro(this, false);
-	ui = new ModuleUI(this);
+	scene_intro = new ModuleIntro(this, true);
+	ui = new ModuleUI(this, false);
 
 
 	// The order of calls is very important!

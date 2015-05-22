@@ -452,17 +452,8 @@ update_status ModulePlayer::Update()
 			
 				break;
 
-			case ST_WALK_RIGHT:{
-				
-				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH)
-				{
-					if (position.x < App->player2->position.x)
-						current_animation = &forward;
-					else 
-						current_animation = &backward;
-					
-					collider->SetPos(position.x - 30, position.y - 90);
-				}
+			case ST_WALK_RIGHT:
+			{
 				if (!isOnLeft && App->player2->isAttacking)
 				{
 					doDefense = true;
@@ -471,7 +462,16 @@ update_status ModulePlayer::Update()
 				else
 				{
 					doDefense = false;
+				}
+
+				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+				{
+					if (position.x < App->player2->position.x)
+						current_animation = &forward;
+					else 
+						current_animation = &backward;
 					position.x += speed;
+					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
 				if (doDefense)
@@ -479,23 +479,12 @@ update_status ModulePlayer::Update()
 					current_animation = &block;
 
 					c_defense->type = COLLIDER_DEFENSE_1;
-					collider->rect.h = 50;
 					doDefense = false;
 				}
 			}
-									break;
+			break;
 			case ST_WALK_LEFT:
 			{
-				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20)
-				{
-					if (position.x > App->player2->position.x)
-						current_animation = &forward;
-					else
-						current_animation = &backward;
-					
-					collider->SetPos(position.x - 30, position.y - 90);
-				}
-
 				if (isOnLeft && App->player2->isAttacking)
 				{
 					doDefense = true;
@@ -504,7 +493,16 @@ update_status ModulePlayer::Update()
 				else
 				{
 					doDefense = false;
+				}
+
+				if (position.x > 0.0 && position.x > (App->renderer->OpCamera.x) + 20 && !doDefense)
+				{
+					if (position.x > App->player2->position.x)
+						current_animation = &forward;
+					else
+						current_animation = &backward;
 					position.x -= speed;
+					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
 				if (doDefense)
@@ -512,8 +510,6 @@ update_status ModulePlayer::Update()
 					current_animation = &block;
 
 					c_defense->type = COLLIDER_DEFENSE_1;
-					collider->rect.h = 50;
-					//doDefense = false;
 				}
 			}
 			break;
@@ -594,11 +590,7 @@ update_status ModulePlayer::Update()
 			collider->SetPos(position.x - 30, position.y - 60);
 			c_defense->SetPos(position.x - 30, position.y - 60);
 		}
-		if (doDefense)
-		{
-			collider->SetPos(position.x - 30, position.y - 30);
-			c_defense->SetPos(position.x - 30, position.y - 90);
-		}
+
 		current_state = state;
 		App->player->internal_input(inputs);
 		
@@ -618,7 +610,8 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	App->player2->Health--;
+	if (App->player2->doDefense == false)
+		App->player2->Health--;
 }
 
 
