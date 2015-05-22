@@ -183,36 +183,39 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 			
 		{
 			inputs.Push(IN_PUNCH_L_FINISH);
-			isPunching_L = false;
+			isAttacking = isPunching_L = false;
 		}
 	}
 
 	if (isPunching_H)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 
 		{
 			inputs.Push(IN_PUNCH_H_FINISH);
-			isPunching_H = false;
+			isAttacking = isPunching_H = false;
 		}
 	}
 
 	if (isKicking_L)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 
 		{
 			inputs.Push(IN_KICK_L_FINISH);
-			isKicking_L = false;
+			isAttacking = isKicking_L = false;
 		}
 	}
 
 	if (isKicking_H)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_KICK_H_FINISH);
-			isKicking_H = false;
+			isAttacking = isKicking_H = false;
 		}
 	}
 	if (isHit)
@@ -331,8 +334,8 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_LEFT_UP: state = ST_IDLE; break;
-				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+				case IN_LEFT_UP: state = ST_IDLE; doDefense = false; break;
+				case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false; break;
 				//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 				//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 				}
@@ -455,7 +458,7 @@ update_status ModulePlayer2::Update()
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
-				if (!isOnLeft /*&& App->player->isAttacking*/)
+				if (!isOnLeft && App->player->isAttacking)
 				{
 					doDefense = true;
 				}
@@ -466,7 +469,7 @@ update_status ModulePlayer2::Update()
 
 					c_defense2->type = COLLIDER_DEFENSE_2;
 					collider->rect.h = 50;
-					doDefense = false;
+					//doDefense = false;
 				}
 			}
 				
@@ -484,7 +487,7 @@ update_status ModulePlayer2::Update()
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
-				if (isOnLeft/* && App->player->isAttacking*/)
+				if (isOnLeft && App->player->isAttacking)
 				{
 					doDefense = true;
 				}
@@ -548,36 +551,6 @@ update_status ModulePlayer2::Update()
 	}
 	
 
-	// debug camera movement --------------------------------
-	
-
-	
-	//Does attack if called
-		
-	//Sets Collider position
-	collider->SetPos(position.x - 30, position.y - 90);
-	c_defense2->SetPos(position.x - 30, position.y - 90);
-
-	if (isJumping)
-	{
-		c_defense2->SetPos(position.x - 30, position.y - 150);
-		collider->SetPos(position.x - 30, position.y - 150);
-	}
-
-	if (isFalling)
-	{
-		c_defense2->SetPos(position.x - 30, position.y - 90);
-		collider->SetPos(position.x - 30, position.y - 90);
-
-	}
-
-	if (isCrouching)
-	{
-
-		collider->SetPos(position.x - 30, position.y - 60);
-		c_defense2->SetPos(position.x - 30, position.y - 60);
-	}
-
 	//Checks where player is facing
 
 	if (App->player->position.x > App->player2->position.x)
@@ -585,9 +558,6 @@ update_status ModulePlayer2::Update()
 	else
 		isOnLeft = false;
 
-	
-	
-	
 	c_defense2->SetPos(position.x - 30, position.y - 90);
 	collider->SetPos(position.x - 30, position.y - 90);
 
@@ -610,8 +580,14 @@ update_status ModulePlayer2::Update()
 		c_defense2->SetPos(position.x - 30, position.y - 60);
 	}
 
+	if (doDefense)
+	{
+		collider->SetPos(position.x - 30, position.y - 30);
+		c_defense2->SetPos(position.x - 30, position.y - 90);
+	}
 	current_state = state2;
 	App->player2->internal_input(inputs2);
+	
 	// Draw everything --------------------------------------
 
 	SDL_Rect r = current_animation->GetCurrentFrame();

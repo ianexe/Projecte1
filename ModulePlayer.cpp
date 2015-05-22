@@ -113,7 +113,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	 isKicking_L= false;
 	 isKicking_H= false;
 	 doDefense = false;
-
+	 isAttacking = false;
 
 	speed = 3;
 }
@@ -185,38 +185,41 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 	//Attacks
 	if (isPunching_L)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_PUNCH_L_FINISH);
-			isPunching_L = false;
+			isAttacking = isPunching_L = false;
 		}
 	}
 
 	if (isPunching_H)
 	{
-
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_PUNCH_H_FINISH);
-			isPunching_H = false;
+			isAttacking = isPunching_H = false;
 		}
 	}
 
 	if (isKicking_L)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_KICK_L_FINISH);
-			isKicking_L = false;
+			isAttacking = isKicking_L = false;
 		}
 	}
 
 	if (isKicking_H)
 	{
+		isAttacking = true;
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 		{
 			inputs.Push(IN_KICK_H_FINISH);
-			isKicking_H = false;
+			isAttacking = isKicking_H = false;
 		}
 	}
 
@@ -344,8 +347,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_LEFT_UP: state = ST_IDLE; break;
-			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
+			case IN_LEFT_UP: state = ST_IDLE; doDefense = false;  break;
+			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false; break;
 			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
@@ -458,7 +461,7 @@ update_status ModulePlayer::Update()
 					position.x += speed;
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
-				if (!isOnLeft/* && App->player2->isAttacking*/)
+				if (!isOnLeft && App->player2->isAttacking)
 				{
 					doDefense = true;
 				}
@@ -485,7 +488,7 @@ update_status ModulePlayer::Update()
 					collider->SetPos(position.x - 30, position.y - 90);
 				}
 
-				if (isOnLeft/* && App->player2->isAttacking*/)
+				if (isOnLeft && App->player2->isAttacking)
 				{
 					doDefense = true;
 				}
@@ -496,7 +499,7 @@ update_status ModulePlayer::Update()
 
 					c_defense->type = COLLIDER_DEFENSE_1;
 					collider->rect.h = 50;
-					doDefense = false;
+					//doDefense = false;
 				}
 			}
 			break;
@@ -572,12 +575,15 @@ update_status ModulePlayer::Update()
 			collider->SetPos(position.x - 30, position.y - 90);
 
 		}
-
 		if (isCrouching)
 		{
-			
 			collider->SetPos(position.x - 30, position.y - 60);
 			c_defense->SetPos(position.x - 30, position.y - 60);
+		}
+		if (doDefense)
+		{
+			collider->SetPos(position.x - 30, position.y - 90);
+			collider->SetPos(position.x - 30, position.y - 30);
 		}
 		current_state = state;
 		App->player->internal_input(inputs);
