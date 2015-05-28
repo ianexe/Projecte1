@@ -24,48 +24,59 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 public:
 
+	SDL_Texture* graphics;
+
 	//Pointer to current animation
 	Animation* current_animation;
 
-	//Colliders
-	Collider* collider;
-	Collider* c_punch1;
-	Collider* c_punch2;
-	Collider* c_kick;
-
-	//Timers
-	Uint32 jump_timer;
-	Uint32 punch_timer_l;
-	Uint32 punch_timer_h;
-	Uint32 kick_timer_l;
-	Uint32 hit_timer;
+	SDL_Rect shadow;
+	Animation idle;
+	Animation forward;
+	Animation backward;
+	Animation jump;
+	Animation jumpfalling;
+	Animation block;
+	Animation crouch;
+	Animation crouchidle;
+	Animation punch;
+	Animation punch2;
+	Animation kick;
+	Animation kick2;
+	unsigned int normalFX;
+	unsigned int strongFX;
+	unsigned int fallingFX;
 
 	//State Machine variables
 	p2Qeue<p1_inputs> inputs2;
 	p1_states current_state;
 
-	//Not so evil bools
+	//Bools
 	bool isOnLeft;
+
+	bool isCrouching;
+	bool isJumping;
+	bool isFalling;
 	bool isAttacking;
+	bool isPunching_L;
+	bool isPunching_H;
+	bool isKicking_L;
+	bool isKicking_H;
 
-	//Evil bools
-	bool doPunch;
-	bool doPunch2;
-	bool doKick;
-
+	bool isHit;
+	bool doDefense;
 	//PNJ basics
 	p2Point<int> position;
 	unsigned int Health;
+	float speed;
 
-	//Animations
-	SDL_Texture* graphics;
-	Animation idle;
-	Animation forward;
-	Animation backward;
-	Animation punch;
-	Animation punch2;
-	Animation kick;
-	SDL_Rect atac;
-	SDL_Rect defense;
-	SDL_Rect detection;
+	//SDL_Rect detection;
+	Collider* collider;
+	Collider* c_defense2;
+	Collider* c_punch1;
+	Collider* c_punch2;
+	Collider* c_kick;
+	Collider* c_kick2;
+
+
+	
 };

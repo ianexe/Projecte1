@@ -16,6 +16,7 @@
 #include "ModuleSceneHonda.h"
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
+#include "ModuleUI.h"
 class Application
 {
 public:
@@ -31,6 +32,7 @@ public:
 	ModuleSceneHonda* scene_honda;
 	ModuleCollision* colision;
 	ModuleIntro* scene_intro;
+	ModuleUI* ui;
 	
 private:
 

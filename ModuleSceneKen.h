@@ -19,6 +19,7 @@ public:
 	SDL_Rect ground;
 	SDL_Rect foreground;
 	SDL_Rect background;
+	SDL_Rect lifebar;
 	Animation flag;
 	Animation girl;
 	Animation hatGuy;
