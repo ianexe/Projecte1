@@ -77,7 +77,7 @@ public:
 	bool isPunching_H;
 	bool isKicking_L;
 	bool isKicking_H;
-
+	bool isAttackHard;
 	bool isHit;
 	
 	bool doDefense;

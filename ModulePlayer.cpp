@@ -315,16 +315,28 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 			break;
 
-			case IN_HIT: state = ST_HIT; isHit = true;break;
+			case IN_HIT_L: state = ST_HIT_L; isHit = true;break;
+
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			}
 		}
 		break;
 
-		case ST_HIT:
+		case ST_HIT_L:
 		{
 			switch (last_input)
 			{
-			case IN_HIT_FINISH: state = ST_IDLE; break;
+			
+				case IN_HIT_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_HIT_H:
+		{
+			switch (last_input)
+			{
+				case IN_HIT_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -339,6 +351,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				/**
 				*TODO: COLISIO CROUCH
 				**/
+			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -351,12 +365,14 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; doDefense = false;  break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false; break;
+			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
 		break;
-
+		// TODO IF HIT
 		case ST_JUMPING_NEUTRAL:
 		{
 			switch (last_input)
@@ -372,6 +388,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_HIT_L: c_punch1->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_punch1->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_PUNCH_L_FINISH: c_punch1->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
@@ -381,6 +399,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_HIT_L: c_punch2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_punch2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_PUNCH_H_FINISH: c_punch2->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
@@ -391,6 +411,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_KICK_L_FINISH: c_kick->to_delete = true;  state = ST_IDLE;  break;
+			case IN_HIT_L: c_kick->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_kick->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			}
 		}
 		break;
@@ -399,6 +421,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_HIT_L: c_kick2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_kick2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_KICK_H_FINISH: c_kick2->to_delete = true; state = ST_IDLE;  break;
 			}
 		}
@@ -419,6 +443,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
+			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 			}
 		}
@@ -432,7 +458,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 update_status ModulePlayer::Update()
 {
 	current_animation = &idle;
-
+	isAttackHard == false;
 	current_state = ST_UNKNOWN;
 
 	p1_states state = App->player->process_fsm(inputs);
@@ -448,10 +474,13 @@ update_status ModulePlayer::Update()
 				}
 				collider->rect.h = 90;
 				break;
-			case ST_HIT:
+			case ST_HIT_L:
 			
 				break;
 
+			case ST_HIT_H:
+
+				break;
 			case ST_WALK_RIGHT:
 			{
 				if (!isOnLeft && App->player2->isAttacking)
@@ -610,7 +639,11 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	if (App->player2->doDefense == false)
-		App->player2->Health--;
+	//if (App->player2->doDefense == false)
+		//App->player2->Health--;
+	if (isAttackHard)
+		inputs.Push(IN_HIT_H);
+	else
+		inputs.Push(IN_HIT_L);
 }
 
