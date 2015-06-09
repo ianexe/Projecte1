@@ -305,11 +305,11 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 					state = ST_KICK_STANDING_H;
 				}
 				break;
-				case IN_HIT: state = ST_HIT; isHit = true;  break;
+				//case IN_HIT: state = ST_HIT; isHit = true;  break;
 				}
 			}
 			break;
-
+			/*
 			case ST_HIT:
 			{
 				switch (last_input)
@@ -318,7 +318,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				}
 			}
 			break;
-
+			*/
 
 			case ST_WALK_RIGHT:
 			{
@@ -444,9 +444,9 @@ update_status ModulePlayer2::Update()
 				}
 				collider->rect.h = 90;
 				break;
-			case ST_HIT:
+			/*case ST_HIT:
 			
-				break;
+				break;*/
 
 			case ST_WALK_RIGHT:
 			{
