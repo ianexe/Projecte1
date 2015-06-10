@@ -102,6 +102,18 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick2.frames.PushBack({ 482, 407, 98, 81 });
 	kick2.speed = 0.2f;
 	
+	// hadouken move
+	hadoukenmove.frames.PushBack({ 34, 1545, 100, 90 });
+	hadoukenmove.frames.PushBack({ 135, 1551, 102, 84 });
+	hadoukenmove.frames.PushBack({ 244, 1552, 104, 83 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.speed = 0.2f;
+
 	//Timer
 	
 
@@ -548,7 +560,8 @@ update_status ModulePlayer::Update()
 				break;
 
 			case ST_PUNCH_STANDING_L:
-				current_animation = &punch;
+				//current_animation = &punch;
+				current_animation = &hadoukenmove;
 				break;
 
 			case ST_PUNCH_STANDING_H:
