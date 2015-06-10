@@ -560,8 +560,7 @@ update_status ModulePlayer::Update()
 				break;
 
 			case ST_PUNCH_STANDING_L:
-				//current_animation = &punch;
-				current_animation = &hadoukenmove;
+				current_animation = &punch;
 				break;
 
 			case ST_PUNCH_STANDING_H:
