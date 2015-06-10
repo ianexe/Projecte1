@@ -177,7 +177,10 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			
 	}
 
-	//Attacks
+
+
+	
+	//Normal Attacks
 	if (isPunching_L)
 	{
 		isAttacking = true;
@@ -255,19 +258,26 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_RIGHT_DOWN: state = ST_WALK_RIGHT;	break;
 			case IN_LEFT_DOWN: state = ST_WALK_LEFT;break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
-
+			case IN_CROUCH_DOWN: state = ST_CROUCHED; sp_check = 0; sp_timer = SDL_GetTicks(); isCrouching = true; break;
+				
 			case IN_L_PUNCH:
 			{
-				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (sp_check == 2)
+				{
+					state = ST_HADOUKEN;
 				}
-				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					if (isOnLeft){
+						c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+					}
+					else{
+						c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+					}
+					isPunching_L = true;
+					App->audio->PlayFx(normalFX);
+					state = ST_PUNCH_STANDING_L;
 				}
-				isPunching_L = true;
-				App->audio->PlayFx(normalFX);
-				state = ST_PUNCH_STANDING_L;
 			}
 			break;
 
@@ -436,24 +446,41 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
-			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
-			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
+				case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
+				case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+				case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 
-			case IN_L_PUNCH:
-			{
-				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				case IN_L_PUNCH:
+				{
+				
+					{
+						/*BULLSHIT DETECTED
+						if (isOnLeft){
+							c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+						}
+						else{
+							c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+						}
+						isPunching_L = true;
+						App->audio->PlayFx(normalFX);
+						state = ST_PUNCH_CROUCH;*/
+					}
 				}
-				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
-				}
-				isPunching_L = true;
-				//App->audio->PlayFx(normalFX);
-				state = ST_PUNCH_CROUCH;
-			}
-			break;
+				break;
 
+				
+				case IN_RIGHT_AND_CROUCH:
+					if (sp_check == 0)
+					{
+						sp_check = 1;
+					}
+					break;
+				case IN_RIGHT_DOWN:
+				if (sp_check == 1)
+				{
+					sp_check = 2;
+				}
+				break;
 			}
 		}
 		break;
@@ -612,6 +639,8 @@ update_status ModulePlayer::Update()
 			case ST_KICK_STANDING_H:
 				current_animation = &kick2;
 				break;
+			case ST_HADOUKEN:
+				current_animation = &kick2;
 			}
 		}
 
