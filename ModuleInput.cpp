@@ -196,20 +196,18 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 	//Player1
 		if (left && right)
 			inputs.Push(IN_LEFT_AND_RIGHT);
+
+		else
 		{
 			if (left)
 				inputs.Push(IN_LEFT_DOWN);
 			if (right)
 				inputs.Push(IN_RIGHT_DOWN);
 		}
+
+
 		if (up && down)
 			inputs.Push(IN_JUMP_AND_CROUCH);
-
-		if (left && up)
-			inputs.Push(IN_LEFT_AND_UP);
-
-		if (right && up)
-			inputs.Push(IN_RIGHT_AND_UP);
 
 		else
 		{
@@ -218,6 +216,30 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 			if (up)
 				inputs.Push(IN_JUMP_DOWN);
 		}
+
+		if (left && up)
+			inputs.Push(IN_LEFT_AND_UP);
+
+		else 
+		{
+			if (left)
+				inputs.Push(IN_LEFT_DOWN);
+			if (up)
+				inputs.Push(IN_JUMP_DOWN);
+		}
+
+		if (right && up)
+			inputs.Push(IN_RIGHT_AND_UP);
+
+		else
+		{
+			if (right)
+				inputs.Push(IN_RIGHT_DOWN);
+			if (up)
+				inputs.Push(IN_JUMP_DOWN);
+		}
+
+		
 
 		//Attacks
 		if (punch_l)
