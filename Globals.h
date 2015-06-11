@@ -43,6 +43,7 @@ if (SDL_GetTicks() - jump_timer > JUMP_TIME)
 #define VSYNC true
 #define TITLE "Super Awesome Game"
 #define FADE_TIME 2.5f
-#define SP_LIMIT 100
+#define HADOUKEN_LIMIT 1000
+#define SP_LIMIT 1500
 
 

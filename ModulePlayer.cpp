@@ -116,6 +116,7 @@ bool ModulePlayer::Start()
 	Health = 144;
 	// Load SFC
 	hadouken_timer = 0;
+	sp_timer = 0;
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
@@ -474,9 +475,11 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_RIGHT_AND_CROUCH:
 					if (sp_check == 0)
 					{
+						sp_timer = SDL_GetTicks();
 						sp_check = 1;
 					}
 					break;
+				
 				case IN_RIGHT_DOWN:
 				if (sp_check == 1)
 				{
@@ -499,7 +502,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_HADOUKEN:
 			switch (last_input)
 			{
-			case IN_HADOUKEN_FINISH: hadouken_timer = 0; break;
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; break;
 
 			}
 			break;
@@ -651,7 +654,7 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_HADOUKEN:		
 
-				if (SDL_GetTicks() + hadouken_timer > SP_LIMIT)
+				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
 					inputs.Push(IN_HADOUKEN_FINISH);
 				}
@@ -695,6 +698,13 @@ update_status ModulePlayer::Update()
 		isOnLeft = true;
 	else
 		isOnLeft = false;
+
+
+	//Timer special movements
+	if (SDL_GetTicks() - sp_timer > SP_LIMIT)
+	{
+		sp_check = 0;
+	}
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();

@@ -61,7 +61,7 @@ public:
 	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;
 	//Timers
-	
+
 	
 
 	//Variables
@@ -86,6 +86,7 @@ public:
 	p2Point<int> position;
 	unsigned int Health;
 	float speed;
-	int hadouken_timer;
+	long hadouken_timer;
+	long sp_timer;
 	int sp_check;
 };
