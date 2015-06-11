@@ -144,13 +144,11 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	// crouch punch
 	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
 	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
-	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
 	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
 	crouchpunch.speed = 0.2f;
 
 	// crouch kick
 	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
-	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
 	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
 	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
 	crouchkick.speed = 0.2f;
@@ -719,14 +717,14 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_L_PUNCH:
 			{
-				/*
+				
 				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 48, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
 				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 48, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
+				
 				isCrouchPunching = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_CROUCH;
@@ -764,7 +762,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_PUNCH_CROUCH_FINISH: 
-				/*c_punch1->to_delete = true;  state = ST_IDLE;*/ 
+				c_punch1->to_delete = true;
 				if (isCrouching)
 				{
 					state = ST_CROUCHED;
