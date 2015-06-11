@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 
+<<<<<<< HEAD
 
 
 //Scroll
@@ -9,6 +10,8 @@
 //Select stage?
 //Que el joc torni a la intro quan mors!!!
 //Que et moris!!
+=======
+>>>>>>> origin/Ian
 class ModuleIntro : public Module
 {
 public:

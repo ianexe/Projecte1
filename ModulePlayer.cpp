@@ -49,6 +49,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	//jump.frames.PushBack({ 100, 823, 58, 109 });
 	//jump.frames.PushBack({ 176, 805, 50, 127 });
 	jump.frames.PushBack({ 239, 798, 66, 134 });
+/*<<<<<<< HEAD
 	jump.speed = 0.23f;
 
 	// jump down animation (arcade sprite sheet)
@@ -57,6 +58,12 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
 
 	jumpfalling.speed = 0.23f;
+=======*/
+	jump.frames.PushBack({ 327, 813, 54, 119 });
+	jump.frames.PushBack({ 397, 810, 52, 122 });
+	jump.frames.PushBack({ 464, 819, 60, 113 });
+	jump.speed = 0.23f;
+//>>>>>>> origin/Ian
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
@@ -250,10 +257,16 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 	while (inputs.Pop(last_input))
 	{
+
 		switch (state)
 		{
 		case ST_IDLE:
+
 		{
+		>>>>>>>>IAN	current_animation = &jump;
+
+					/*
+					if ((position.y > 135) && (!isFalling))*/
 			switch (last_input)
 			{
 			case IN_RIGHT_DOWN: state = ST_WALK_RIGHT;	break;
@@ -369,7 +382,21 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_HIT_FINISH: state = ST_IDLE; break;
 			}
 		}
+
 		break;
+
+		
+		if (isFalling)
+		position.y += 5;
+
+		if (position.y > 216)
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			isJumping = false;
+		}
+	}
+>>>>>>> origin/Ian
 
 		case ST_WALK_RIGHT:
 		{
@@ -402,6 +429,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
+
 		// TODO IF HIT
 		case ST_JUMPING_NEUTRAL:
 		{
@@ -685,6 +713,9 @@ update_status ModulePlayer::Update()
 			}
 		}
 
+	
+
+
 		/**
 		*TODO: COLISIO BONA
 		**/
@@ -714,9 +745,6 @@ update_status ModulePlayer::Update()
 		current_state = state;
 		App->player->internal_input(inputs);
 		
-
-
-
 
 	//Timer special movements
 	if (SDL_GetTicks() - sp_timer > SP_LIMIT)
