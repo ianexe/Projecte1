@@ -3,7 +3,6 @@
 #include "Globals.h"
 
 
-
 //Scroll
 //Input
 //Select stage?
@@ -23,10 +22,12 @@ public:
 
 	//Variables
 	SDL_Texture* graphics;
-	SDL_Texture* intro_animation;
+
 	SDL_Rect scroll;
+	Animation warning;
 	Animation intro;
 	Animation insert_coin;
+
 
 	//Animation punchFace;
 	bool isEnd;

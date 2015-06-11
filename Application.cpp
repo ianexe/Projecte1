@@ -16,6 +16,7 @@ Application::Application()
 	colision = new ModuleCollision(this);
 	scene_intro = new ModuleIntro(this, true);
 	ui = new ModuleUI(this, false);
+	map = new ModuleMap(this, false);
 
 
 	// The order of calls is very important!
@@ -31,6 +32,7 @@ Application::Application()
 	
 	// Scenes
 	AddModule(scene_intro);
+	AddModule(map);
 	AddModule(scene_ken);
 	AddModule(scene_honda);
 	
@@ -57,6 +59,7 @@ Application::~Application()
 	delete audio;
 	delete colision;
 	delete scene_intro;
+	delete map;
 	delete scene_honda;
 	delete scene_ken;
 	delete player;
