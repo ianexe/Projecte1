@@ -331,8 +331,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					{
 						if (App->player->isOnLeft == true)
 						{
-							App->particles->AddParticle(App->particles->Hadouken, position.x , position.y - 80, 200);
-							
+							App->particles->AddParticle(App->particles->Hadouken, position.x , position.y - 80, 150);
+							c_hadouken = App->colision->AddCollider({ position.x, position.y - 80, 62, 32 }, COLLIDER_HADOUKEN_1);
 						}
 						else
 						{
@@ -591,7 +591,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_HADOUKEN:
 			switch (last_input)
 			{
-			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; App->particles->Hadouken.speed.x = 3.5; break;
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; c_hadouken->to_delete = true; App->particles->Hadouken.speed.x = 3.5; break;
 
 			}
 			break;
@@ -753,6 +753,7 @@ update_status ModulePlayer::Update()
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
 					
+					c_hadouken->SetPos(App->particles->Hadouken.position.x, App->particles->Hadouken.position.y);
 					inputs.Push(IN_HADOUKEN_FINISH);
 				}
 

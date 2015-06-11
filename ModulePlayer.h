@@ -62,6 +62,7 @@ public:
 	Collider* c_punch2;
 	Collider* c_kick;
 	Collider* c_kick2;
+	Collider* c_hadouken;
 	//State Variables
 	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;
@@ -92,6 +93,7 @@ public:
 	unsigned int Health;
 	float speed;
 	long hadouken_timer;
+	int or_pos_hadouken;
 	long sp_timer;
 	int sp_check;
 };
