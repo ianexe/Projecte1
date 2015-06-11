@@ -114,6 +114,34 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
 	hadoukenmove.speed = 0.2f;
 
+	// crouch punch
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.speed = 0.2f;
+
+	// crouch kick
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.speed = 0.2f;
+
+	// jump punch
+	jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
+	jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	jumppunch.speed = 0.2f;
+
+	// jump kick
+	jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
+	jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	jumpkick.speed = 0.2f;
+
 	//Timer
 	
 

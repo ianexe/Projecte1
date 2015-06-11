@@ -45,6 +45,10 @@ public:
 	Animation punch2;
 	Animation kick;
 	Animation kick2;
+	Animation crouchpunch;
+	Animation crouchkick;
+	Animation jumppunch;
+	Animation jumpkick;
 	Animation hadoukenmove;
 	unsigned int normalFX;
 	unsigned int strongFX;
