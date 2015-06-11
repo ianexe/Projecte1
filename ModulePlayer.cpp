@@ -368,6 +368,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_LEFT_DOWN: state = ST_WALK_LEFT;break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
+			/*
 			case IN_LEFT_AND_UP:
 			{
 				isJumping = true;
@@ -375,16 +376,16 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 					state = ST_JUMP_BACKWARD;
 					isJumpingB = true;
-					break;
 				}
 
 				else if (position.x > App->player2->position.x)
 				{
 					state = ST_JUMP_FORWARD;
 					isJumpingF = true;
-					break;
 				}
 			}
+			break;
+			*/
 
 			case IN_L_PUNCH:
 			{
@@ -474,17 +475,16 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 					state = ST_JUMP_FORWARD;
 					isJumpingF = true;
-					break;
 				}
 					
 				else if (position.x > App->player2->position.x)
 				{
 					state = ST_JUMP_BACKWARD;
 					isJumpingB = true;
-					break;
 				}
 				
 			}
+			break;
 				//case IN_JUMP_DOWN: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 				/**
 				*TODO: COLISIO CROUCH
@@ -508,16 +508,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 					state = ST_JUMP_BACKWARD;
 					isJumpingB = true;
-					break;
 				}
 
 				else if (position.x > App->player2->position.x)
 				{
 					state = ST_JUMP_FORWARD;
 					isJumpingF = true;
-					break;
 				}
 			}
+			break;
 			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
