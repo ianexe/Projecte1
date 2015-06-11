@@ -263,7 +263,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_IDLE:
 
 		{
-		>>>>>>>>IAN	current_animation = &jump;
+
 
 					/*
 					if ((position.y > 135) && (!isFalling))*/
@@ -385,7 +385,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 		break;
 
-		
+		/*
 		if (isFalling)
 		position.y += 5;
 
@@ -396,7 +396,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			isJumping = false;
 		}
 	}
->>>>>>> origin/Ian
+	*/
 
 		case ST_WALK_RIGHT:
 		{
