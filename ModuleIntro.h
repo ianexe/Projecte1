@@ -28,6 +28,8 @@ public:
 	Animation intro;
 	Animation insert_coin;
 
+	unsigned int music_coin;
+	bool music_on;
 
 	//Animation punchFace;
 	bool isEnd;

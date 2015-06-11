@@ -4,6 +4,7 @@
 #include "Globals.h"
 
 
+
 class ModuleMap : public Module
 {
 public:
@@ -22,7 +23,10 @@ public:
 
 	Animation countdown;
 
-	Uint32 start_time;
+	bool music_on;
+	bool map;
+
+	unsigned int music_versus;
 
 	SDL_Rect scroll;
 

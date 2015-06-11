@@ -6,8 +6,8 @@ ModuleIntro::ModuleIntro(Application* app, bool start_enabled) : Module(app, sta
 {
 	isEnd = false;
 
-	warning.frames.PushBack({ 889, 218, 314, 197 });
 	warning.frames.PushBack({ 680, 11, 417, 196 });
+	warning.frames.PushBack({ 889, 218, 314, 197 });
 
 	warning.speed = 0.01;
 
@@ -45,10 +45,12 @@ ModuleIntro::ModuleIntro(Application* app, bool start_enabled) : Module(app, sta
 bool ModuleIntro::Start()
 {
 	LOG("Loading Intro scene");
+	music_on = true;
 
 	graphics = App->textures->Load("intro_def.png");
 
-	App->audio->PlayMusic("opening.ogg", FADE_TIME);
+	
+	music_coin = App->audio->LoadFx("coin.wav");
 
 	return true;
 }
@@ -67,6 +69,13 @@ update_status ModuleIntro::Update()
 
 	if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
 	{
+		
+		if (music_on){
+
+			App->audio->PlayMusic("opening.ogg", FADE_TIME);
+			music_on = false;
+		}
+		
 		current_animation = &intro;
 
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
@@ -79,6 +88,7 @@ update_status ModuleIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
+		App->audio->PlayFx(music_coin);
 		App->fade->FadeToBlack(App->scene_intro, App->map, FADE_TIME);
 	}
 

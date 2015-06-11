@@ -6,12 +6,19 @@ ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_e
 {
 
 
-	countdown.frames.PushBack({ 335, 289, 254, 189 });
-	countdown.frames.PushBack({ 335, 289, 254, 189 });
-	countdown.frames.PushBack({ 335, 289, 254, 189 });
-
-
-	countdown.speed = 0.04f;
+	countdown.frames.PushBack({ 452, 852, 384, 226 });
+	countdown.frames.PushBack({ 860, 586, 385, 225 });
+	countdown.frames.PushBack({ 450, 584, 385, 226 });
+	countdown.frames.PushBack({ 42, 578, 386, 225 });
+	countdown.frames.PushBack({ 858, 316, 385, 225 });
+	countdown.frames.PushBack({ 450, 314, 384, 225 });
+	countdown.frames.PushBack({ 42, 312, 385, 226 });
+	countdown.frames.PushBack({ 859, 43, 385, 226 });
+	countdown.frames.PushBack({ 450, 44, 385, 226 });
+	countdown.frames.PushBack({ 41, 44, 385, 226 });
+	
+	countdown.speed = 0.02f;
+	
 
 }
 
@@ -19,10 +26,15 @@ bool ModuleMap::Start()
 {
 	LOG("Loading Intro scene");
 
-	scroll = { 0, 0, 600, 600 };
 
-	map_selection = App->textures->Load("characters.png");
-	versus_image = App->textures->Load("characters.png");
+	scroll = { 0, 0, 320, 240 };
+	music_on = true;
+	map = true;
+
+	map_selection = App->textures->Load("ryu_mapa.png");
+	versus_image = App->textures->Load("countdownVS.png");
+
+	music_versus = App->audio->LoadFx("musica_versus.wav");
 
 	App->audio->PlayMusic("opening.ogg", FADE_TIME);
 
@@ -38,29 +50,36 @@ update_status ModuleMap::PreUpdate()
 
 update_status ModuleMap::Update()
 {
-	App->renderer->Blit(map_selection, 100, 100, &scroll);
 	
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP || map == false)
 	{
-		start_time = SDL_GetTicks();
+		map = false;
 
-		while (SDL_GetTicks() - start_time < 200){
+		if (music_on){
 
-			scroll = countdown.GetCurrentFrame();
-
-			App->renderer->Blit(versus_image, 0, 0, &scroll);
-
-
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-			{
-				App->fade->FadeToBlack(App->map, App->scene_ken, FADE_TIME);
-			}
+			App->audio->PlayFx(music_versus);
+			music_on = false;
 
 		}
+		
 
-		App->fade->FadeToBlack(App->map, App->scene_ken, FADE_TIME);
+		scroll = countdown.GetCurrentFrame();
+
+		App->renderer->Blit(versus_image, 40, 7, &scroll);
+
+		if ((App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_UP) || (countdown.getFrame() >= (countdown.frames.Count() - countdown.speed)))
+		{
+			
+			App->fade->FadeToBlack(App->map, App->scene_ken, FADE_TIME);
+		}
 		
 	}
+
+	if(map == true){
+		App->renderer->Blit(map_selection, 70, 0, &scroll);
+	}
+	
 	
 	return UPDATE_CONTINUE;
 }
