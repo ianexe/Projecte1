@@ -204,6 +204,13 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 		}
 		if (up && down)
 			inputs.Push(IN_JUMP_AND_CROUCH);
+
+		if (left && up)
+			inputs.Push(IN_LEFT_AND_UP);
+
+		if (right && up)
+			inputs.Push(IN_RIGHT_AND_UP);
+
 		else
 		{
 			if (down)

@@ -80,7 +80,11 @@ public:
 
 	bool isCrouching;
 	bool isJumping;
+	bool isJumpingF;
+	bool isJumpingB;
 	bool isFalling;
+	bool isFallingF;
+	bool isFallingB;
 	bool isAttacking;
 	bool isPunching_L;
 	bool isPunching_H;

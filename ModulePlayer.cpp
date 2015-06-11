@@ -74,6 +74,21 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	jumpforwardfalling.loop = false;
 	jumpforwardfalling.speed = 0.23f;
 
+	// jump backward animation (arcade sprite sheet)
+	jumpbackward.frames.PushBack({ 1149, 817, 68, 109 });
+	jumpbackward.frames.PushBack({ 1064, 821, 74, 105 });
+	jumpbackward.frames.PushBack({ 917, 823, 132, 103 });
+	jumpbackward.frames.PushBack({ 857, 806, 60, 120 });
+	jumpbackward.loop = false;
+	jumpbackward.speed = 0.23f;
+
+	// jump backward fall animation (arcade sprite sheet)
+	jumpbackwardfalling.frames.PushBack({ 744, 826, 120, 100 });
+	jumpbackwardfalling.frames.PushBack({ 668, 828, 62, 98 });
+	jumpbackwardfalling.frames.PushBack({ 581, 823, 68, 103 });
+	jumpbackwardfalling.loop = false;
+	jumpbackwardfalling.speed = 0.23f;
+
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
 	block.frames.PushBack({ 525, 2334, 64, 93 });
@@ -160,14 +175,18 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	//Bools 
 	isJumping = false;
 	isOnLeft = false;
-	 isJumping= false;
-	 isFalling= false;
-	 isPunching_L= false;
-	 isPunching_H= false;
-	 isKicking_L= false;
-	 isKicking_H= false;
-	 doDefense = false;
-	 isAttacking = false;
+	isJumping= false;
+	isJumpingB = false;
+	isJumpingF = false;
+	isFalling= false;
+	isFallingB = false;
+	isFallingF = false;
+	isPunching_L= false;
+	isPunching_H= false;
+	isKicking_L= false;
+	isKicking_H= false;
+	doDefense = false;
+	isAttacking = false;
 
 	speed = 3;
 }
@@ -225,6 +244,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			App->audio->PlayFx(fallingFX);
 			jump.setToZero();
 			jumpforward.setToZero();
+			jumpbackward.setToZero();
 			
 			inputs.Push(IN_JUMP_N_FINISH);
 		}
@@ -428,8 +448,26 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_RIGHT_UP: state = ST_IDLE; collider->rect.h = 90; doDefense = false; break;
+			case IN_RIGHT_UP: state = ST_IDLE; doDefense = false; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false;  break;
+			case IN_JUMP_DOWN:
+			{
+				isJumping = true;
+				if (position.x < App->player2->position.x)
+				{
+					state = ST_JUMP_FORWARD;
+					isJumpingF = true;
+					break;
+				}
+					
+				else if (position.x > App->player2->position.x)
+				{
+					state = ST_JUMP_BACKWARD;
+					isJumpingB = true;
+					break;
+				}
+				
+			}
 				//case IN_JUMP_DOWN: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 				/**
 				*TODO: COLISIO CROUCH
@@ -446,6 +484,23 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; doDefense = false;  break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false; break;
+			case IN_JUMP_DOWN:
+			{
+				isJumping = true;
+				if (position.x < App->player2->position.x)
+				{
+					state = ST_JUMP_BACKWARD;
+					isJumpingB = true;
+					break;
+				}
+
+				else if (position.x > App->player2->position.x)
+				{
+					state = ST_JUMP_FORWARD;
+					isJumpingF = true;
+					break;
+				}
+			}
 			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
@@ -493,13 +548,109 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				state = ST_IDLE; 
 				isFalling = isJumping = false;
 				jumpfalling.setToZero();
-				jumpforwardfalling.setToZero();
 				break;
 			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
 			}
 		}
 		break;
+
+		case ST_JUMP_FORWARD:
+		{
+			switch (last_input)
+			{
+				
+			case IN_L_PUNCH:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isJumpPunching = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_PUNCH_JUMP;
+			}
+			break;
+
+			case IN_L_KICK:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isJumpKicking = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_KICK_JUMP;
+			}
+			break;
+
+			case IN_JUMP_N_FINISH:
+				state = ST_IDLE;
+				isFalling = isFallingF = isJumping = isJumpingF = false;
+				jumpforwardfalling.setToZero();
+				break;
+				//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+
+			}
+		}
+		break;
+
+		case ST_JUMP_BACKWARD:
+		{
+			switch (last_input)
+			{
+
+			case IN_L_PUNCH:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isJumpPunching = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_PUNCH_JUMP;
+			}
+			break;
+
+			case IN_L_KICK:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isJumpKicking = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_KICK_JUMP;
+			}
+			break;
+
+			case IN_JUMP_N_FINISH:
+				state = ST_IDLE;
+				isFalling = isFallingB = isJumping = isJumpingB = false;
+				jumpbackwardfalling.setToZero();
+				break;
+				//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+
+			}
+		}
+		break;
+
 		case ST_PUNCH_STANDING_L:
 		{
 			switch (last_input)
@@ -780,7 +931,91 @@ update_status ModulePlayer::Update()
 				}
 			}
 			collider->rect.h = 90;
-				break;
+			break;
+
+			case ST_JUMP_FORWARD:
+			if (!isFalling)
+			{
+				current_animation = &jumpforward;
+				//current_animation = &idle;
+				position.y -= 5.0f;
+				/*
+				collider->rect.h = 90;
+				collider->SetPos(position.x - 30, position.y + 90);
+
+				*/
+			}
+			else
+			{
+				position.y += 5.0f;
+				if (!isAttacking)
+				{
+
+					current_animation = &jumpforwardfalling;
+
+				}
+			}
+
+			if (isOnLeft)
+			{
+				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+				{
+					position.x += speed;
+				}
+			}
+
+			else
+			{
+				if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
+				{
+					position.x -= speed;
+				}
+			}
+
+			collider->rect.h = 90;
+			break;
+
+			case ST_JUMP_BACKWARD:
+			if (!isFalling)
+			{
+				current_animation = &jumpbackward;
+				//current_animation = &idle;
+				position.y -= 5.0f;
+				/*
+				collider->rect.h = 90;
+				collider->SetPos(position.x - 30, position.y + 90);
+
+				*/
+			}
+			else
+			{
+				position.y += 5.0f;
+				if (!isAttacking)
+				{
+
+					current_animation = &jumpbackwardfalling;
+
+				}
+			}
+
+			if (isOnLeft == false)
+			{
+				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+				{
+					position.x += speed;
+				}
+			}
+
+			else
+			{
+				if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
+				{
+					position.x -= speed;
+				}
+			}
+
+			collider->rect.h = 90;
+			break;
 
 			/*case ST_CROUCHING:
 				current_animation = &crouch;
