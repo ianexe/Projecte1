@@ -45,6 +45,8 @@ public:
 		return mouse_y;
 	}
 
+	
+
 private:
 	KEY_STATE* keyboard;
 	int mouse_x;

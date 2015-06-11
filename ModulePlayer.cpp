@@ -49,14 +49,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	//jump.frames.PushBack({ 100, 823, 58, 109 });
 	//jump.frames.PushBack({ 176, 805, 50, 127 });
 	jump.frames.PushBack({ 239, 798, 66, 134 });
+
+
+	jump.frames.PushBack({ 327, 813, 54, 119 });
+	jump.frames.PushBack({ 397, 810, 52, 122 });
+	jump.frames.PushBack({ 464, 819, 60, 113 });
 	jump.speed = 0.23f;
 
-	// jump down animation (arcade sprite sheet)
-	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
-	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
-	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
-
-	jumpfalling.speed = 0.23f;
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
@@ -102,6 +101,46 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick2.frames.PushBack({ 482, 407, 98, 81 });
 	kick2.speed = 0.2f;
 	
+	// hadouken move
+	hadoukenmove.frames.PushBack({ 34, 1545, 100, 90 });
+	hadoukenmove.frames.PushBack({ 135, 1551, 102, 84 });
+	hadoukenmove.frames.PushBack({ 244, 1552, 104, 83 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.speed = 0.2f;
+
+	// crouch punch
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.speed = 0.2f;
+
+	// crouch kick
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.speed = 0.2f;
+
+	// jump punch
+	jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
+	jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	jumppunch.speed = 0.2f;
+
+	// jump kick
+	jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
+	jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	jumpkick.speed = 0.2f;
+
 	//Timer
 	
 
@@ -117,6 +156,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	 doDefense = false;
 	 isAttacking = false;
 
+
 	speed = 3;
 }
 
@@ -129,12 +169,32 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	Health = 144;
 	// Load SFC
+	hadouken_timer = 0;
+	sp_timer = 0;
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 
+	//Declare bools
+	isJumping = false;
+	isOnLeft = false;
+	isJumping = false;
+	isFalling = false;
+	isPunching_L = false;
+	isPunching_H = false;
+	isKicking_L = false;
+	isKicking_H = false;
+	doDefense = false;
+	isAttacking = false;
+	isPunching_Crouch = false;
+
+	//Set initial position
+	position.x = 80;
+	position.y = 216;
+
+	//Set Colliders
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_1);
 	c_defense = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
 
@@ -148,10 +208,7 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
 	App->textures->Unload(graphics);
-	position.x = 80;
-	position.y = 216;
 	return true;
 }
 
@@ -175,16 +232,10 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 			
 	}
+	
 
-	/*if (isCrouching)
-	{
-		inputs.Push(IN_CROUCH_FINISH);
-			//current_animation = &crouchidle;
-		isCrouching = false;
-		}
-	}*/
 
-	//Attacks
+	//Normal Attacks
 	if (isPunching_L)
 	{
 		isAttacking = true;
@@ -225,6 +276,16 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 	}
 
+	if (isPunching_Crouch)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			//inputs.Push(IN_PUNCH_H_FINISH);
+			//isAttacking = isPunching_H = false;
+		}
+	}
+
 	if (isHit)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
@@ -243,28 +304,57 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 	while (inputs.Pop(last_input))
 	{
+
 		switch (state)
 		{
 		case ST_IDLE:
+
 		{
+
+
+					/*
+					if ((position.y > 135) && (!isFalling))*/
 			switch (last_input)
 			{
 			case IN_RIGHT_DOWN: state = ST_WALK_RIGHT;	break;
 			case IN_LEFT_DOWN: state = ST_WALK_LEFT;break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
-
+				
 			case IN_L_PUNCH:
 			{
-				if (isOnLeft){
-					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (sp_check == 2)
+				{
+					state = ST_HADOUKEN;
+					//Only 1 hadouken on screen
+					if (App->particles->Hadouken.exists == NULL)
+					{
+						if (App->player->isOnLeft == true)
+						{
+							App->particles->AddParticle(App->particles->Hadouken, position.x , position.y - 80, 200);
+							
+						}
+						else
+						{
+							App->particles->Hadouken.speed.x *= (-1);
+							App->particles->AddParticle(App->particles->Hadouken, position.x, position.y - 80, 30);
+							
+						}
+					}
+					hadouken_timer = SDL_GetTicks();
 				}
-				else{
-					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					if (isOnLeft){
+						c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+					}
+					else{
+						c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+					}
+					isPunching_L = true;
+					App->audio->PlayFx(normalFX);
+					state = ST_PUNCH_STANDING_L;
 				}
-				isPunching_L = true;
-				App->audio->PlayFx(normalFX);
-				state = ST_PUNCH_STANDING_L;
 			}
 			break;
 
@@ -315,19 +405,45 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 			break;
 
-			case IN_HIT: state = ST_HIT; isHit = true;break;
+			case IN_HIT_L: state = ST_HIT_L; isHit = true;break;
+
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			}
 		}
 		break;
 
-		case ST_HIT:
+		case ST_HIT_L:
 		{
 			switch (last_input)
 			{
-			case IN_HIT_FINISH: state = ST_IDLE; break;
+			
+				case IN_HIT_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
+
+		case ST_HIT_H:
+		{
+			switch (last_input)
+			{
+				case IN_HIT_FINISH: state = ST_IDLE; break;
+			}
+		}
+
+		break;
+
+		/*
+		if (isFalling)
+		position.y += 5;
+
+		if (position.y > 216)
+
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			isJumping = false;
+		}
+	}
+	*/
 
 		case ST_WALK_RIGHT:
 		{
@@ -339,6 +455,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				/**
 				*TODO: COLISIO CROUCH
 				**/
+			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -351,12 +469,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; doDefense = false;  break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; doDefense = false; break;
+			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
 		break;
 
+		// TODO IF HIT
 		case ST_JUMPING_NEUTRAL:
 		{
 			switch (last_input)
@@ -372,6 +493,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_HIT_L: c_punch1->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_punch1->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_PUNCH_L_FINISH: c_punch1->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
@@ -381,6 +504,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_HIT_L: c_punch2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_punch2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_PUNCH_H_FINISH: c_punch2->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
@@ -391,6 +516,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_KICK_L_FINISH: c_kick->to_delete = true;  state = ST_IDLE;  break;
+			case IN_HIT_L: c_kick->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_kick->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			}
 		}
 		break;
@@ -399,30 +526,75 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_HIT_L: c_kick2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
+			case IN_HIT_H: c_kick2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_KICK_H_FINISH: c_kick2->to_delete = true; state = ST_IDLE;  break;
 			}
 		}
 		break;
 
-		/*case ST_CROUCHING:
-		{
-			switch (last_input)
-			{
-			case IN_CROUCH_FINISH: state = ST_CROUCHED; break;
-			case IN_CROUCH_UP: state = ST_IDLE; break;
-			}
-		}
-		break;*/
 
 		case ST_CROUCHED:
 		{
 			switch (last_input)
 			{
-			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
-			//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+				case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
+				case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+				case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
+
+				case IN_L_PUNCH:
+				{
+				
+					{
+						/*BULLSHIT DETECTED
+						if (isOnLeft){
+							c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+						}
+						else{
+							c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+						}
+						isPunching_L = true;
+						App->audio->PlayFx(normalFX);
+						state = ST_PUNCH_CROUCH;*/
+					}
+				}
+				break;
+
+				
+				case IN_RIGHT_AND_CROUCH:
+					if (sp_check == 0)
+					{
+						sp_timer = SDL_GetTicks();
+						sp_check = 1;
+					}
+					break;
+				
+				case IN_RIGHT_DOWN:
+				if (sp_check == 1)
+				{
+					sp_check = 2;
+				}
+				break;
 			}
 		}
 		break;
+
+		case ST_PUNCH_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_CROUCH_FINISH:state = ST_IDLE; break;//delete collider tornar a crouch po
+			}
+		}
+		break;
+
+		case ST_HADOUKEN:
+			switch (last_input)
+			{
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; App->particles->Hadouken.speed.x = 3.5; break;
+
+			}
+			break;
 		}
 	}
 	return state;
@@ -432,8 +604,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 update_status ModulePlayer::Update()
 {
 	current_animation = &idle;
-
+	isAttackHard == false;
 	current_state = ST_UNKNOWN;
+
+
+	//Checks where player is facing
+	if (App->player->position.x < App->player2->position.x)
+		isOnLeft = true;
+	else
+		isOnLeft = false;
 
 	p1_states state = App->player->process_fsm(inputs);
 
@@ -448,10 +627,13 @@ update_status ModulePlayer::Update()
 				}
 				collider->rect.h = 90;
 				break;
-			case ST_HIT:
+			case ST_HIT_L:
 			
 				break;
 
+			case ST_HIT_H:
+
+				break;
 			case ST_WALK_RIGHT:
 			{
 				if (!isOnLeft && App->player2->isAttacking)
@@ -539,10 +721,14 @@ update_status ModulePlayer::Update()
 				break;
 
 			/*case ST_CROUCHING:
-				current_animation = &crouch;
+				
 				break;*/
 
 			case ST_CROUCHED:
+				if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+				{
+					current_animation = &crouch;
+				}
 				current_animation = &crouchidle;
 				collider->rect.h = 60;
 				break;
@@ -562,8 +748,20 @@ update_status ModulePlayer::Update()
 			case ST_KICK_STANDING_H:
 				current_animation = &kick2;
 				break;
+			case ST_HADOUKEN:		
+				current_animation = &hadoukenmove;
+				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
+				{
+					
+					inputs.Push(IN_HADOUKEN_FINISH);
+				}
+
+				break;
 			}
 		}
+
+	
+
 
 		/**
 		*TODO: COLISIO BONA
@@ -595,11 +793,11 @@ update_status ModulePlayer::Update()
 		App->player->internal_input(inputs);
 		
 
-	//Checks where player is facing
-	if (App->player->position.x < App->player2->position.x)
-		isOnLeft = true;
-	else
-		isOnLeft = false;
+	//Timer special movements
+	if (SDL_GetTicks() - sp_timer > SP_LIMIT)
+	{
+		sp_check = 0;
+	}
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
@@ -612,6 +810,9 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	if (App->player2->doDefense == false)
 		App->player2->Health--;
+	/*if (isAttackHard)
+		inputs.Push(IN_HIT_H);
+	else
+		inputs.Push(IN_HIT_L);*/
 }
-
 

@@ -45,6 +45,11 @@ public:
 	Animation punch2;
 	Animation kick;
 	Animation kick2;
+	Animation crouchpunch;
+	Animation crouchkick;
+	Animation jumppunch;
+	Animation jumpkick;
+	Animation hadoukenmove;
 	unsigned int normalFX;
 	unsigned int strongFX;
 	unsigned int fallingFX;
@@ -61,7 +66,7 @@ public:
 	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;
 	//Timers
-	
+
 	
 
 	//Variables
@@ -75,9 +80,10 @@ public:
 	bool isAttacking;
 	bool isPunching_L;
 	bool isPunching_H;
+	bool isPunching_Crouch;
 	bool isKicking_L;
 	bool isKicking_H;
-
+	bool isAttackHard;
 	bool isHit;
 	
 	bool doDefense;
@@ -85,5 +91,7 @@ public:
 	p2Point<int> position;
 	unsigned int Health;
 	float speed;
-
+	long hadouken_timer;
+	long sp_timer;
+	int sp_check;
 };

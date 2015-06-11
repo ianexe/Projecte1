@@ -3,11 +3,14 @@
 #include "Globals.h"
 
 
+<<<<<<< HEAD
 //Scroll
 //Input
 //Select stage?
 //Que el joc torni a la intro quan mors!!!
 //Que et moris!!
+=======
+>>>>>>> origin/David
 class ModuleIntro : public Module
 {
 public:

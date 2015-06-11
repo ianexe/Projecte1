@@ -17,8 +17,12 @@
 #include "ModuleIntro.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
+<<<<<<< HEAD
 #include "ModuleMap.h"
 
+=======
+#include "ModuleParticles.h"
+>>>>>>> origin/David
 class Application
 {
 public:
@@ -35,8 +39,12 @@ public:
 	ModuleCollision* colision;
 	ModuleIntro* scene_intro;
 	ModuleUI* ui;
+<<<<<<< HEAD
 	ModuleMap* map;
 	
+=======
+	ModuleParticles* particles;
+>>>>>>> origin/David
 private:
 
 	p2List<Module*> list_modules;

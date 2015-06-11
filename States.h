@@ -28,9 +28,23 @@ enum p1_states
 	ST_PUNCH_FORWARD_JUMP,
 	ST_PUNCH_BACKWARD_JUMP,
 	ST_PUNCH_CROUCH,
-	ST_HIT,
+	ST_HADOUKEN,
+	ST_HIT_L,
+	ST_HIT_H,
 	ST_STUN,
 };
+
+
+/**
+*TODO LIST:
+	Estats de hit
+	Varis tipos de salt
+	Saltar i pegar (i crouch)
+	Hadoken
+	FUN
+	Colisions de veritat?
+	I si el peguen a l'aire
+**/
 
 /**
 *Inputs
@@ -41,6 +55,8 @@ enum p1_inputs
 	IN_LEFT_UP,
 	IN_RIGHT_DOWN,
 	IN_RIGHT_UP,
+	IN_RIGHT_AND_CROUCH,
+	IN_LEFT_AND_CROUCH,
 	IN_LEFT_AND_RIGHT,
 	IN_JUMP_DOWN,
 	IN_JUMP_UP,
@@ -51,12 +67,16 @@ enum p1_inputs
 	IN_H_PUNCH,	
 	IN_L_KICK,	
 	IN_H_KICK,	
-	IN_HIT,		
+	IN_HIT_L,		
+	IN_HIT_H,
+	IN_HADOUKEN,
+	IN_HADOUKEN_FINISH,
 	IN_JUMP_N_FINISH,
 	IN_FALLING_N_FINISH,
 	IN_CROUCH_FINISH,
 	IN_DEFENSE_FINISH,
 	IN_PUNCH_L_FINISH,
+	IN_PUNCH_CROUCH_FINISH,
 	IN_PUNCH_H_FINISH,
 	IN_KICK_L_FINISH,
 	IN_KICK_H_FINISH,
