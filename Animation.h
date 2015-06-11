@@ -6,7 +6,7 @@ class Animation
 public:
 	float speed;
 	p2DynArray<SDL_Rect> frames;
-
+	bool loop;
 private:
 	float current_frame;
 

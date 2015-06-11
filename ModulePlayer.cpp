@@ -640,7 +640,9 @@ update_status ModulePlayer::Update()
 				current_animation = &kick2;
 				break;
 			case ST_HADOUKEN:
-				current_animation = &kick2;
+				App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
+			
+				break;
 			}
 		}
 
