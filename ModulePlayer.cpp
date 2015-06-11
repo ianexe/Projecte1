@@ -178,7 +178,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 	}
 
 
-
+	if (App->particles->Hadouken.position.x)
 	
 	//Normal Attacks
 	if (isPunching_L)
@@ -265,6 +265,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				if (sp_check == 2)
 				{
 					state = ST_HADOUKEN;
+					App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
+
 				}
 				else
 				{
@@ -493,6 +495,13 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
+
+		case ST_HADOUKEN:
+			switch (last_input)
+			{
+
+			}
+			break;
 		}
 	}
 	return state;
@@ -640,7 +649,6 @@ update_status ModulePlayer::Update()
 				current_animation = &kick2;
 				break;
 			case ST_HADOUKEN:
-				App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
 			
 				break;
 			}
