@@ -86,6 +86,6 @@ public:
 	p2Point<int> position;
 	unsigned int Health;
 	float speed;
-	long hadouken_timer;
-	int hadouken_check;
+	int or_hadouken_pos;
+	int sp_check;
 };

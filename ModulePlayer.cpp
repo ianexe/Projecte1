@@ -177,9 +177,9 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			
 	}
 
-
-	if (App->particles->Hadouken.position.x)
-	
+//	if (isOnLeft)
+//		if 
+	//else
 	//Normal Attacks
 	if (isPunching_L)
 	{
@@ -258,7 +258,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_RIGHT_DOWN: state = ST_WALK_RIGHT;	break;
 			case IN_LEFT_DOWN: state = ST_WALK_LEFT;break;
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
-			case IN_CROUCH_DOWN: state = ST_CROUCHED; sp_check = 0; sp_timer = SDL_GetTicks(); isCrouching = true; break;
+			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
 				
 			case IN_L_PUNCH:
 			{
@@ -266,6 +266,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 					state = ST_HADOUKEN;
 					App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
+					or_hadouken_pos = App->particles->Hadouken.position.x;
 
 				}
 				else
