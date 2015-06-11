@@ -177,15 +177,11 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			
 	}
 
-<<<<<<< HEAD
+
 //	if (isOnLeft)
 //		if 
 	//else
-=======
 
-
-	
->>>>>>> parent of a32862b... Potatoe :potable_water:
 	//Normal Attacks
 	if (isPunching_L)
 	{
@@ -271,12 +267,10 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				if (sp_check == 2)
 				{
 					state = ST_HADOUKEN;
-<<<<<<< HEAD
 					App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
 					or_hadouken_pos = App->particles->Hadouken.position.x;
 
-=======
->>>>>>> parent of a32862b... Potatoe :potable_water:
+
 				}
 				else
 				{
