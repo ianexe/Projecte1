@@ -61,6 +61,7 @@ update_status ModuleParticles::Update()
 
 		if(p->Update() == false)
 		{
+			p->exists = false;
 			active.del(tmp);
 			delete p;
 		}
@@ -86,6 +87,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32
 	p->born = SDL_GetTicks() + delay;
 	p->position.x = x;
 	p->position.y = y;
+	p->exists = true;
 
 	active.add(p);
 }

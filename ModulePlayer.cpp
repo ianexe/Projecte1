@@ -266,7 +266,21 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				if (sp_check == 2)
 				{
 					state = ST_HADOUKEN;
-					App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
+					//Only 1 hadouken on screen
+					if (App->particles->Hadouken.exists == NULL)
+					{
+						if (App->player->isOnLeft == true)
+						{
+							App->particles->AddParticle(App->particles->Hadouken, position.x + 30, position.y - 80, 30);
+							
+						}
+						else
+						{
+							App->particles->Hadouken.speed.x *= (-1);
+							App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
+							
+						}
+					}
 					hadouken_timer = SDL_GetTicks();
 				}
 				else
@@ -502,7 +516,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_HADOUKEN:
 			switch (last_input)
 			{
-			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; break;
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; App->particles->Hadouken.speed.x = 3.5; break;
 
 			}
 			break;
@@ -517,6 +531,13 @@ update_status ModulePlayer::Update()
 	current_animation = &idle;
 	isAttackHard == false;
 	current_state = ST_UNKNOWN;
+
+
+	//Checks where player is facing
+	if (App->player->position.x < App->player2->position.x)
+		isOnLeft = true;
+	else
+		isOnLeft = false;
 
 	p1_states state = App->player->process_fsm(inputs);
 
@@ -656,6 +677,7 @@ update_status ModulePlayer::Update()
 
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
+					
 					inputs.Push(IN_HADOUKEN_FINISH);
 				}
 
@@ -693,11 +715,7 @@ update_status ModulePlayer::Update()
 		App->player->internal_input(inputs);
 		
 
-	//Checks where player is facing
-	if (App->player->position.x < App->player2->position.x)
-		isOnLeft = true;
-	else
-		isOnLeft = false;
+
 
 
 	//Timer special movements
@@ -715,11 +733,11 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	//if (App->player2->doDefense == false)
-		//App->player2->Health--;
-	if (isAttackHard)
+	if (App->player2->doDefense == false)
+		App->player2->Health--;
+	/*if (isAttackHard)
 		inputs.Push(IN_HIT_H);
 	else
-		inputs.Push(IN_HIT_L);
+		inputs.Push(IN_HIT_L);*/
 }
 

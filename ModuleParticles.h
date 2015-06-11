@@ -14,6 +14,7 @@ struct Particle
 	Uint32 born;
 	Uint32 life;
 	bool fx_played;
+	bool exists;
 
 	Particle();
 	Particle(const Particle& p);
