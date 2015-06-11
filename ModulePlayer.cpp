@@ -265,6 +265,46 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 	}
 
+	if (isCrouchKicking)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_KICK_CROUCH_FINISH);
+			isAttacking = isCrouchKicking = false;
+		}
+	}
+
+	if (isJumpKicking)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_KICK_JUMP_FINISH);
+			isAttacking = isJumpKicking = false;
+		}
+	}
+
+	if (isCrouchPunching)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_PUNCH_CROUCH_FINISH);
+			isAttacking = isCrouchPunching = false;
+		}
+	}
+
+	if (isJumpPunching)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_PUNCH_JUMP_FINISH);
+			isAttacking = isJumpPunching = false;
+		}
+	}
+
 	if (isHit)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
@@ -458,8 +498,86 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+			case IN_L_PUNCH:
+			{
+				/*
+				if (isOnLeft){
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isCrouchPunching = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_PUNCH_CROUCH;
+			}
+			break;
+
+			case IN_L_KICK:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isCrouchKicking = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_KICK_CROUCH;
+			}
+			break;
+
 			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
-			//case IN_L_PUNCH: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			
+			}
+		}
+		break;
+
+		case ST_PUNCH_CROUCH:
+		{
+			if (last_input == IN_CROUCH_UP)
+			{
+				isCrouching = false;
+			}
+			switch (last_input)
+			{
+			case IN_PUNCH_CROUCH_FINISH: 
+				/*c_punch1->to_delete = true;  state = ST_IDLE;*/ 
+				if (isCrouching)
+				{
+					state = ST_CROUCHED;
+				}
+				if (!isCrouching)
+				{
+					state = ST_IDLE;
+				}
+				break;
+			}
+		}
+		break;
+
+		case ST_KICK_CROUCH:
+		{
+			if (last_input == IN_CROUCH_UP)
+			{
+				isCrouching = false;
+			}
+			switch (last_input)
+			{
+			case IN_KICK_CROUCH_FINISH: 
+				/*c_punch1->to_delete = true;  state = ST_IDLE;*/ 
+				if (isCrouching)
+				{
+					state = ST_CROUCHED;
+				}
+				if (!isCrouching)
+				{
+					state = ST_IDLE;
+				}
+				break;
 			}
 		}
 		break;
@@ -601,6 +719,14 @@ update_status ModulePlayer::Update()
 
 			case ST_KICK_STANDING_H:
 				current_animation = &kick2;
+				break;
+
+			case ST_PUNCH_CROUCH:
+				current_animation = &crouchpunch;
+				break;
+
+			case ST_KICK_CROUCH:
+				current_animation = &crouchkick;
 				break;
 			}
 		}

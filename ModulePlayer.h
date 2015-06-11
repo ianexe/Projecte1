@@ -83,6 +83,11 @@ public:
 	bool isKicking_L;
 	bool isKicking_H;
 
+	bool isJumpPunching;
+	bool isCrouchPunching;
+	bool isJumpKicking;
+	bool isCrouchKicking;
+
 	bool isHit;
 	
 	bool doDefense;
