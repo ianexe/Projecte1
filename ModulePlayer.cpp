@@ -115,6 +115,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	Health = 144;
 	// Load SFC
+	hadouken_timer = 0;
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
@@ -176,11 +177,8 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		}
 			
 	}
+	
 
-
-//	if (isOnLeft)
-//		if 
-	//else
 
 	//Normal Attacks
 	if (isPunching_L)
@@ -268,9 +266,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 					state = ST_HADOUKEN;
 					App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
-					or_hadouken_pos = App->particles->Hadouken.position.x;
-
-
+					hadouken_timer = SDL_GetTicks();
 				}
 				else
 				{
@@ -495,10 +491,18 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_CROUCH_FINISH: break;//delete collider tornar a crouch po
+			case IN_PUNCH_CROUCH_FINISH:state = ST_IDLE; break;//delete collider tornar a crouch po
 			}
 		}
 		break;
+
+		case ST_HADOUKEN:
+			switch (last_input)
+			{
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; break;
+
+			}
+			break;
 		}
 	}
 	return state;
@@ -645,9 +649,13 @@ update_status ModulePlayer::Update()
 			case ST_KICK_STANDING_H:
 				current_animation = &kick2;
 				break;
-			case ST_HADOUKEN:
-				App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
-			
+			case ST_HADOUKEN:		
+
+				if (SDL_GetTicks() + hadouken_timer > SP_LIMIT)
+				{
+					inputs.Push(IN_HADOUKEN_FINISH);
+				}
+
 				break;
 			}
 		}
