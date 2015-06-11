@@ -331,13 +331,13 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					{
 						if (App->player->isOnLeft == true)
 						{
-							App->particles->AddParticle(App->particles->Hadouken, position.x + 30, position.y - 80, 30);
+							App->particles->AddParticle(App->particles->Hadouken, position.x , position.y - 80, 200);
 							
 						}
 						else
 						{
 							App->particles->Hadouken.speed.x *= (-1);
-							App->particles->AddParticle(App->particles->Hadouken, position.x - 30, position.y - 80, 30);
+							App->particles->AddParticle(App->particles->Hadouken, position.x, position.y - 80, 30);
 							
 						}
 					}
@@ -749,7 +749,7 @@ update_status ModulePlayer::Update()
 				current_animation = &kick2;
 				break;
 			case ST_HADOUKEN:		
-
+				current_animation = &hadoukenmove;
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
 					
