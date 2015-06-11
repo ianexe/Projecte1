@@ -49,21 +49,13 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	//jump.frames.PushBack({ 100, 823, 58, 109 });
 	//jump.frames.PushBack({ 176, 805, 50, 127 });
 	jump.frames.PushBack({ 239, 798, 66, 134 });
-/*<<<<<<< HEAD
-	jump.speed = 0.23f;
 
-	// jump down animation (arcade sprite sheet)
-	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
-	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
-	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
 
-	jumpfalling.speed = 0.23f;
-=======*/
 	jump.frames.PushBack({ 327, 813, 54, 119 });
 	jump.frames.PushBack({ 397, 810, 52, 122 });
 	jump.frames.PushBack({ 464, 819, 60, 113 });
 	jump.speed = 0.23f;
-//>>>>>>> origin/Ian
+
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
@@ -109,6 +101,61 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	kick2.frames.PushBack({ 482, 407, 98, 81 });
 	kick2.speed = 0.2f;
 	
+	// hadouken move
+	hadoukenmove.frames.PushBack({ 34, 1545, 100, 90 });
+	hadoukenmove.frames.PushBack({ 135, 1551, 102, 84 });
+	hadoukenmove.frames.PushBack({ 244, 1552, 104, 83 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.speed = 0.2f;
+
+	// crouch punch
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.speed = 0.2f;
+
+	// crouch kick
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.speed = 0.2f;
+
+	// jump punch
+	jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
+	jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	jumppunch.speed = 0.2f;
+
+	// jump kick
+	jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
+	jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	jumpkick.speed = 0.2f;
+
+	//Timer
+	
+
+	//Bools 
+	isJumping = false;
+	isOnLeft = false;
+	 isJumping= false;
+	 isFalling= false;
+	 isPunching_L= false;
+	 isPunching_H= false;
+	 isKicking_L= false;
+	 isKicking_H= false;
+	 doDefense = false;
+	 isAttacking = false;
+
 
 	speed = 3;
 }
