@@ -38,6 +38,10 @@ public:
 	Animation backward;
 	Animation jump;
 	Animation jumpfalling;
+	Animation jumpforward;
+	Animation jumpforwardfalling;
+	Animation jumpbackward;
+	Animation jumpbackwardfalling;
 	Animation block;
 	Animation crouch;
 	Animation crouchidle;

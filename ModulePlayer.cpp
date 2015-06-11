@@ -45,31 +45,34 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	backward.speed = 0.1f;
 
 	// jump animation (arcade sprite sheet)
-	//jump.frames.PushBack({ 16, 847, 56, 85 });
-	//jump.frames.PushBack({ 100, 823, 58, 109 });
-	//jump.frames.PushBack({ 176, 805, 50, 127 });
 	jump.frames.PushBack({ 100, 823, 60, 104 });
 	jump.frames.PushBack({ 176, 827, 54, 100 });
 	jump.frames.PushBack({ 251, 828, 54, 99 });
 	jump.frames.PushBack({ 327, 829, 62, 98 });
-	jump.frames.PushBack({ 327, 829, 62, 98 });
-	jump.frames.PushBack({ 327, 829, 62, 98 });
-	jump.frames.PushBack({ 327, 829, 62, 98 });
-	jump.frames.PushBack({ 327, 829, 62, 98 });
+	jump.loop = false;
 	jump.speed = 0.23f;
 
-	// jump down animation (arcade sprite sheet)
-	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
-	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
+	// jump fall animation (arcade sprite sheet)
 	jumpfalling.frames.PushBack({ 397, 826, 48, 101 });
 	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
-	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
-	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
-	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
-	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
-	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
-	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.loop = false;
 	jumpfalling.speed = 0.23f;
+
+	// jump forward animation (arcade sprite sheet)
+	jumpforward.frames.PushBack({ 581, 823, 68, 103 });
+	jumpforward.frames.PushBack({ 668, 828, 62, 98 });
+	jumpforward.frames.PushBack({ 744, 826, 120, 100 });
+	jumpforward.frames.PushBack({ 857, 806, 60, 120 });
+	jumpforward.loop = false;
+	jumpforward.speed = 0.23f;
+
+	// jump forward fall animation (arcade sprite sheet)
+
+	jumpforwardfalling.frames.PushBack({ 917, 823, 132, 103 });
+	jumpforwardfalling.frames.PushBack({ 1064, 821, 74, 105 });
+	jumpforwardfalling.frames.PushBack({ 1149, 817, 68, 109 });
+	jumpforwardfalling.loop = false;
+	jumpforwardfalling.speed = 0.23f;
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
@@ -120,11 +123,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	hadoukenmove.frames.PushBack({ 135, 1551, 102, 84 });
 	hadoukenmove.frames.PushBack({ 244, 1552, 104, 83 });
 	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
-	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
-	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
-	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
-	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
-	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.loop = false;
 	hadoukenmove.speed = 0.2f;
 
 	// crouch punch
@@ -142,16 +141,18 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	crouchkick.speed = 0.2f;
 
 	// jump punch
-	//jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
-	//jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
+	jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
+	jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
 	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
-	jumppunch.speed = 0.2f;
+	jumppunch.loop = false;
+	jumppunch.speed = 0.23f;
 
 	// jump kick
-	//jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
-	//jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
+	jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
+	jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
 	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
-	jumpkick.speed = 0.2f;
+	jumpkick.loop = false;
+	jumpkick.speed = 0.23f;
 
 	//Timer
 	
@@ -222,6 +223,9 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 		{
 			position.y = 216;
 			App->audio->PlayFx(fallingFX);
+			jump.setToZero();
+			jumpforward.setToZero();
+			
 			inputs.Push(IN_JUMP_N_FINISH);
 		}
 			
@@ -485,7 +489,12 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 			break;
 
-			case IN_JUMP_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
+			case IN_JUMP_N_FINISH: 
+				state = ST_IDLE; 
+				isFalling = isJumping = false;
+				jumpfalling.setToZero();
+				jumpforwardfalling.setToZero();
+				break;
 			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
 			}
@@ -765,6 +774,7 @@ update_status ModulePlayer::Update()
 				position.y += 5.0f;
 				if (!isAttacking)
 				{
+
 					current_animation = &jumpfalling;
 					
 				}
