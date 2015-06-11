@@ -48,14 +48,27 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	//jump.frames.PushBack({ 16, 847, 56, 85 });
 	//jump.frames.PushBack({ 100, 823, 58, 109 });
 	//jump.frames.PushBack({ 176, 805, 50, 127 });
-	jump.frames.PushBack({ 239, 798, 66, 134 });
+	jump.frames.PushBack({ 100, 823, 60, 104 });
+	jump.frames.PushBack({ 176, 827, 54, 100 });
+	jump.frames.PushBack({ 251, 828, 54, 99 });
+	jump.frames.PushBack({ 327, 829, 62, 98 });
+	jump.frames.PushBack({ 327, 829, 62, 98 });
+	jump.frames.PushBack({ 327, 829, 62, 98 });
+	jump.frames.PushBack({ 327, 829, 62, 98 });
+	jump.frames.PushBack({ 327, 829, 62, 98 });
 	jump.speed = 0.23f;
 
 	// jump down animation (arcade sprite sheet)
 	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
 	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
-	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
-
+	jumpfalling.frames.PushBack({ 397, 826, 48, 101 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
 	jumpfalling.speed = 0.23f;
 
 	// block
@@ -129,16 +142,14 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	crouchkick.speed = 0.2f;
 
 	// jump punch
-	jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
-	jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
-	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+	//jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
+	//jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
 	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
 	jumppunch.speed = 0.2f;
 
 	// jump kick
-	jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
-	jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
-	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+	//jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
+	//jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
 	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
 	jumpkick.speed = 0.2f;
 
@@ -202,7 +213,7 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (isJumping)
 	{
-		if (position.y < 135 && !isFalling)
+		if (position.y < 115 && !isFalling)
 		{
 			isFalling = true;
 		}
@@ -442,6 +453,38 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			//case IN_JUMP_UP: isFalling = true; break;
+			case IN_L_PUNCH:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isJumpPunching = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_PUNCH_JUMP;
+			}
+			break;
+
+			case IN_L_KICK:
+			{
+				/*
+				if (isOnLeft){
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else{
+				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				*/
+				isJumpKicking = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_KICK_JUMP;
+			}
+			break;
+
 			case IN_JUMP_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
 			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
@@ -581,6 +624,40 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 		}
 		break;
+
+		case ST_PUNCH_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_N_FINISH:
+				isFalling = isJumping = false;
+				state = ST_IDLE;
+				break;
+			//case IN_PUNCH_JUMP_FINISH:
+				/*c_punch1->to_delete = true;  state = ST_IDLE;*/
+				//state = ST_JUMPING_NEUTRAL;
+				//break;
+			}
+		}
+		break;
+
+		case ST_KICK_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_N_FINISH:
+				isFalling = isJumping = false;
+				state = ST_IDLE;
+				break;
+				
+			//case IN_KICK_JUMP_FINISH:
+				/*c_punch1->to_delete = true;  state = ST_IDLE;*/
+				//state = ST_JUMPING_NEUTRAL;
+				//break;
+				
+			}
+		}
+		break;
 		}
 	}
 	return state;
@@ -675,23 +752,22 @@ update_status ModulePlayer::Update()
 			if (!isFalling)
 			{
 				current_animation = &jump;
-				position.y -= 5;
+				//current_animation = &idle;
+				position.y -= 5.0f ;
 				/*
-				
-				
-				
 				collider->rect.h = 90;
 				collider->SetPos(position.x - 30, position.y + 90);
-				
-				
-				
+
 				*/
-				
 			}
 			else
 			{
-				position.y += 5;
-				current_animation = &jumpfalling;
+				position.y += 5.0f;
+				if (!isAttacking)
+				{
+					current_animation = &jumpfalling;
+					
+				}
 			}
 			collider->rect.h = 90;
 				break;
@@ -727,6 +803,40 @@ update_status ModulePlayer::Update()
 
 			case ST_KICK_CROUCH:
 				current_animation = &crouchkick;
+				break;
+
+			case ST_PUNCH_JUMP:
+				if (!isFalling)
+				{
+					position.y -= 5.0f;
+					/*
+					collider->rect.h = 90;
+					collider->SetPos(position.x - 30, position.y + 90);
+					*/
+				}
+				else
+				{
+					position.y += 5.0f;
+				}
+				collider->rect.h = 90;
+				current_animation = &jumppunch;
+				break;
+
+			case ST_KICK_JUMP:
+				if (!isFalling)
+				{
+					position.y -= 5.0f;
+					/*
+					collider->rect.h = 90;
+					collider->SetPos(position.x - 30, position.y + 90);
+					*/
+				}
+				else
+				{
+					position.y += 5.0f;
+				}
+				collider->rect.h = 90;
+				current_animation = &jumpkick;
 				break;
 			}
 		}
