@@ -483,7 +483,23 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			//case IN_JUMP_UP: isFalling = true; break;
-			case IN_JUMP_N_FINISH: state = ST_IDLE; isFalling = isJumping = false; break;
+			case IN_JUMP_N_FINISH: 
+				switch (last_input)
+				{
+					isFalling = isJumping = false;
+				case IN_LEFT_DOWN:
+					if (isOnLeft)
+						state = ST_WALK_LEFT;
+					else
+						state = ST_WALK_RIGHT;
+					break;
+
+				default:
+					state = ST_IDLE;  
+					break;
+				}
+				
+				
 			//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
 			}
@@ -528,7 +544,9 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 			case IN_HIT_L: c_kick2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
 			case IN_HIT_H: c_kick2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
-			case IN_KICK_H_FINISH: c_kick2->to_delete = true; state = ST_IDLE;  break;
+			case IN_KICK_H_FINISH: 
+				
+				c_kick2->to_delete = true; state = ST_IDLE;  break;
 			}
 		}
 		break;
