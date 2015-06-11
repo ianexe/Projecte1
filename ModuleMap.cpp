@@ -71,7 +71,7 @@ update_status ModuleMap::Update()
 		if ((App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_UP) || (countdown.getFrame() >= (countdown.frames.Count() - countdown.speed)))
 		{
 			
-			App->fade->FadeToBlack(App->map, App->scene_ken, FADE_TIME);
+			//App->fade->FadeToBlack(App->map, App->scene_ken, FADE_TIME);
 		}
 		
 	}

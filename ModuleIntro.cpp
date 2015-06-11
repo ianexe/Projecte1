@@ -89,7 +89,7 @@ update_status ModuleIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		App->audio->PlayFx(music_coin);
-		App->fade->FadeToBlack(App->scene_intro, App->map, FADE_TIME);
+//		App->fade->FadeToBlack(App->scene_intro, App->map, FADE_TIME);
 	}
 
 	scroll = current_animation->GetCurrentFrame();
