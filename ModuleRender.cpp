@@ -51,7 +51,7 @@ update_status ModuleRender::Update()
 	char title[250];
 
 	//sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
-	sprintf_s(title, "Player1 Health: %i Player2 Health: %i", (App->player->Health), (App->player2->Health));
+	sprintf_s(title, "Position.x HADO: %i Player2 Health: %i", App->particles->Hadouken.position.x, (App->player2->Health));
 //	sprintf_s(title, "Timer %i", (App->player->sp_timer));
 
 

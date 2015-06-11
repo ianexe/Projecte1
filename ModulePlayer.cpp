@@ -750,10 +750,11 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_HADOUKEN:		
 				current_animation = &hadoukenmove;
+				c_hadouken->SetPos(-App->particles->Hadouken.position.x, App->particles->Hadouken.position.y);
+
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
 					
-					c_hadouken->SetPos(App->particles->Hadouken.position.x, App->particles->Hadouken.position.y);
 					inputs.Push(IN_HADOUKEN_FINISH);
 				}
 
