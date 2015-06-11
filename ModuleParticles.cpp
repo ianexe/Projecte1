@@ -31,6 +31,8 @@ bool ModuleParticles::Start()
 	Hadouken.anim.frames.PushBack({489, 1558, 49 , 39});
 	Hadouken.anim.speed = 0.5f;
 	Hadouken.speed.x = 3.5;
+	col_particle = App->colision->AddCollider({ Hadouken.position.x, Hadouken.position.y, 20, 20 }, COLLIDER_HADOUKEN_1, this);
+
 
 	// TODO 1: Crear una nova particula "laser":
 	// Fer servir un dels lasers blaus de "rtype/particles.png"
@@ -68,6 +70,7 @@ update_status ModuleParticles::Update()
 		else if(SDL_GetTicks() >= p->born)
 		{
 			App->renderer->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
+			col_particle->SetPos(p->position.x, p->position.y);
 			if(p->fx_played == false)
 			{
 				p->fx_played = true;

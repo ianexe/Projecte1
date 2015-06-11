@@ -15,6 +15,7 @@ struct Particle
 	Uint32 life;
 	bool fx_played;
 	bool exists;
+	
 
 	Particle();
 	Particle(const Particle& p);
@@ -37,6 +38,7 @@ private:
 
 	SDL_Texture* graphics;
 	p2List<Particle*> active;
+	Collider* col_particle;
 
 public:
 	//Particles
