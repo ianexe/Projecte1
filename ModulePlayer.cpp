@@ -390,8 +390,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_IDLE:
 
 		{
-
-
 					/*
 					if ((position.y > 135) && (!isFalling))*/
 			switch (last_input)
@@ -425,10 +423,11 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			{
 				if (sp_check == 2)
 				{
-					state = ST_HADOUKEN;
+					
 					//Only 1 hadouken on screen
-					if (App->particles->Hadouken.exists == NULL)
+					if (App->particles->current_exists == NULL)
 					{
+						state = ST_HADOUKEN;
 						if (App->player->isOnLeft == true)
 						{
 							App->particles->AddParticle(App->particles->Hadouken, position.x , position.y - 80, 150);
@@ -441,8 +440,9 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 							App->particles->AddParticle(App->particles->Hadouken, position.x, position.y - 80, 30);
 							
 						}
+						hadouken_timer = SDL_GetTicks();
 					}
-					hadouken_timer = SDL_GetTicks();
+					
 				}
 				else
 				{
@@ -937,7 +937,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		case ST_HADOUKEN:
 			switch (last_input)
 			{
-			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; c_hadouken->to_delete = true; App->particles->Hadouken.speed.x = 3.5; break;
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; c_hadouken->to_delete = true; App->particles->current_exists = false;  App->particles->Hadouken.speed.x = 3.5; break;
 
 			}
 			break;
