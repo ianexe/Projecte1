@@ -820,7 +820,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				if (isOnLeft){
 					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 48, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
+				else
+				{
 					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 48, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
 				
@@ -828,7 +829,24 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_CROUCH;
 			}
-				break;
+			break;
+
+			case IN_L_KICK:
+			{
+				
+				if (isOnLeft){
+					c_kick = App->colision->AddCollider({ position.x + 10, position.y - 14, 60, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				else
+				{
+					c_kick = App->colision->AddCollider({ position.x - 70, position.y - 14, 60, 10 }, COLLIDER_PUNCH_1, this);
+				}
+				isCrouchKicking = true;
+				App->audio->PlayFx(normalFX);
+				state = ST_KICK_CROUCH;
+			}
+			break;
+
 
 			case IN_RIGHT_AND_CROUCH:
 			{
@@ -885,7 +903,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_KICK_CROUCH_FINISH: 
-				/*c_punch1->to_delete = true;  state = ST_IDLE;*/ 
+				c_kick->to_delete = true;
 				if (isCrouching)
 				{
 					state = ST_CROUCHED;
