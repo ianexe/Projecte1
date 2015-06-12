@@ -45,18 +45,49 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	backward.speed = 0.1f;
 
 	// jump animation (arcade sprite sheet)
-	//jump.frames.PushBack({ 16, 847, 56, 85 });
-	//jump.frames.PushBack({ 100, 823, 58, 109 });
-	//jump.frames.PushBack({ 176, 805, 50, 127 });
-	jump.frames.PushBack({ 239, 798, 66, 134 });
+	jump.frames.PushBack({ 100, 823, 60, 104 });
+	jump.frames.PushBack({ 176, 827, 54, 100 });
+	jump.frames.PushBack({ 251, 828, 54, 99 });
+	jump.frames.PushBack({ 327, 829, 62, 98 });
+	jump.loop = false;
 	jump.speed = 0.23f;
 
 	// jump down animation (arcade sprite sheet)
-	//jumpfalling.frames.PushBack({ 327, 813, 54, 119 });
-	//jumpfalling.frames.PushBack({ 397, 810, 52, 122 });
-	jumpfalling.frames.PushBack({ 464, 819, 60, 113 });
-
+	jumpfalling.frames.PushBack({ 397, 826, 48, 101 });
+	jumpfalling.frames.PushBack({ 464, 818, 60, 109 });
+	jumpfalling.loop = false;
 	jumpfalling.speed = 0.23f;
+
+	// jump forward animation (arcade sprite sheet)
+	jumpforward.frames.PushBack({ 581, 823, 68, 103 });
+	jumpforward.frames.PushBack({ 668, 828, 62, 98 });
+	jumpforward.frames.PushBack({ 744, 826, 120, 100 });
+	jumpforward.frames.PushBack({ 857, 806, 60, 120 });
+	jumpforward.loop = false;
+	jumpforward.speed = 0.23f;
+
+	// jump forward fall animation (arcade sprite sheet)
+
+	jumpforwardfalling.frames.PushBack({ 917, 823, 132, 103 });
+	jumpforwardfalling.frames.PushBack({ 1064, 821, 74, 105 });
+	jumpforwardfalling.frames.PushBack({ 1149, 817, 68, 109 });
+	jumpforwardfalling.loop = false;
+	jumpforwardfalling.speed = 0.23f;
+
+	// jump backward animation (arcade sprite sheet)
+	jumpbackward.frames.PushBack({ 1149, 817, 68, 109 });
+	jumpbackward.frames.PushBack({ 1064, 821, 74, 105 });
+	jumpbackward.frames.PushBack({ 917, 823, 132, 103 });
+	jumpbackward.frames.PushBack({ 857, 806, 60, 120 });
+	jumpbackward.loop = false;
+	jumpbackward.speed = 0.23f;
+
+	// jump backward fall animation (arcade sprite sheet)
+	jumpbackwardfalling.frames.PushBack({ 744, 826, 120, 100 });
+	jumpbackwardfalling.frames.PushBack({ 668, 828, 62, 98 });
+	jumpbackwardfalling.frames.PushBack({ 581, 823, 68, 103 });
+	jumpbackwardfalling.loop = false;
+	jumpbackwardfalling.speed = 0.23f;
 
 	// block
 	block.frames.PushBack({ 442, 2335, 64, 92 });
@@ -101,19 +132,65 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	kick2.frames.PushBack({ 351, 411, 108, 77 });
 	kick2.frames.PushBack({ 482, 407, 98, 81 });
 	kick2.speed = 0.2f;
+
+	// hadouken move
+	hadoukenmove.frames.PushBack({ 34, 1545, 100, 90 });
+	hadoukenmove.frames.PushBack({ 135, 1551, 102, 84 });
+	hadoukenmove.frames.PushBack({ 244, 1552, 104, 83 });
+	hadoukenmove.frames.PushBack({ 350, 1558, 113, 77 });
+	hadoukenmove.loop = false;
+
+	hadoukenmove.speed = 0.2f;
+
+	// crouch punch
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.frames.PushBack({ 93, 1344, 120, 61 });
+	crouchpunch.frames.PushBack({ 24, 1344, 72, 61 });
+	crouchpunch.speed = 0.2f;
+
+	// crouch kick
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.frames.PushBack({ 960, 1342, 142, 64 });
+	crouchkick.frames.PushBack({ 890, 1342, 86, 64 });
+	crouchkick.speed = 0.2f;
+
+	// jump punch
+	jumppunch.frames.PushBack({ 26, 1099, 60, 76 });
+	jumppunch.frames.PushBack({ 100, 1102, 62, 73 });
+	jumppunch.frames.PushBack({ 182, 1108, 80, 67 });
+
+	jumppunch.loop = false;
+	jumppunch.speed = 0.23f;
+
+
+	// jump kick
+	jumpkick.frames.PushBack({ 310, 1099, 66, 76 });
+	jumpkick.frames.PushBack({ 392, 1103, 78, 72 });
+	jumpkick.frames.PushBack({ 456, 1104, 132, 71 });
+
+	jumpkick.loop = false;
+	jumpkick.speed = 0.23f;
 	
+	//Timer
+
+
+
 	//Bools 
 	isJumping = false;
 	isOnLeft = false;
 	isJumping = false;
+	isJumpingB = false;
+	isJumpingF = false;
 	isFalling = false;
+	isGoingRight = false;
+	isGoingLeft = false;
 	isPunching_L = false;
 	isPunching_H = false;
 	isKicking_L = false;
 	isKicking_H = false;
 	doDefense = false;
 	isAttacking = false;
-	
+
 	speed = 3;
 }
 
@@ -126,10 +203,33 @@ bool ModulePlayer2::Start()
 	LOG("Loading player");
 	Health = 144;
 	// Load SFC
+	hadouken_timer = 0;
+	sp_timer = 0;
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
+	hadoukenFX = App->audio->LoadFx("hadouken.wav");
+
 	graphics = App->textures->Load("ryu4.png"); // arcade version
+
+	//Declare bools
+	isJumping = false;
+	isOnLeft = false;
+	isJumping = false;
+	isFalling = false;
+	isPunching_L = false;
+	isPunching_H = false;
+	isKicking_L = false;
+	isKicking_H = false;
+	doDefense = false;
+	isAttacking = false;
+	isPunching_Crouch = false;
+
+	//Init pos
+	position.x = 380;
+	position.y = 216;
+
+	//Colliders
 	collider = App->colision->AddCollider({ position.x, position.y, 60, 90 }, COLLIDER_NEUTRAL_2);
 	c_defense2 = App->colision->AddCollider({ position.x + 5, position.y + 10, 60, 40 }, COLLIDER_NONE);
 
@@ -153,21 +253,27 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 {
 	if (isJumping)
 	{
-		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		if (position.y < 115 && !isFalling)
 		{
-			if (position.y < 135 && !isFalling)
-			{
-				isFalling = true;
-			}
-
-			if (position.y >= 216 && isFalling)
-			{
-				position.y = 216;
-				App->audio->PlayFx(fallingFX);
-				inputs.Push(IN_JUMP_N_FINISH);
-			}
-
+			isFalling = true;
 		}
+
+		if (position.y >= 216 && isFalling)
+		{
+			position.y = 216;
+			App->audio->PlayFx(fallingFX);
+			jump.setToZero();
+			jumpforward.setToZero();
+			jumpbackward.setToZero();
+			isJumping = false;
+			isJumpingF = false;
+			isJumpingB = false;
+			isGoingLeft = false;
+			isGoingRight = false;
+
+			inputs.Push(IN_JUMP_N_FINISH);
+		}
+
 	}
 
 	/*if (isCrouching)
@@ -220,6 +326,50 @@ void ModulePlayer2::internal_input(p2Qeue<p1_inputs>& inputs)
 			isAttacking = isKicking_H = false;
 		}
 	}
+
+	if (isCrouchKicking)
+
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+
+			inputs.Push(IN_KICK_CROUCH_FINISH);
+			isAttacking = isCrouchKicking = false;
+		}
+	}
+
+	if (isJumpKicking)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_KICK_JUMP_FINISH);
+			isAttacking = isJumpKicking = false;
+		}
+	}
+
+	if (isCrouchPunching)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_PUNCH_CROUCH_FINISH);
+			isAttacking = isCrouchPunching = false;
+		}
+	}
+
+	if (isJumpPunching)
+	{
+		isAttacking = true;
+		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
+		{
+			inputs.Push(IN_PUNCH_JUMP_FINISH);
+			isAttacking = isJumpPunching = false;
+
+		}
+	}
+
 	if (isHit)
 	{
 		if (current_animation->getFrame() >= current_animation->frames.Count() - current_animation->speed)
