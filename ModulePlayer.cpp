@@ -208,12 +208,13 @@ bool ModulePlayer::Start()
 	// Load SFC
 	hadouken_timer = 0;
 	sp_timer = 0;
+
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
 	hadoukenFX = App->audio->LoadFx("hadouken.wav");
 
-	graphics = App->textures->Load("ryu4.png"); // arcade version
+	graphics = App->textures->Load("ryu5_enhanced.png"); // arcade version
 
 	//Declare bools
 	isJumping = false;
