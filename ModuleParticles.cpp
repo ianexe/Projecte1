@@ -28,13 +28,13 @@ bool ModuleParticles::Start()
 
 
 	//Awesome hadouken
-	Hadouken.anim.frames.PushBack({489, 1558, 49 , 39});
+	Hadouken.anim.frames.PushBack({760, 1561, 49 , 35});
 	Hadouken.anim.speed = 0.5f;
 	Hadouken.speed.x = 3.5;
 
 	Hadouken_L.anim.frames.PushBack({ 489, 1558, 49, 39 });
-	Hadouken.anim.speed = 0.5f;
-	Hadouken.speed.x = -3.5;
+	Hadouken_L.anim.speed = 0.5f;
+	Hadouken_L.speed.x = 3.5;
 
 	// TODO 1: Crear una nova particula "laser":
 	// Fer servir un dels lasers blaus de "rtype/particles.png"
