@@ -177,8 +177,8 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	isJumpingB = false;
 	isJumpingF = false;
 	isFalling= false;
-	isFallingB = false;
-	isFallingF = false;
+	isGoingRight = false;
+	isGoingLeft = false;
 	isPunching_L= false;
 	isPunching_H= false;
 	isKicking_L= false;
@@ -246,6 +246,8 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			isJumping = false;
 			isJumpingF = false;
 			isJumpingB = false;
+			isGoingLeft = false;
+			isGoingRight = false;
 			
 			inputs.Push(IN_JUMP_N_FINISH);
 		}
@@ -475,12 +477,14 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				if (position.x < App->player2->position.x)
 				{
 					state = ST_JUMP_FORWARD;
+					isGoingRight = true;
 					isJumpingF = true;
 				}
 					
 				else if (position.x > App->player2->position.x)
 				{
 					state = ST_JUMP_BACKWARD;
+					isGoingRight = true;
 					isJumpingB = true;
 				}
 				
@@ -508,6 +512,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				if (position.x < App->player2->position.x)
 				{
 					state = ST_JUMP_BACKWARD;
+					isGoingLeft = true;
 					isJumpingB = true;
 					
 				}
@@ -515,6 +520,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				else if (position.x > App->player2->position.x)
 				{
 					state = ST_JUMP_FORWARD;
+					isGoingLeft = true;
 					isJumpingF = true;
 				}
 			}
@@ -612,7 +618,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_JUMP_N_FINISH:
 				state = ST_IDLE;
-				isFalling = isFallingF = isJumping = isJumpingF = false;
+				isFalling = isJumping = isJumpingF = false;
 				jumpforwardfalling.setToZero();
 				break;
 				//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
@@ -660,7 +666,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_JUMP_N_FINISH:
 				state = ST_IDLE;
-				isFalling = isFallingB = isJumping = isJumpingB = false;
+				isFalling = isJumping = isJumpingB = false;
 				jumpbackwardfalling.setToZero();
 				break;
 				//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
@@ -974,7 +980,7 @@ update_status ModulePlayer::Update()
 				}
 			}
 
-			if (isOnLeft)
+			if (isGoingRight)
 			{
 				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 				{
@@ -982,7 +988,7 @@ update_status ModulePlayer::Update()
 				}
 			}
 
-			else
+			if (isGoingLeft)
 			{
 				if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 				{
@@ -1016,7 +1022,7 @@ update_status ModulePlayer::Update()
 				}
 			}
 
-			if (isOnLeft == false)
+			if (isGoingRight)
 			{
 				if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 				{
@@ -1024,7 +1030,7 @@ update_status ModulePlayer::Update()
 				}
 			}
 
-			else
+			if (isGoingLeft)
 			{
 				if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 				{
@@ -1084,7 +1090,7 @@ update_status ModulePlayer::Update()
 
 				if (isJumpingF)
 				{
-					if (isOnLeft)
+					if (isGoingRight)
 					{
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
@@ -1092,7 +1098,7 @@ update_status ModulePlayer::Update()
 						}
 					}
 
-					if (isOnLeft == false)
+					if (isGoingLeft)
 					{
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
@@ -1103,7 +1109,7 @@ update_status ModulePlayer::Update()
 
 				if (isJumpingB)
 				{
-					if (isOnLeft == false)
+					if (isGoingRight)
 					{
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
@@ -1111,7 +1117,7 @@ update_status ModulePlayer::Update()
 						}
 					}
 
-					if (isOnLeft)
+					if (isGoingLeft)
 					{
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
@@ -1140,7 +1146,7 @@ update_status ModulePlayer::Update()
 
 				if (isJumpingF)
 				{
-					if (isOnLeft)
+					if (isGoingRight)
 					{
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
@@ -1148,7 +1154,7 @@ update_status ModulePlayer::Update()
 						}
 					}
 
-					else
+					if (isGoingLeft)
 					{
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
@@ -1159,7 +1165,7 @@ update_status ModulePlayer::Update()
 
 				else if (isJumpingB)
 				{
-					if (isOnLeft == false)
+					if (isGoingRight)
 					{
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
@@ -1167,7 +1173,7 @@ update_status ModulePlayer::Update()
 						}
 					}
 
-					else
+					if (isGoingLeft)
 					{
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
