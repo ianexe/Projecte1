@@ -211,6 +211,7 @@ bool ModulePlayer::Start()
 	normalFX = App->audio->LoadFx("normal.wav");
 	strongFX = App->audio->LoadFx("strong.wav");
 	fallingFX = App->audio->LoadFx("falling.wav");
+	hadoukenFX = App->audio->LoadFx("hadouken.wav");
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
 
@@ -426,6 +427,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 					//Only 1 hadouken on screen
 					if (App->particles->current_exists == NULL)
 					{
+						App->audio->PlayFx(hadoukenFX);
 						state = ST_HADOUKEN;
 						if (App->player->isOnLeft == true)
 						{
@@ -964,7 +966,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 
-			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; c_hadouken->to_delete = true; App->particles->current_exists = false; break;
+			case IN_HADOUKEN_FINISH: hadouken_timer = 0; state = ST_IDLE; c_hadouken->to_delete = true; App->particles->current_exists = false; hadoukenmove.setToZero(); break;
 
 			}
 			break;
