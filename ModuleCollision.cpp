@@ -99,6 +99,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 
 
 	matrix[COLLIDER_HADOUKEN_1][COLLIDER_NEUTRAL_2] = true;
+
+	matrix[COLLIDER_HADOUKEN_2][COLLIDER_NEUTRAL_1] = true;
 }
 
 // Destructor
@@ -209,7 +211,10 @@ void ModuleCollision::DrawDebug(Collider* col)
 		break;
 		case COLLIDER_HADOUKEN_1:
 			App->renderer->DrawQuad(col->rect, 255,120 , 255, alpha);
-			break;
+		break;
+		case COLLIDER_HADOUKEN_2:
+			App->renderer->DrawQuad(col->rect, 255, 120, 255, alpha);
+		break;
 	}
 	
 }

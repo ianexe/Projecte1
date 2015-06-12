@@ -171,9 +171,6 @@ ModulePlayer2::ModulePlayer2(Application* app, bool start_enabled) : Module(app,
 	jumpkick.loop = false;
 	jumpkick.speed = 0.23f;
 	
-	//Timer
-
-
 
 	//Bools 
 	isJumping = false;
@@ -408,7 +405,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 						{
 							App->audio->PlayFx(hadoukenFX);
 							state = ST_HADOUKEN;
-							if (App->player->isOnLeft == true)
+							if (App->player->isOnLeft == false)
 							{
 								App->particles->AddParticle(App->particles->Hadouken_L, position.x, position.y - 80, 150);
 								or_pos_hadouken = position.x;
@@ -512,14 +509,14 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_JUMP_DOWN:
 				{
 					isJumping = true;
-					if (position.x < App->player2->position.x)
+					if (position.x < App->player->position.x)
 					{
 						state = ST_JUMP_FORWARD;
 						isGoingRight = true;
 						isJumpingF = true;
 					}
 
-					else if (position.x > App->player2->position.x)
+					else if (position.x > App->player->position.x)
 					{
 						state = ST_JUMP_BACKWARD;
 						isGoingRight = true;
@@ -543,7 +540,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 				case IN_JUMP_DOWN:
 				{
 					isJumping = true;
-					if (position.x < App->player2->position.x)
+					if (position.x < App->player->position.x)
 					{
 						state = ST_JUMP_BACKWARD;
 						isGoingLeft = true;
@@ -551,7 +548,7 @@ p1_states ModulePlayer2::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 					}
 
-					else if (position.x > App->player2->position.x)
+					else if (position.x > App->player->position.x)
 					{
 						state = ST_JUMP_FORWARD;
 						isGoingLeft = true;
