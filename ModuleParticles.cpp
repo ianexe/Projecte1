@@ -74,7 +74,7 @@ update_status ModuleParticles::Update()
 				App->audio->PlayFx(p->fx);
 			}
 		}
-
+		curret_position = p->position;
 		tmp = tmp_next;
 	}
 

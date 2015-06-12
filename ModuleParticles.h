@@ -26,7 +26,7 @@ class ModuleParticles : public Module
 public:
 	ModuleParticles(Application* app, bool start_enabled = true);
 	~ModuleParticles();
-
+	p2Point<int> curret_position;
 
 
 	bool Start();

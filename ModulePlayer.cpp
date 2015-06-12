@@ -1213,7 +1213,7 @@ update_status ModulePlayer::Update()
 
 			case ST_HADOUKEN:		
 				current_animation = &hadoukenmove;
-				c_hadouken->SetPos(App->particles->, App->particles->Hadouken.position.y);
+				c_hadouken->SetPos(App->particles->curret_position.x, position.y - 80);
 
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
