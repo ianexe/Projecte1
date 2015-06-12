@@ -332,6 +332,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 						if (App->player->isOnLeft == true)
 						{
 							App->particles->AddParticle(App->particles->Hadouken, position.x , position.y - 80, 150);
+							or_pos_hadouken = position.x;
 							c_hadouken = App->colision->AddCollider({ position.x, position.y - 80, 62, 32 }, COLLIDER_HADOUKEN_1);
 						}
 						else
@@ -750,7 +751,7 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_HADOUKEN:		
 				current_animation = &hadoukenmove;
-				c_hadouken->SetPos(-App->particles->Hadouken.position.x, App->particles->Hadouken.position.y);
+				c_hadouken->SetPos(App->particles->Hadouken.position.x, App->particles->Hadouken.position.y);
 
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
