@@ -27,7 +27,7 @@ public:
 	ModuleParticles(Application* app, bool start_enabled = true);
 	~ModuleParticles();
 	p2Point<int> curret_position;
-
+	bool current_exists;
 
 	bool Start();
 	update_status Update();
