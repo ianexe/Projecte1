@@ -16,6 +16,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_DEFENSE_1][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_DEFENSE_1][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_DEFENSE_1][COLLIDER_NEUTRAL_2] = false;
+	matrix[COLLIDER_DEFENSE_1][COLLIDER_HADOUKEN_1] = false;
+	matrix[COLLIDER_DEFENSE_1][COLLIDER_HADOUKEN_2] = false;
 
 	matrix[COLLIDER_DEFENSE_2][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_DEFENSE_2][COLLIDER_DEFENSE_2] = false;
@@ -25,6 +27,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_DEFENSE_2][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_DEFENSE_2][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_DEFENSE_2][COLLIDER_NEUTRAL_2] = false;
+	matrix[COLLIDER_DEFENSE_2][COLLIDER_HADOUKEN_1] = false;
+	matrix[COLLIDER_DEFENSE_2][COLLIDER_HADOUKEN_2] = false;
 
 	matrix[COLLIDER_PUNCH_1][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_DEFENSE_2] = false;
@@ -34,6 +38,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_PUNCH_1][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_PUNCH_1][COLLIDER_NEUTRAL_2] = true;
+	matrix[COLLIDER_PUNCH_1][COLLIDER_HADOUKEN_1] = false;
+	matrix[COLLIDER_PUNCH_1][COLLIDER_HADOUKEN_2] = true;
 
 	matrix[COLLIDER_PUNCH_2][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_DEFENSE_2] = false;
@@ -43,6 +49,9 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_PUNCH_2][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_NEUTRAL_1] = true;
 	matrix[COLLIDER_PUNCH_2][COLLIDER_NEUTRAL_2] = false;
+	matrix[COLLIDER_PUNCH_2][COLLIDER_HADOUKEN_1] = false;
+	matrix[COLLIDER_PUNCH_2][COLLIDER_HADOUKEN_2] = false;
+
 
 	matrix[COLLIDER_KICK_1][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_DEFENSE_2] = false;
@@ -52,6 +61,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_KICK_1][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_KICK_1][COLLIDER_NEUTRAL_2] = true;
+	matrix[COLLIDER_KICK_1][COLLIDER_HADOUKEN_2] = true;
+	matrix[COLLIDER_KICK_1][COLLIDER_HADOUKEN_1] = false;
 
 	matrix[COLLIDER_KICK_2][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_KICK_2][COLLIDER_DEFENSE_2] = false;
@@ -61,6 +72,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_KICK_2][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_KICK_2][COLLIDER_NEUTRAL_1] = true;
 	matrix[COLLIDER_KICK_2][COLLIDER_NEUTRAL_2] = false;
+	matrix[COLLIDER_KICK_2][COLLIDER_HADOUKEN_2] = false;
+	matrix[COLLIDER_KICK_2][COLLIDER_HADOUKEN_1] = true;
 
 	matrix[COLLIDER_NEUTRAL_1][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_NEUTRAL_1][COLLIDER_DEFENSE_2] = false;
@@ -70,6 +83,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_NEUTRAL_1][COLLIDER_KICK_2] = true;
 	matrix[COLLIDER_NEUTRAL_1][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_NEUTRAL_1][COLLIDER_NEUTRAL_2] = false;
+	matrix[COLLIDER_NEUTRAL_1][COLLIDER_HADOUKEN_2] = true;
+	matrix[COLLIDER_NEUTRAL_1][COLLIDER_HADOUKEN_1] = false;
 
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_DEFENSE_1] = false;
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_DEFENSE_2] = false;
@@ -79,8 +94,8 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_KICK_2] = false;
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_NEUTRAL_2] = false;
-
-	
+	matrix[COLLIDER_NEUTRAL_2][COLLIDER_HADOUKEN_2] = false;
+	matrix[COLLIDER_NEUTRAL_2][COLLIDER_HADOUKEN_1] = true;
 }
 
 // Destructor
@@ -189,6 +204,9 @@ void ModuleCollision::DrawDebug(Collider* col)
 		case COLLIDER_NEUTRAL_2:
 		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
 		break;
+		case COLLIDER_HADOUKEN_1:
+			App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
+			break;
 	}
 	
 }

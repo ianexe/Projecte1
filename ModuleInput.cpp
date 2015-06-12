@@ -22,7 +22,6 @@ bool ModuleInput::Init()
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
-
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -45,7 +44,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 	static bool kick_l = false;
 	static bool kick_h = false;
 	static bool hit = false;
-
+	//Player2
 	static bool left_2 = false;
 	static bool right_2 = false;
 	static bool down_2 = false;
@@ -193,6 +192,7 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 				break;
 			}
 		}
+		
 	//Player1
 		if (left && right)
 			inputs.Push(IN_LEFT_AND_RIGHT);
@@ -209,10 +209,18 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 		if (up && down)
 			inputs.Push(IN_JUMP_AND_CROUCH);
 
+		else if (down && right)
+		{
+			inputs.Push(IN_RIGHT_AND_CROUCH);
+		}
+
 		else
 		{
+			
 			if (down)
-				inputs.Push(IN_CROUCH_DOWN);
+			{
+				inputs.Push(IN_CROUCH_DOWN);				
+			}
 			if (up)
 				inputs.Push(IN_JUMP_DOWN);
 		}

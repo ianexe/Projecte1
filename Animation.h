@@ -8,6 +8,7 @@ public:
 	p2DynArray<SDL_Rect> frames;
 	bool loop;
 
+
 private:
 	float current_frame;
 

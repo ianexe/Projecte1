@@ -66,11 +66,12 @@ public:
 	Collider* c_punch2;
 	Collider* c_kick;
 	Collider* c_kick2;
+	Collider* c_hadouken;
 	//State Variables
 	p1_states current_state;
 	p2Qeue<p1_inputs> inputs;
 	//Timers
-	
+
 	
 
 	//Variables
@@ -88,13 +89,14 @@ public:
 	bool isAttacking;
 	bool isPunching_L;
 	bool isPunching_H;
+	bool isPunching_Crouch;
 	bool isKicking_L;
 	bool isKicking_H;
-
 	bool isJumpPunching;
 	bool isCrouchPunching;
 	bool isJumpKicking;
 	bool isCrouchKicking;
+	bool isAttackHard;
 
 	bool isHit;
 	
@@ -103,5 +105,8 @@ public:
 	p2Point<int> position;
 	unsigned int Health;
 	float speed;
-
+	long hadouken_timer;
+	int or_pos_hadouken;
+	long sp_timer;
+	int sp_check;
 };

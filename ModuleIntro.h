@@ -3,12 +3,12 @@
 #include "Globals.h"
 
 
-
 //Scroll
 //Input
 //Select stage?
 //Que el joc torni a la intro quan mors!!!
 //Que et moris!!
+
 class ModuleIntro : public Module
 {
 public:
@@ -23,10 +23,14 @@ public:
 
 	//Variables
 	SDL_Texture* graphics;
-	SDL_Texture* intro_animation;
+
 	SDL_Rect scroll;
+	Animation warning;
 	Animation intro;
 	Animation insert_coin;
+
+	unsigned int music_coin;
+	bool music_on;
 
 	//Animation punchFace;
 	bool isEnd;

@@ -48,6 +48,7 @@ ModuleSceneKen::ModuleSceneKen(Application* app, bool start_enabled) : Module(ap
 	foreground_pos = 0;
 	forward = true;
 
+
 	/*
 	// Life Bar
 	lifebar.x = 31;
@@ -55,6 +56,7 @@ ModuleSceneKen::ModuleSceneKen(Application* app, bool start_enabled) : Module(ap
 	lifebar.w = 322;
 	lifebar.h = 14;
 	*/
+
 }
 
 ModuleSceneKen::~ModuleSceneKen()
@@ -69,8 +71,9 @@ bool ModuleSceneKen::Start()
 	App->colision->Enable();
 	App->player->Enable();
 	App->player2->Enable();
+
 	App->ui->Enable();
-	
+
 	App->audio->PlayMusic("ken.ogg",FADE_TIME);
 	
 	return true;
@@ -118,11 +121,13 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 192, 105 + foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
 	App->renderer->Blit(graphics, 87, 25 + foreground_pos, &(hatGuy.GetCurrentFrame()), 0.92f); //Hat guy animation
 	App->renderer->Blit(graphics, 0, 170, &ground);
+
 	//App->renderer->Blit(ui, 31, 18, &lifebar);
+
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == 1)
 	{
-		//App->fade->FadeToBlack(App->scene_ken, App->scene_honda, FADE_TIME);
+		App->fade->FadeToBlack(App->scene_ken, App->map, FADE_TIME);
 	}
 
 	if (App->player->Health <= 0 || App->player2->Health <= 0)
