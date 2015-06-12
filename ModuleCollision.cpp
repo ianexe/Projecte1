@@ -95,7 +95,7 @@ ModuleCollision::ModuleCollision(Application* app, bool start_enabled) : Module(
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_NEUTRAL_1] = false;
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_NEUTRAL_2] = false;
 	matrix[COLLIDER_NEUTRAL_2][COLLIDER_HADOUKEN_2] = false;
-	matrix[COLLIDER_NEUTRAL_2][COLLIDER_HADOUKEN_1] = false;
+	matrix[COLLIDER_NEUTRAL_2][COLLIDER_HADOUKEN_1] = true;
 
 
 	matrix[COLLIDER_HADOUKEN_1][COLLIDER_NEUTRAL_2] = true;
@@ -208,7 +208,7 @@ void ModuleCollision::DrawDebug(Collider* col)
 		App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
 		break;
 		case COLLIDER_HADOUKEN_1:
-			App->renderer->DrawQuad(col->rect, 0, 255, 255, alpha);
+			App->renderer->DrawQuad(col->rect, 255,120 , 255, alpha);
 			break;
 	}
 	
