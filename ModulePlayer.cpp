@@ -399,26 +399,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			case IN_JUMP_DOWN: state = ST_JUMPING_NEUTRAL; isJumping = true;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCHED; isCrouching = true; break;
 
-			/*
->>>>>>> origin/Ian2.0
-			case IN_LEFT_AND_UP:
-			{
-				isJumping = true;
-				if (position.x < App->player2->position.x)
-				{
-					state = ST_JUMP_BACKWARD;
-					isJumpingB = true;
-				}
-
-				else if (position.x > App->player2->position.x)
-				{
-					state = ST_JUMP_FORWARD;
-					isJumpingF = true;
-				}
-			}
-			break;
-			*/
-
 			case IN_L_PUNCH:
 			{
 				if (sp_check == 2)
@@ -511,13 +491,13 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			}
 			break;
 
-			case IN_HIT_L: state = ST_HIT_L; isHit = true;break;
+			//case IN_HIT_L: state = ST_HIT_L; isHit = true;break;
 
-			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
+			//case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			}
 		}
 		break;
-
+		/*
 		case ST_HIT_L:
 		{
 			switch (last_input)
@@ -537,6 +517,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		}
 
 		break;
+		*/
 
 		/*
 		if (isFalling)
@@ -580,8 +561,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				/**
 				*TODO: COLISIO CROUCH
 				**/
-			case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
-			case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
+			//case IN_HIT_L: state = ST_HIT_L; isHit = true; break;
+			//case IN_HIT_H: state = ST_HIT_H; isHit = true; break;
 			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
@@ -614,10 +595,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				}
 			}
 
-	
-
-			//case IN_JUMP_DOWN: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
-			//case IN_CROUCH_DOWN: state = ST_CROUCHING; break;
 			}
 		}
 		break;
@@ -775,8 +752,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_HIT_L: c_punch1->to_delete = true;  state = ST_HIT_L; isHit = true; break;
-			case IN_HIT_H: c_punch1->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_PUNCH_L_FINISH: c_punch1->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
@@ -786,8 +761,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_HIT_L: c_punch2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
-			case IN_HIT_H: c_punch2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_PUNCH_H_FINISH: c_punch2->to_delete = true;  state = ST_IDLE;  break;
 			}
 		}
@@ -798,8 +771,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_KICK_L_FINISH: c_kick->to_delete = true;  state = ST_IDLE;  break;
-			case IN_HIT_L: c_kick->to_delete = true;  state = ST_HIT_L; isHit = true; break;
-			case IN_HIT_H: c_kick->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			}
 		}
 		break;
@@ -808,8 +779,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_HIT_L: c_kick2->to_delete = true;  state = ST_HIT_L; isHit = true; break;
-			case IN_HIT_H: c_kick2->to_delete = true;  state = ST_HIT_H; isHit = true; break;
 			case IN_KICK_H_FINISH: c_kick2->to_delete = true; state = ST_IDLE;  break;
 			}
 		}
@@ -997,6 +966,9 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	if (Health < 0)
+		Health = 0;
+
 	current_animation = &idle;
 	isAttackHard == false;
 	current_state = ST_UNKNOWN;
