@@ -814,27 +814,27 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 
-				case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
+			case IN_CROUCH_UP: state = ST_IDLE; collider->rect.h = 90; isCrouching = false; break;
 
 			case IN_L_PUNCH:
 			{
-				
+
 				if (isOnLeft){
 					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 48, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
 				else{
 					c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 48, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				
+
 				isCrouchPunching = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_CROUCH;
 			}
-				break;
+			break;
 
 			case IN_RIGHT_AND_CROUCH:
 			{
-				if (sp_check == 0)
+				if (sp_check == 0 && isOnLeft)
 				{
 					sp_timer = SDL_GetTicks();
 					sp_check = 1;
@@ -842,13 +842,30 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				break;
 
 			case IN_RIGHT_DOWN:
-				if (sp_check == 1)
+				if (sp_check == 1 && isOnLeft)
 				{
 					sp_check = 2;
 				}
 				break;
-			}
 
+			case IN_LEFT_AND_CROUCH:
+
+				if (sp_check == 0 && !isOnLeft)
+				{
+					sp_timer = SDL_GetTicks();
+					sp_check = 1;
+				}
+				break;
+
+			case IN_LEFT_DOWN:
+				if (sp_check == 1 && !isOnLeft)
+				{
+					sp_check = 2;
+				}
+				break;
+
+
+			}
 			}
 		}
 		break;
