@@ -437,7 +437,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 						}
 						else
 						{
-							App->particles->Hadouken.speed.x *= (-1);
+							//App->particles->Hadouken.speed.x *= (-1);
 							or_pos_hadouken = position.x;
 							c_hadouken = App->colision->AddCollider({ position.x - 50, position.y - 80, 62, 32 }, COLLIDER_HADOUKEN_1, this);
 							App->particles->AddParticle(App->particles->Hadouken, position.x, position.y - 80, 150);
