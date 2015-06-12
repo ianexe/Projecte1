@@ -84,8 +84,8 @@ public:
 	bool isJumpingF;
 	bool isJumpingB;
 	bool isFalling;
-	bool isFallingF;
-	bool isFallingB;
+	bool isGoingRight;
+	bool isGoingLeft;
 	bool isAttacking;
 	bool isPunching_L;
 	bool isPunching_H;
