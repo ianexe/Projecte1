@@ -828,25 +828,25 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_CROUCH;
 			}
-			break;
+				break;
 
+			case IN_RIGHT_AND_CROUCH:
+			{
+				if (sp_check == 0)
+				{
+					sp_timer = SDL_GetTicks();
+					sp_check = 1;
+				}
+				break;
 
-				
-				
-				case IN_RIGHT_AND_CROUCH:
-					if (sp_check == 0)
-					{
-						sp_timer = SDL_GetTicks();
-						sp_check = 1;
-					}
-					break;
-				
-				case IN_RIGHT_DOWN:
+			case IN_RIGHT_DOWN:
 				if (sp_check == 1)
 				{
 					sp_check = 2;
 				}
 				break;
+			}
+
 			}
 		}
 		break;
@@ -1296,7 +1296,7 @@ update_status ModulePlayer::Update()
 
 				collider->rect.h = 90;
 				current_animation = &jumpkick;
-
+				break;
 			case ST_HADOUKEN:		
 				current_animation = &hadoukenmove;
 				c_hadouken->SetPos(App->particles->curret_position.x, position.y - 80);
