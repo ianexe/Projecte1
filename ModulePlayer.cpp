@@ -446,7 +446,8 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				}
 				else
 				{
-					if (isOnLeft){
+					if (isOnLeft)
+					{
 						c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
 					}
 					else
@@ -626,14 +627,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			//case IN_JUMP_UP: isFalling = true; break;
 			case IN_L_PUNCH:
 			{
-				/*
-				if (isOnLeft){
-				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (isOnLeft)
+				{
+				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 15, 30, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
-				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+				c_punch1 = App->colision->AddCollider({ position.x - 40, position.y - 15, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
+				
 				isJumpPunching = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_JUMP;
@@ -642,14 +644,14 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_L_KICK:
 			{
-				/*
-				if (isOnLeft){
-				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (isOnLeft)
+				{
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 25, 50, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
-				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 25, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
 				isJumpKicking = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_KICK_JUMP;
@@ -674,14 +676,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				
 			case IN_L_PUNCH:
 			{
-				/*
-				if (isOnLeft){
-				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (isOnLeft)
+				{
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 15, 30, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
-				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					c_punch1 = App->colision->AddCollider({ position.x - 40, position.y - 15, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
+				
 				isJumpPunching = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_JUMP;
@@ -690,14 +693,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_L_KICK:
 			{
-				/*
-				if (isOnLeft){
-				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (isOnLeft)
+				{
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 25, 50, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
-				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 25, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
+				
 				isJumpKicking = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_KICK_JUMP;
@@ -722,14 +726,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_L_PUNCH:
 			{
-				/*
-				if (isOnLeft){
-				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (isOnLeft)
+				{
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 15, 30, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
-				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					c_punch1 = App->colision->AddCollider({ position.x - 40, position.y - 15, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
+				
 				isJumpPunching = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_PUNCH_JUMP;
@@ -738,14 +743,15 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 
 			case IN_L_KICK:
 			{
-				/*
-				if (isOnLeft){
-				c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				if (isOnLeft)
+				{
+					c_punch1 = App->colision->AddCollider({ position.x + 10, position.y - 25, 50, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				else{
-				c_punch1 = App->colision->AddCollider({ position.x - 50, position.y - 75, 40, 10 }, COLLIDER_PUNCH_1, this);
+				else
+				{
+					c_punch1 = App->colision->AddCollider({ position.x - 60, position.y - 25, 40, 10 }, COLLIDER_PUNCH_1, this);
 				}
-				*/
+				
 				isJumpKicking = true;
 				App->audio->PlayFx(normalFX);
 				state = ST_KICK_JUMP;
@@ -757,7 +763,6 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				isFalling = isJumping = isJumpingB = false;
 				jumpbackwardfalling.setToZero();
 				break;
-				//case IN_L_PUNCH: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 
 			}
 		}
@@ -923,6 +928,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_N_FINISH:
+				c_punch1->to_delete = true;
 				isFalling = isJumping = false;
 				state = ST_IDLE;
 				break;
@@ -939,6 +945,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_N_FINISH:
+				c_punch1->to_delete = true;
 				isFalling = isJumping = false;
 				state = ST_IDLE;
 				break;
@@ -1213,10 +1220,12 @@ update_status ModulePlayer::Update()
 					collider->rect.h = 90;
 					collider->SetPos(position.x - 30, position.y + 90);
 					*/
+					c_punch1->rect.y -= 5.0f;
 				}
 				else
 				{
 					position.y += 5.0f;
+					c_punch1->rect.y += 5.0f;
 				}
 
 				if (isJumpingF)
@@ -1226,6 +1235,7 @@ update_status ModulePlayer::Update()
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
 							position.x += speed;
+							c_punch1->rect.x += speed;
 						}
 					}
 
@@ -1234,6 +1244,7 @@ update_status ModulePlayer::Update()
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
 							position.x -= speed;
+							c_punch1->rect.x -= speed;
 						}
 					}
 				}
@@ -1245,6 +1256,7 @@ update_status ModulePlayer::Update()
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
 							position.x += speed;
+							c_punch1->rect.x += speed;
 						}
 					}
 
@@ -1253,6 +1265,7 @@ update_status ModulePlayer::Update()
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
 							position.x -= speed;
+							c_punch1->rect.x -= speed;
 						}
 					}
 				}
@@ -1265,6 +1278,7 @@ update_status ModulePlayer::Update()
 				if (!isFalling)
 				{
 					position.y -= 5.0f;
+					c_punch1->rect.y -= 5.0f;
 					/*
 					collider->rect.h = 90;
 					collider->SetPos(position.x - 30, position.y + 90);
@@ -1273,6 +1287,7 @@ update_status ModulePlayer::Update()
 				else
 				{
 					position.y += 5.0f;
+					c_punch1->rect.y += 5.0f;
 				}
 
 				if (isJumpingF)
@@ -1282,6 +1297,7 @@ update_status ModulePlayer::Update()
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
 							position.x += speed;
+							c_punch1->rect.x += speed;
 						}
 					}
 
@@ -1290,6 +1306,7 @@ update_status ModulePlayer::Update()
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
 							position.x -= speed;
+							c_punch1->rect.x -= speed;
 						}
 					}
 				}
@@ -1301,6 +1318,7 @@ update_status ModulePlayer::Update()
 						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
 						{
 							position.x += speed;
+							c_punch1->rect.x += speed;
 						}
 					}
 
@@ -1309,6 +1327,7 @@ update_status ModulePlayer::Update()
 						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
 						{
 							position.x -= speed;
+							c_punch1->rect.x -= speed;
 						}
 					}
 				}
