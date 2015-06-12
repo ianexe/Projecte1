@@ -279,6 +279,53 @@ bool ModuleInput::external_inputs(p2Qeue<p1_inputs>& inputs, p2Qeue<p1_inputs>& 
 			if (right_2)
 				inputs2.Push(IN_RIGHT_DOWN);
 		}
+
+
+		if (up_2 && down_2)
+			inputs2.Push(IN_JUMP_AND_CROUCH);
+
+		else if (down_2 && right_2)
+		{
+			inputs2.Push(IN_RIGHT_AND_CROUCH);
+		}
+		else if (down_2 && left_2)
+		{
+			inputs2.Push(IN_LEFT_AND_CROUCH);
+		}
+		else
+		{
+
+			if (down_2)
+			{
+				inputs2.Push(IN_CROUCH_DOWN);
+			}
+			if (up_2)
+				inputs2.Push(IN_JUMP_DOWN);
+		}
+
+		if (left_2 && up_2)
+			inputs2.Push(IN_LEFT_AND_UP);
+
+		else
+		{
+			if (left_2)
+				inputs2.Push(IN_LEFT_DOWN);
+			if (up_2)
+				inputs2.Push(IN_JUMP_DOWN);
+		}
+
+		if (right_2 && up_2)
+			inputs2.Push(IN_RIGHT_AND_UP);
+
+		else
+		{
+			if (right_2)
+				inputs2.Push(IN_RIGHT_DOWN);
+			if (up_2)
+				inputs2.Push(IN_JUMP_DOWN);
+		}
+
+
 		if (up_2 && down_2)
 			inputs2.Push(IN_JUMP_AND_CROUCH);
 		else
