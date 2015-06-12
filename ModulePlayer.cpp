@@ -1344,11 +1344,9 @@ update_status ModulePlayer::Update()
 
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
-<<<<<<< HEAD
 
-=======
 					isAttacking = false;
->>>>>>> origin/David&Ian
+
 					inputs.Push(IN_HADOUKEN_FINISH);
 				}
 
