@@ -16,6 +16,7 @@ struct Particle
 	bool fx_played;
 	bool exists;
 
+
 	Particle();
 	Particle(const Particle& p);
 	bool Update();
@@ -43,4 +44,5 @@ private:
 public:
 	//Particles
 	Particle Hadouken;
+	Particle Hadouken_L;
 };
