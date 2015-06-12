@@ -68,7 +68,7 @@ update_status ModuleMap::Update()
 
 		App->renderer->Blit(versus_image, 40, 7, &scroll);
 
-		if ((App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_UP) || (countdown.getFrame() >= (countdown.frames.Count() - countdown.speed)))
+		if ((App->input->GetKey(SDL_SCANCODE_INSERT) == KEY_UP) || (countdown.getFrame() >= (countdown.frames.Count() - countdown.speed)))
 		{
 
 			App->fade->FadeToBlack(App->map, App->scene_ken, FADE_TIME);
