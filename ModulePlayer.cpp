@@ -243,6 +243,9 @@ void ModulePlayer::internal_input(p2Qeue<p1_inputs>& inputs)
 			jump.setToZero();
 			jumpforward.setToZero();
 			jumpbackward.setToZero();
+			isJumping = false;
+			isJumpingF = false;
+			isJumpingB = false;
 			
 			inputs.Push(IN_JUMP_N_FINISH);
 		}
@@ -506,6 +509,7 @@ p1_states ModulePlayer::process_fsm(p2Qeue<p1_inputs>& inputs)
 				{
 					state = ST_JUMP_BACKWARD;
 					isJumpingB = true;
+					
 				}
 
 				else if (position.x > App->player2->position.x)
@@ -1077,6 +1081,45 @@ update_status ModulePlayer::Update()
 				{
 					position.y += 5.0f;
 				}
+
+				if (isJumpingF)
+				{
+					if (isOnLeft)
+					{
+						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+						{
+							position.x += speed;
+						}
+					}
+
+					if (isOnLeft == false)
+					{
+						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
+						{
+							position.x -= speed;
+						}
+					}
+				}
+
+				if (isJumpingB)
+				{
+					if (isOnLeft == false)
+					{
+						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+						{
+							position.x += speed;
+						}
+					}
+
+					if (isOnLeft)
+					{
+						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
+						{
+							position.x -= speed;
+						}
+					}
+				}
+
 				collider->rect.h = 90;
 				current_animation = &jumppunch;
 				break;
@@ -1094,6 +1137,45 @@ update_status ModulePlayer::Update()
 				{
 					position.y += 5.0f;
 				}
+
+				if (isJumpingF)
+				{
+					if (isOnLeft)
+					{
+						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+						{
+							position.x += speed;
+						}
+					}
+
+					else
+					{
+						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
+						{
+							position.x -= speed;
+						}
+					}
+				}
+
+				else if (isJumpingB)
+				{
+					if (isOnLeft == false)
+					{
+						if (position.x < 860.0 && position.x < (App->renderer->OpCamera.x) + SCREEN_WIDTH && !doDefense)
+						{
+							position.x += speed;
+						}
+					}
+
+					else
+					{
+						if (position.x > 0.0 && position.x >(App->renderer->OpCamera.x) + 20 && !doDefense)
+						{
+							position.x -= speed;
+						}
+					}
+				}
+
 				collider->rect.h = 90;
 				current_animation = &jumpkick;
 				break;
