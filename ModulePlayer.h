@@ -57,6 +57,7 @@ public:
 	unsigned int normalFX;
 	unsigned int strongFX;
 	unsigned int fallingFX;
+	unsigned int hadoukenFX;
 
 
 	//SDL_Rect detection;
