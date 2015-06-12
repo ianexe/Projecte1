@@ -1318,11 +1318,12 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_HADOUKEN:		
 				current_animation = &hadoukenmove;
+				isAttacking = true;
 				c_hadouken->SetPos(App->particles->curret_position.x, position.y - 80);
 
 				if (SDL_GetTicks() - hadouken_timer > HADOUKEN_LIMIT)
 				{
-					
+					isAttacking = false;
 					inputs.Push(IN_HADOUKEN_FINISH);
 				}
 
