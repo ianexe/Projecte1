@@ -8,15 +8,15 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this);
-	scene_ken = new ModuleSceneKen(this, false);
+	audio = new ModuleAudio(this, false);
+	scene_ken = new ModuleSceneKen(this, true);
 	player = new ModulePlayer(this, false);
 	player2 = new ModulePlayer2(this, false);
 	particles = new ModuleParticles(this, true);
 	scene_honda = new ModuleSceneHonda(this, false);
 	fade = new ModuleFadeToBlack(this);
 	colision = new ModuleCollision(this);
-	scene_intro = new ModuleIntro(this, true);
+	scene_intro = new ModuleIntro(this, false);
 	ui = new ModuleUI(this, false);
 	map = new ModuleMap(this, false);
 
@@ -30,7 +30,7 @@ Application::Application()
 	AddModule(textures);
 	AddModule(map);
 	AddModule(input);
-	AddModule(audio);
+	//AddModule(audio);
 	
 	// Scenes
 	AddModule(scene_intro);
