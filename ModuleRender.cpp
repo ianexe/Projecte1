@@ -34,8 +34,6 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
-	FirstFPS = SDL_GetTicks();
-	FPS= CountFPS = 0;
 	return ret;
 }
 
@@ -53,7 +51,7 @@ update_status ModuleRender::Update()
 	char title[250];
 
 	//sprintf_s(title, "Camera X: %f Player1X: %f Player2X: %f", -(camera.x), (App->player->position.x), (App->player2->position.x));
-	sprintf_s(title, "FPS", (App->player2->Health));
+	sprintf_s(title, "Position.x HADO: %i Player2 Health: %i", App->particles->Hadouken.position.x, (App->player2->Health));
 //	sprintf_s(title, "Timer %i", (App->player->sp_timer));
 
 
@@ -87,6 +85,7 @@ update_status ModuleRender::Update()
 		}
 
 		OpCamera.x = (-camera.x / 3);
+	
 	
 	return UPDATE_CONTINUE;
 }
@@ -153,9 +152,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 		}
 	}
 	
-	//CountFPS++;
 
-	//FPS = CountFPS / (SDL_.getTicks() / 1000.f)
 	return ret;
 }
 
