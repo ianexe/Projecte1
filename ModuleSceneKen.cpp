@@ -132,7 +132,7 @@ update_status ModuleSceneKen::Update()
 
 	if (App->player->Health <= 0 || App->player2->Health <= 0)
 	{
-		App->fade->FadeToBlack(App->scene_ken, App->scene_ken, FADE_TIME);
+		App->fade->FadeToBlack(App->scene_ken, App->scene_intro, FADE_TIME);
 	}
 
 	
