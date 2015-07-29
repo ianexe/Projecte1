@@ -392,7 +392,7 @@ update_status ModuleInput::PreUpdate()
 	SDL_GetMouseState(&mouse_x, &mouse_y);
 	mouse_x /= SCREEN_SIZE;
 	mouse_y /= SCREEN_SIZE;
-
+	
 	App->input->external_inputs(App->player->inputs, App->player2->inputs2);
 
 	return UPDATE_CONTINUE;
